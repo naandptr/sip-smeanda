@@ -1080,12 +1080,9 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     gap: 34px;
     background: var(--colors-white, #FFF);
     border-radius: 0;
-    width: 100%;
 }
 
-.modal-view-content-absen {
-    width: 70%;
-}
+
 
 .modal-view-header {
     display: flex;
@@ -1093,20 +1090,16 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .modal-view-body {
+    padding: 0px;
     display: flex;
     flex-direction: column;
     gap: 40px;
-    width: 100%;
 }
 
 .modal-view-item {
     display: flex;
     justify-content: space-between;
     align-items: start;
-}
-
-.modal-view-item img {
-    max-width: 100%;
 }
 
 .modal-view-value {
@@ -1118,6 +1111,8 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     width: 70%;
     padding: 8px 12px;
 }
+
+
 
 .desc-box {
     min-height: 100px;
