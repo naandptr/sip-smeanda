@@ -767,8 +767,8 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 
 
-/* Modal Absen dan Jurnal */
-.modal-absen-content form, .modal-jurnal-content form {
+/* Modal Form */
+.modal-content form {
     display: flex;
     flex-direction: column;  
     padding: 32px;
@@ -777,19 +777,19 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     border-radius: 0;
 }
 
-.modal-absen-body, .modal-jurnal-body {
+.modal-form-body {
     display: flex;
     flex-direction: column;
     padding: 0;
     gap: 34px;
 }
 
-.input-item {
+.modal-form-group {
     display: flex;
     justify-content: space-between;
 }
 
-.input-item label {
+.modal-form-group label {
     color: var(--Colors-gray-500, #64748B);
     font-family: "Nunito Sans";
     font-size: 14px;
@@ -798,7 +798,11 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 120%; /* 16.8px */
 }
 
-.input-value  {
+.required-label {
+    color: red;
+}
+
+.modal-form-value  {
     width: 70%;
 }
 
@@ -811,7 +815,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     resize: vertical;
 }
 
-.input-value input, .input-value select {
+.modal-form-value input, .modal-form-value select {
     width: 100%;
     border-radius: 4px;
     border: 1px solid var(--colors-gray-400, #94A3B8);
@@ -847,7 +851,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     outline: none; /* Hilangkan outline saat diklik */
 }
 
-.modal-absen-footer, .modal-jurnal-footer {
+.modal-absen-footer, .modal-form-footer {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
