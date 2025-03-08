@@ -30,9 +30,10 @@
                             <td>XII Animasi I</td>
                             <td class="btn-aksi">
                                 <!-- Tombol Lihat -->
-                                <button class="btn-open">
+                                <button type="button" class="btn-open" data-bs-toggle="modal" data-bs-target="#modalDetailSiswa">
                                     Detail
                                 </button>
+                                <x-modal_detail_siswa></x-modal_detail_siswa>
                             </td>
                         </tr>
                     </tbody>
