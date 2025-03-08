@@ -1,0 +1,1154 @@
+/* Global Styles */
+body, html {
+    background-color: #F0F9FF;
+    font-family: 'Nunito Sans';
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    box-sizing: border-box; /* Mencegah overflow */
+}
+
+/* Heading Styles */
+h1 { font-size: 32px; font-style: normal; margin: 0;}
+h2 { font-size: 24px; font-style: normal; margin: 0;}
+h3 { font-size: 20px; font-style: normal; margin: 0;}
+h4 { font-size: 16px; font-style: normal; margin: 0;}
+h5 { font-size: 14px; font-style: normal; margin: 0;}
+p { font-size: 12px; font-style: normal; margin: 0;}
+
+.layout {
+    display: grid;
+    grid-template-rows: 60px 1fr; /* Navbar + Main Container */
+    grid-template-columns: 240px 1fr;
+    height: 100vh; /* Full tinggi layar */
+    overflow: hidden; /* Hindari overflow horizontal */
+    transition: grid-template-columns 0.3s ease;
+}
+
+.layout.collapsed {
+    grid-template-columns: 80px 1fr; /* Sidebar mengecil */
+}
+
+/* Navbar */
+.navbar {
+    grid-row: 1 / 2; /* Di baris pertama */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Tinggi navbar */
+    background: #fff;
+    z-index: 1000; /* Navbar tetap di atas */
+}
+
+#brand {
+    padding: 0 21px;
+    gap: 10px;
+}
+
+#brand h5 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 16.8px */
+}
+
+#avatar {
+    padding: 0 12px;
+    gap: 12px;
+}
+
+#avatar h5 {
+    color: var(--color-black, #000);
+    font-weight: 500;
+    line-height: 120%; /* 16.8px */
+}
+
+.btn-logout {
+    color: var(--colors-white, #FFF);
+    text-align: center;
+    width: 110px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--colors-primary-50, #F0F9FF);
+    background: var(--colors-primary-500, #0EA5E9);
+    font-weight: 800;
+    line-height: 120%; /* 16.8px */
+}
+
+.btn-logout:hover {
+    background: var(--colors-primary-600, #0284C7);
+}
+  
+/* Sidebar */
+
+.sidebar {
+    grid-row: 2 / 3; 
+    height: 100%; /* Sesuai tinggi layar */
+    background: #fff;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-header h3 {
+    width: 100%;
+    letter-spacing: 1px;
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 24px */
+
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    
+}
+
+.layout.collapsed .sidebar-header {
+    align-items: center; /* Tombol toggle di tengah */
+}
+
+.layout .toggle-btn {
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+
+.layout.collapsed .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.menu:hover {
+    border-radius: 4px;
+    background: var(--colors-primary-50, #F0F9FF); /* Warna highlight untuk yang aktif */
+}
+
+.menu.active {
+    border-radius: 4px;
+    background: var(--colors-primary-50, #F0F9FF); /* Warna highlight untuk yang aktif */
+}
+
+.menu-text, #menuText {
+    transition: opacity 0.3s ease;
+}
+
+/* Menyembunyikan teks jika sidebar di-collapse */
+.layout.collapsed .menu-text,
+.layout.collapsed #menuText {
+    display: none;
+}
+
+/* .sidebar .active {
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+} */
+  
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#sidebarMenu {
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.sidebar-box {
+    padding: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    flex-shrink: 0;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.menu h4 {
+    color: var(--colors-gray-600, #475569);
+    font-weight: 500;
+    line-height: 120%; /* 19.2px */
+    
+}
+
+/* Main Content di samping sidebar */
+.content {
+    grid-row: 2 / 3;
+    padding: 0px;
+    overflow-y: auto; /* Scroll jika konten panjang */
+    overflow-x: auto; /* Scroll jika konten panjang */
+}
+
+.content h1 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 500;
+    line-height: 120%; /* 38.4px */
+}
+
+/* Sweet Alert */
+.swal2-popup {
+    padding: 40px !important;
+    font-family: "Nunito Sans" !important;
+}
+
+.swal2-title {
+    font-size: 20px !important;
+    font-weight: 500 !important;
+    color: var(--color-black, #000) !important;
+}
+
+.swal2-html-container {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: var(--colors-gray-500, #64748B) !important;
+}
+
+.swal2-image {
+    width: 64px !important;
+    height: auto !important;
+}
+
+.swal2-confirm {
+    border-radius: 8px !important;
+    background: var(--colors-primary-500, #0EA5E9) !important;
+    padding: 10px 20px !important;
+
+    color: var(--colors-white, #FFF);
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+.swal2-cancel {
+    border-radius: 8px !important;
+    background: var(--colors-gray-300, #CBD5E1) !important;
+    padding: 10px 20px !important;
+
+    color: var(--colors-gray-600, #475569);
+    font-size: 14px !important;
+    font-weight: 800 !important;
+}
+
+/* Login */
+.auth-content {
+    width: 100%;
+    padding: 0px;
+}
+
+.auth-container {
+    display: flex; 
+    justify-content: space-between;
+    gap: 40px;
+    padding: 70px;
+}
+
+.auth-section {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    padding: 0px;
+}
+
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-body {
+    display: flex;
+    flex-direction: column;
+    gap: 43px;
+}
+
+.auth-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.auth-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-header h1 {
+    color: #313131;
+    font-weight: 800;
+    line-height: 120%; /* 38.4px */
+}
+
+.auth-header h4 {
+    color: #313131;
+    font-weight: 500;
+    line-height: 120%; /* 19.2px */
+    opacity: 0.75;
+}
+
+.auth-button button {
+    width: 100%;
+    border-radius: 4px;
+    background: var(--colors-primary-500, #0EA5E9);
+    color: var(--colors-white, #FFF);
+    font-weight: 800;
+    line-height: 120%; /* 19.2px */
+}
+
+.brand-text {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 16.8px */
+}
+
+.auth-image img {
+    border-radius: 30px;
+}
+
+
+
+
+
+/* Dashboard */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 60px;
+    gap: 34px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.card-item {
+    display: flex;
+    width: 100%;
+    padding: 24px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 8px;
+    background: var(--colors-white, #FFF);
+
+    /* double shadow */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.card-item h4 {
+    color: var(--color-black, #000);
+    font-weight: 500;
+    line-height: 120%; /* 19.2px */
+}
+
+.detail-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.detail-card h2 + .detail-lokasi h2 {
+    color: var(--color-black, #000);
+    font-weight: 400;
+    line-height: 120%; /* 28.8px */
+}
+
+.detail-lokasi {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-lokasi p {
+    color: var(--colors-gray-800, #1E293B);
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+/* Informasi Prakerin */
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 60px;
+    gap: 34px;
+}
+
+.header {
+    padding: 20px;
+    border-radius: 8px;
+    background: var(--colors-white, #FFF);
+    /* double shadow */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.header h1 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 38.4px */
+}
+
+.info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-header {
+    display: flex;
+    padding: 16px 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+
+    border-radius: 5px;
+    background: var(--Colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.info-header h2 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 28.8px */
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px;
+    gap: 20px;
+
+    border-radius: 5px;
+    background: var(--Colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-item h4 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 500;
+    line-height: 20px; /* 125% */
+}
+
+.info-value {
+    width: 70%;
+    padding: 10px 6px;
+    border-radius: 4px;
+    background: var(--colors-gray-200, #E2E8F0);
+}
+
+.info-value h5 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 500;
+    line-height: 120%; /* 16.8px */
+}
+
+/* Dokumen Prakerin */
+.document {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 60px;
+    gap: 34px;
+}
+
+.document-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.document-title {
+    display: flex;
+    padding: 16px 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+
+    border-radius: 5px;
+    background: var(--Colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.document-title h2 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; /* 28.8px */
+}
+
+.document form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 25px;
+    border-radius: 5px;
+    background: var(--colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.document-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8.5px;
+}
+
+.document-input h4 {
+    color: var(--Colors-gray-500, #64748B);
+    font-weight: 500;
+    line-height: 20px; /* 125% */
+}
+
+.document-upload {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    gap: 5px;
+}
+
+.file-btn {
+    padding: 2px 5px;
+    border-radius: 20px;
+    border: 1px solid var(--colors-primary-50, #F0F9FF);
+    background: var(--colors-primary-500, #0EA5E9);
+
+    color: var(--colors-white, #FFF);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+}
+
+.file-btn:hover {
+    background: var(--colors-primary-600, #0284C7);
+}
+
+.document-upload p {
+    color: var(--colors-gray-500, #64748B);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 120%; /* 16.8px */
+}
+
+.document-action {
+    display: flex;
+    justify-content: end;
+    padding-bottom: 16px;
+    padding-right: 16px;
+}
+
+.btn-open, .btn-submit {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--colors-primary-50, #F0F9FF);
+    background: var(--colors-primary-500, #0EA5E9);
+
+    color: var(--colors-white, #FFF);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 16.8px */
+}
+
+.btn-cancel {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--colors-primary-50, #F0F9FF);
+    background: var(--colors-gray-300, #CBD5E1);
+
+    color: var(--colors-gray-600, #475569);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 16.8px */
+}
+
+.btn-open:hover, .btn-submit:hover {
+    background: var(--colors-primary-600, #0284C7);
+}
+
+.btn-cancel:hover {
+    background: var(--colors-gray-400, #94A3B8);
+}
+
+/* Absensi dan Jurnal */
+.data-container {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 60px;
+    gap: 42px;
+
+}
+
+.data-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.data-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 673px;
+    align-self: stretch;
+}
+
+.data-content {
+    width: 100%; /* Pastikan container mengikuti lebar */
+    overflow-x: auto; /* Jika tabel besar, scroll horizontal */
+    border-radius: 8px;
+    background: var(--Colors-white, #FFF);
+    /* double shadow */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.data-table {
+    width: 100%; /* Tabel memenuhi lebar container */
+    border-collapse: collapse; /* Menggabungkan border */
+    table-layout: fixed; /* Opsional: Atur kolom secara merata */
+}
+
+.data-header th {
+    margin: 0;
+    padding: 8px;
+    background: var(--colors-gray-200, #E2E8F0);
+    color: var(--colors-primary-900, #0C4A6E);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 20px; /* 166.667% */
+}
+
+.data-body tr {
+    border-bottom: 0.1px solid #f0f0f0; /* Garis tipis di bawah setiap baris */
+    color: var(--color-black, #000);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 14.4px */
+}
+
+.data-body td {
+    margin: 0;
+    padding: 8px;
+}
+
+.pagination {
+    display: flex; 
+    justify-content: space-between; /* Previous kiri, Next kanan */
+    align-items: center; /* Pusatkan vertikal */
+    margin: 0;
+    padding: 8px 16px;
+}
+
+.prev {
+    order: 0; /* Previous di kiri */
+    color: var(--colors-gray-300, #CBD5E1);
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 14.4px */
+}
+
+.page-info {
+    margin: 1 auto; /* Pusatkan secara horizontal */
+    color: var(--colors-gray-500, #64748B);
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 14.4px */
+}
+
+.next {
+    order: 2; /* Next di kanan */
+    color: var(--colors-gray-300, #CBD5E1);
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 14.4px */
+}
+
+.status-badge {
+    display: inline-block;
+    color: var(--colors-red-600, #DC2626);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 120%; /* 14.4px */
+    border-radius: 999px;
+    background: var(--colors-red-100, #FEE2E2);
+    padding: 0 8px;
+    text-align: center;
+}
+
+/* Bungkus tabel agar bisa discroll saat layar kecil */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Pastikan tabel tidak melebar melebihi container */
+.data-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+/* Jaga agar header dan footer sejajar */
+.data-table thead th,
+.data-table tfoot td {
+    position: sticky;
+}
+
+/* Header tetap di atas */
+.data-table thead th {
+    top: 0;
+    z-index: 5;
+}
+
+/* Footer tetap di bawah */
+.data-table tfoot td {
+    bottom: 0;
+    z-index: 5;
+}
+
+/* Kolom aksi tidak terlalu lebar */
+.btn-aksi {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap; /* Biar tombol turun ke bawah kalau sempit */
+}
+
+/* Ukuran tombol lebih kecil agar tidak melebar */
+.btn-validasi {
+    font-size: 12px;
+    padding: 4px 6px;
+    white-space: nowrap;
+}
+
+.btn-icon img {
+    width: 18px;
+    height: 18px;
+}
+
+
+
+
+/* Modal Absen dan Jurnal */
+.modal-absen-content form, .modal-jurnal-content form {
+    display: flex;
+    flex-direction: column;  
+    padding: 32px;
+    gap: 34px;
+    background: var(--colors-white, #FFF);
+    border-radius: 0;
+}
+
+.modal-absen-body, .modal-jurnal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 34px;
+}
+
+.input-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-item label {
+    color: var(--Colors-gray-500, #64748B);
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+}
+
+.input-value  {
+    width: 70%;
+}
+
+#deskripsiView {
+    width: 100%;
+    min-height: 150px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.input-value input, .input-value select {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--colors-gray-400, #94A3B8);
+    color: var(--Colors-gray-500, #64748B);
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+.btn-aksi {
+    display: flex;
+    align-items: center;
+}
+
+.btn-icon {
+    background: none; /* Hilangkan background */
+    border: none; /* Hilangkan border */
+    padding: 0; /* Hilangkan padding */
+    cursor: pointer; /* Pointer saat hover */
+    display: inline-flex; /* Hilangkan extra spacing */
+    align-items: center; /* Posisikan icon di tengah */
+    justify-content: center;
+}
+
+.btn-icon img {
+    width: 24px; /* Atur ukuran ikon */
+    height: auto;
+}
+
+.btn-icon:focus {
+    outline: none; /* Hilangkan outline saat diklik */
+}
+
+.modal-absen-footer, .modal-jurnal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.custom-modal {
+    max-width: 60%;  /* Atur ukuran sesuai kebutuhan */
+    margin: auto;     /* Tetap di tengah */
+}
+
+.modal.show .custom-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Supaya modal tetap berada di tengah vertikal */
+}
+
+.filepond--root {
+    border: 1px solid var(--colors-gray-400, #94A3B8) !important;
+    border-radius: 4px;
+    background-color: #ffff;
+    width: 100%;
+    text-align: center;
+}
+
+.filepond--root div {
+    background-color: white;
+}
+
+.filepond--root h1 {
+    color: var(--color-black, #000);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 21px */
+    letter-spacing: -0.14px;
+}
+
+.filepond--root span {
+    color: var(--colors-primary-600, #0284C7);
+    font-family: Inter;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 12px */
+    text-decoration: none;
+}
+
+.filepond--root p {
+    display: inline;
+    color: var(--color-black, #000);
+    font-family: Inter;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+
+
+.note-editor {
+    width: 100% !important;  
+    min-height: 250px;     
+    border-radius: 4px;
+    border: 1px solid var(--colors-gray-300, #CBD5E1);
+    background: var(--colors-white, #FFF);
+    color: var(--Colors-gray-500, #64748B);
+
+    /* Body Regular */
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+}
+
+
+
+/* Nilai dan Akun */
+.nilai, .akun {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 60px;
+    gap: 20px;
+}
+
+.info-nilai {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px;
+    gap: 20px;
+
+    border-radius: 5px;
+    background: var(--Colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.item-nilai {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-nilai {
+    width: 70%;
+    padding: 10px 6px;
+    border-radius: 4px;
+    background: var(--colors-gray-200, #E2E8F0);
+}
+
+.info-akun {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 20px;
+
+    border-radius: 5px;
+    background: var(--Colors-white, #FFF);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.info-akun tr {
+    border-bottom: 0.1px solid #f0f0f0; /* Garis tipis di bawah setiap baris */
+    
+}
+
+.item-user td {
+    padding: 20px 24px;
+}
+
+.pw-btn {
+    display: flex;
+    justify-content: end;
+}
+
+/* Ganti Password */
+.pass-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 45%;
+}
+
+.pass-container h1 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-family: "Nunito Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 38.4px */
+}
+
+.pass-group, .auth-group {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.pass-item, .auth-field {
+    position: relative;
+    width: 100%;
+}
+
+.pass-item input, .auth-field input {
+    height: 48px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    background: white;
+    width: 100%;
+    padding-right: 40px; /* Ruang untuk icon */
+}
+
+/* Label langsung di atas garis input */
+.pass-item label, .auth-field label {
+    position: absolute;
+    top: -8px; /* Mepet di atas garis input */
+    left: 12px;
+    color: var(--color-black, #000);
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #fff;
+    padding: 0px 4px;
+    transition: 0.2s ease-in-out;
+    pointer-events: none;
+}
+
+/* Icon toggle */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: none; /* Icon awalnya tidak tampil */
+}
+
+.pass-button {
+    display: flex;
+    justify-content: end;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+
+/* Modal Detail Siswa */
+.view-container {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 44px;
+    gap: 40px;
+}
+
+.view-item {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 100px;
+    align-items: start;
+}
+
+.view-value {
+    display: flex;
+    justify-content: start;
+    border-radius: 4px;
+    border: 1px solid var(--Colors-gray-300, #CBD5E1);
+    background: var(--colors-white, #FFF);
+    width: 70%;
+    padding: 8px 12px;
+}
+
+.desc-box {
+    min-height: 200px;
+}
+
+
+/* Modal Validasi */
+.modal-validasi-content {
+    padding: 32px;
+}
+
+.validasi-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.validasi-header h4 {
+    color: var(--color-black, #000);
+    font-weight: 800;
+    line-height: 120%; /* 19.2px */
+}
+
+.validasi-value {
+    min-height: 200px;
+
+}
+
+.validasi-value textarea {
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid var(--colors-gray-300, #CBD5E1);
+    background: var(--colors-white, #FFF);
+    padding: 10px;
+}
+
+.modal-validasi-footer {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+#btnAcc {
+    background: var(--colors-green-500, #22C55E);
+}
+
+#btnReject {
+    background: var(--colors-red-500, #EF4444);
+}
+
+
+/* breakpoint */
+@media (max-width: 992px) {
+    .layout {
+        grid-template-columns: 240px 1fr; /* Default */
+    }
+    
+    .layout.collapsed {
+        grid-template-columns: 80px 1fr; /* Collapse */
+    }
+    
+}
+
