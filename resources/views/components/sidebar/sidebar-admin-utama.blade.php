@@ -17,19 +17,19 @@
                 <h4 class="ms-2 mb-0 fs-6 menu-text">Dashboard</h4>
             </a>
             <a href="{{ url('/admin_utama/user?role=admin-utama') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_utama/user') ? 'active' : '' }}">
-                <img src="{{ asset('img/dashboard-icon.png') }}" alt="kelola user" height="20" />
+                <img src="{{ asset('img/siswa-icon.png') }}" alt="kelola user" height="20" />
                 <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola User</h4>
             </a>
             <a href="{{ url('/admin_utama/jurusan?role=admin-utama') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_utama/jurusan') ? 'active' : '' }}">
-                <img src="{{ asset('img/dashboard-icon.png') }}" alt="kelola jurusan" height="20" />
+                <img src="{{ asset('img/jurusan-icon.png') }}" alt="kelola jurusan" height="20" />
                 <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola Jurusan</h4>
             </a>
             <a href="{{ url('/admin_utama/kelas?role=admin-utama') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_utama/kelas') ? 'active' : '' }}">
-                <img src="{{ asset('img/dashboard-icon.png') }}" alt="kelola kelas" height="20" />
+                <img src="{{ asset('img/dokumen-icon.png') }}" alt="kelola kelas" height="20" />
                 <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola Kelas</h4>
             </a>
             <a href="{{ url('/admin_utama/tahun_ajar?role=admin-utama') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_utama/tahun_ajar') ? 'active' : '' }}">
-                <img src="{{ asset('img/dashboard-icon.png') }}" alt="kelola tahun ajaran" height="20" />
+                <img src="{{ asset('img/date-icon.png') }}" alt="kelola tahun ajaran" height="20" />
                 <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola Tahun Ajaran</h4>
             </a>
         </div>
