@@ -1069,21 +1069,21 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 
 /* Modal Detail Siswa */
-.view-container {
+.modal-view-body {
+    padding: 32px;
     display: flex;
     flex-direction: column;
-    padding: 40px 44px;
     gap: 40px;
 }
 
-.view-item {
+.modal-view-item {
     display: flex;
     justify-content: space-between;
     padding-right: 100px;
     align-items: start;
 }
 
-.view-value {
+.modal-view-value {
     display: flex;
     justify-content: start;
     border-radius: 4px;
