@@ -34,7 +34,12 @@
                         <td>Absen Datang</td>
                         <td>Hadir</td>
                         <td>-</td>
-                        <td><img src="{{ asset('img/show-icon.png') }}" alt=""></td>
+                        <td>
+                            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailAbsen">
+                                <img src="{{ asset('img/show-icon.png') }}" alt="">
+                            </button>
+                            <x-modal_detail_absen></x-modal_detail_absen>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>

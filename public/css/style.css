@@ -592,6 +592,10 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 120%; /* 16.8px */
 }
 
+.btn-close {
+    background: none;
+}
+
 .btn-open:hover, .btn-submit:hover {
     background: var(--colors-primary-600, #0284C7);
 }
@@ -1069,18 +1073,40 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 
 /* Modal Detail Siswa */
-.modal-view-body {
+.modal-view-content {
     padding: 32px;
+    display: flex;
+    flex-direction: column;  
+    gap: 34px;
+    background: var(--colors-white, #FFF);
+    border-radius: 0;
+    width: 100%;
+}
+
+.modal-view-content-absen {
+    width: 70%;
+}
+
+.modal-view-header {
+    display: flex;
+    justify-content: end;
+}
+
+.modal-view-body {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    width: 100%;
 }
 
 .modal-view-item {
     display: flex;
     justify-content: space-between;
-    padding-right: 100px;
     align-items: start;
+}
+
+.modal-view-item img {
+    max-width: 100%;
 }
 
 .modal-view-value {
@@ -1094,7 +1120,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .desc-box {
-    min-height: 200px;
+    min-height: 100px;
 }
 
 
