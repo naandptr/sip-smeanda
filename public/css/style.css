@@ -1099,28 +1099,17 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 
 /* Modal Validasi */
-.modal-validasi-content {
-    padding: 32px;
-}
-
-.validasi-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.validasi-header h4 {
+.modal-form-header h4 {
     color: var(--color-black, #000);
     font-weight: 800;
     line-height: 120%; /* 19.2px */
 }
 
 .validasi-value {
-    min-height: 200px;
-
+    width: 100%;
 }
 
-.validasi-value textarea {
+.modal-form-value #komentar {
     height: 100%;
     width: 100%;
     border-radius: 4px;
