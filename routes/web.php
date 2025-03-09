@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
 
 // Halaman Login
 Route::get('/login', function () {
@@ -12,19 +14,19 @@ Route::get('/change_pass', function () {
 });
 
 // Redirect default ke halaman sesuai role 
-Route::get('/', function () {
-    $role = request()->get('role', 'siswa');
-
-    if ($role == 'guru') {
-        return view('guru/home');
-    } elseif ($role == 'admin_jurusan') {
-        return view('admin_jurusan/home');
-    } elseif ($role == 'admin_utama') {
-        return view('admin_utama/home');
-    }
-
-    return view('siswa/home'); // Default siswa
+Route::get('/switch-role/{role}', function ($role) {
+    session(['role' => $role]); // Simpan role ke session
+    return redirect('/dashboard');
 });
+
+
+Route::get('/dashboard', function () {
+    $role = session('role', 'siswa'); // Default ke 'siswa' kalau belum ada session
+    return view('dashboard', compact('role'));
+});
+
+
+
 
 // Group untuk Siswa
 Route::prefix('siswa')->group(function () {

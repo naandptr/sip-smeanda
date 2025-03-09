@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('components.header')
+    @include('layouts.header')
 </head>
 <body>
-    @php
-        $role = request()->get('role', 'siswa');
-    @endphp
+    
 
     <!-- Grid Container -->
     <div class="layout">
         <!-- Navbar -->
-        <x-navbar></x-navbar>
+        @include('layouts.navbar')
         
         <!-- Sidebar -->
-        @if($role == 'siswa')
-        @include('components.sidebar.sidebar-siswa')
+        {{-- @if($role == 'siswa')
+        @include('components.sidebar.siswa')
         @elseif($role == 'guru')
-        @include('components.sidebar.sidebar-guru')
+        @include('components.sidebar.guru')
         @elseif($role == 'admin_jurusan')
-        @include('components.sidebar.sidebar-admin-jurusan')
+        @include('components.sidebar.admin-jurusan')
         @elseif($role == 'admin_utama')
-        @include('components.sidebar.sidebar-admin-utama')
-        @endif
+        @include('components.sidebar.admin-utama')
+        @endif --}}
+        @include('layouts.sidebar')
+            
+        
 
         <!-- Main Content -->
         <main class="content">
             @yield('content')
         </main>
     </div>
-    <x-footer></x-footer>
+    @include('layouts.footer')
 </body>
 </html>
 
