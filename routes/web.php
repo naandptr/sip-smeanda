@@ -34,7 +34,6 @@ Route::prefix('siswa')->group(function () {
     Route::view('/dokumen', 'siswa/dokumen');
     Route::view('/absen', 'siswa/absen');
     Route::view('/jurnal', 'siswa/jurnal');
-    Route::view('/nilai', 'siswa/nilai');
     Route::view('/akun', 'siswa/akun');
     Route::view('/change_pass', 'siswa/change_pass');
 });
@@ -55,8 +54,8 @@ Route::prefix('admin_jurusan')->group(function () {
     Route::view('/siswa', 'admin_jurusan/siswa');
     Route::view('/lokasi', 'admin_jurusan/lokasi');
     Route::view('/dokumen', 'admin_jurusan/dokumen');
-    Route::view('/penetapan', 'admin_jurusan/penetapan');
-    Route::view('/nilai', 'admin_jurusan/nilai');
+    Route::view('/pembimbing', 'admin_jurusan/pembimbing');
+    Route::view('/prakerin', 'admin_jurusan/prakerin');
     Route::view('/akun', 'admin_jurusan/akun');
     Route::view('/change_pass', 'admin_jurusan/change_pass');
 });

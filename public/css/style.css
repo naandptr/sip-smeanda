@@ -366,6 +366,17 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 120%; /* 19.2px */
 }
 
+.list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-item li {
+    font-size: 16px;
+    font-weight: 500;
+}
+
 .detail-card {
     display: flex;
     align-items: center;
@@ -718,6 +729,62 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     text-align: center;
 }
 
+/* Styling Status */
+.status-kegiatan {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--colors-white, #FFF);
+    color: var(--colors-white, #FFF);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.nonaktif {
+    background-color: red;
+}
+
+.aktif {
+    background-color: green;
+}
+
+/* Wrapper toggle */
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+}
+
+/* Tombol slider di dalam toggle */
+.toggle-slider {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+/* Aktif (Toggle Nyala) */
+.toggle-switch.active {
+    background-color: green;
+}
+
+.toggle-switch.active .toggle-slider {
+    transform: translateX(26px);
+}
+
+
 /* Bungkus tabel agar bisa discroll saat layar kecil */
 .table-wrapper {
     width: 100%;
@@ -822,6 +889,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .modal-form-value input, .modal-form-value select {
     width: 100%;
     border-radius: 4px;
+    padding: 8px 12px;
     border: 1px solid var(--colors-gray-400, #94A3B8);
     color: var(--Colors-gray-500, #64748B);
     font-family: "Nunito Sans";
@@ -1082,8 +1150,6 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     border-radius: 0;
 }
 
-
-
 .modal-view-header {
     display: flex;
     justify-content: end;
@@ -1100,6 +1166,12 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     display: flex;
     justify-content: space-between;
     align-items: start;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+}
+
+.modal-view-label {
+    color: var(--colors-primary-900, #0C4A6E);
 }
 
 .modal-view-value {
@@ -1112,7 +1184,15 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     padding: 8px 12px;
 }
 
+.model-view-value h5 {
+    color: var(--color-black, #000);
+}
 
+.modal-view-status {
+    display: flex;
+    justify-content: start;
+    width: 70%;
+}
 
 .desc-box {
     min-height: 100px;

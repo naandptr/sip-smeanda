@@ -38,6 +38,21 @@
             </div>
         </div>
     </div>
+    <div class="header">
+        <h1>Alur Prakerin</h1>
+    </div>
+    <div class="card-container">
+        <div class="card-item">
+            <ol class="list-item">
+                <li>Lampirkan CV dan portofolio di halaman dokumen</li>
+                <li>Datang tepat waktu dan mengikuti aturan DUDI</li>
+                <li>Mengerjakan tugas yang diberikan dengan penuh tanggung jawab</li>
+                <li>Jangan lupa mengisi absen datang dan pulang setiap hari</li>
+                <li>Mencatat kegiatan dalam jurnal prakerin setiap harinya</li>
+                <li>Lampirkan laporan dan sertifikat prakerin di halaman dokumen setelah masa prakerin berakhir</li>
+            </ol>
+        </div>
+    </div>
     
     @elseif ($role === 'guru')
         <div class="card-container">
@@ -51,7 +66,7 @@
             <div class="card-item">
                 <h4>Lokasi Prakerin</h4>
                 <div class="detail-card">
-                    <img src="img/nis-icon.png" alt="">
+                    <img src="img/lokasi-icon.png" alt="">
                     <h2>3 Lokasi Prakerin</h2>
                 </div>
             </div>
@@ -69,7 +84,7 @@
             <div class="card-item">
                 <h4>Lokasi Prakerin</h4>
                 <div class="detail-card">
-                    <img src="img/nis-icon.png" alt="">
+                    <img src="img/lokasi-icon.png" alt="">
                     <h2>10 Lokasi Prakerin</h2>
                 </div>
             </div>
@@ -78,10 +93,24 @@
     @elseif ($role === 'admin_utama')
         <div class="card-container">
             <div class="card-item">
-                <h4>Jumlah Admin Jurusan</h4>
+                <h4>User</h4>
                 <div class="detail-card">
-                    <img src="{{ asset('img/admin-icon.png') }}" alt="">
-                    <h2>5</h2>
+                    <img src="img/nis-icon.png" alt="">
+                    <h2>100 User</h2>
+                </div>
+            </div>
+            <div class="card-item">
+                <h4>Jurusan</h4>
+                <div class="detail-card">
+                    <img src="img/lokasi-icon.png" alt="">
+                    <h2>9 Jurusan</h2>
+                </div>
+            </div>
+            <div class="card-item">
+                <h4>Kelas</h4>
+                <div class="detail-card">
+                    <img src="img/lokasi-icon.png" alt="">
+                    <h2>20 Kelas</h2>
                 </div>
             </div>
         </div>

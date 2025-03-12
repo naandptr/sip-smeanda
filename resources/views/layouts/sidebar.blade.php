@@ -38,10 +38,6 @@
                     <img src="{{ asset('img/jurnal-icon.png') }}" alt="jurnal kegiatan" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Jurnal Kegiatan</h4>
                 </a>
-                <a href="{{ url('/siswa/nilai') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('siswa/nilai') ? 'active' : '' }}">
-                    <img src="{{ asset('img/nilai-icon.png') }}" alt="nilai" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Nilai</h4>
-                </a>
                 <a href="{{ url('/siswa/akun') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('siswa/akun') ? 'active' : '' }}">
                     <img src="{{ asset('img/akun-icon.png') }}" alt="akun" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Akun</h4>
@@ -76,13 +72,13 @@
                     <img src="{{ asset('img/dokumen-icon.png') }}" alt="dokumen" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Dokumen</h4>
                 </a>
-                <a href="{{ url('/admin_jurusan/penetapan') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_jurusan/penetapan') ? 'active' : '' }}">
-                    <img src="{{ asset('img/prakerin-icon.png') }}" alt="data penetapan" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Data Penetapan</h4>
+                <a href="{{ url('/admin_jurusan/pembimbing') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_jurusan/pembimbing') ? 'active' : '' }}">
+                    <img src="{{ asset('img/pembimbing-icon.png') }}" alt="penetapan pembimbing" height="20" />
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan Pembimbing</h4>
                 </a>
-                <a href="{{ url('/admin_jurusan/nilai') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_jurusan/nilai') ? 'active' : '' }}">
-                    <img src="{{ asset('img/nilai-icon.png') }}" alt="penilaian" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Penilaian</h4>
+                <a href="{{ url('/admin_jurusan/prakerin') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_jurusan/prakerin') ? 'active' : '' }}">
+                    <img src="{{ asset('img/prakerin-icon.png') }}" alt="penetapan siswa" height="20" />
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan Siswa</h4>
                 </a>
                 <a href="{{ url('/admin_jurusan/akun') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('admin_jurusan/akun') ? 'active' : '' }}">
                     <img src="{{ asset('img/akun-icon.png') }}" alt="akun" height="20" />

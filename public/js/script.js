@@ -435,4 +435,19 @@ $(document).ready(function () {
         pond = FilePond.create($(".filepond")[0]);
     });
 
+
+    // ==== Toggle Switch ====
+    $("#toggleStatus").click(function() {
+        $(this).toggleClass("active"); // Toggle class aktif/nonaktif
+        
+        let statusElement = $("#statusTA");
+        
+        if ($(this).hasClass("active")) {
+            statusElement.text("Aktif").removeClass("nonaktif").addClass("aktif");
+        } else {
+            statusElement.text("Nonaktif").removeClass("aktif").addClass("nonaktif");
+        }
+    });
 });
+
+

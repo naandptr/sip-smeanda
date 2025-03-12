@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Data Lokasi')
+@section('title', 'Tahun Ajaran')
 
 @section('content')
 <div class="data-container">
     <!-- Header -->
     <div class="header">
-        <h1>Data Lokasi</h1>
+        <h1>Tahun Ajaran</h1>
     </div>
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open btn-open-lokasi" data-bs-toggle="modal" data-bs-target="#modalLokasi">Tambah Lokasi</button>
-            <x-modal_lokasi></x-modal_lokasi>
+            <button class="btn-open btn-open-tahunajar" data-bs-toggle="modal" data-bs-target="#modalTahunAjar">+ Tahun Ajaran</button>
+            <x-modal_tahun_ajar></x-modal_tahun_ajar>
         </div>
         <div class="data-content">
             <div class="table-wrapper">
@@ -20,32 +20,30 @@
                     <thead class="data-header">
                         <tr>
                             <th>NO</th>
-                            <th>NAMA DUDI</th>
-                            <th>ALAMAT</th>
-                            <th>BIDANG USAHA</th>
-                            <th>KUOTA SISWA</th>
+                            <th>TAHUN AJARAN</th>
+                            <th>PERIODE MULAI</th>
+                            <th>PERIODE SELESAI</th>
+                            <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
                     <tbody class="data-body">
                         <tr>
                             <td>1</td>
-                            <td>PT. ABCD Animax Jaya</td>
-                            <td>Sipin, Jambi</td>
-                            <td>Animator</td>
-                            <td>5 Siswa</td>
+                            <td>2024/2025</td>
+                            <td>01/01/2025</td>
+                            <td>30/06/2025</td>
+                            <td><div id="statusTA" class="status-kegiatan nonaktif">Nonaktif</div></td>
                             <td class="btn-aksi">
-                                <!-- Tombol Lihat -->
-                                <button class="btn-open" data-bs-toggle="modal" data-bs-target="#modalDetailLokasi">
-                                    Detail
-                                </button>
-                                <x-modal_detail_lokasi></x-modal_detail_lokasi>
                                 <!-- Tombol Edit -->
-                                <button class="btn-icon btn-open-lokasi">
+                                <div id="toggleStatus" class="toggle-switch">
+                                    <div class="toggle-slider"></div>
+                                </div>
+                                <button class="btn-icon">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
                                 <!-- Tombol Hapus -->
-                                <button class="btn-icon btn-hapus-lokasi">
+                                <button class="btn-icon">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
@@ -53,7 +51,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">
-                            <td colspan="6">
+                            <td colspan="5">
                                 <div class="pagination">
                                     <span class="prev">Previous</span>
                                     <span class="page-info">1-3 of 3</span>
