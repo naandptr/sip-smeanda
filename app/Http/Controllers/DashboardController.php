@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\DudiJurusan;
+use App\Models\PenetapanPrakerin;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -41,6 +42,19 @@ class DashboardController extends Controller
                 $data['totalLokasiPrakerin'] = DudiJurusan::whereHas('siswa.kelas', function ($query) use ($user) {
                     $query->where('jurusan_id', $user->adminJurusan->jurusan_id);
                 })->count();
+                break;
+
+            case User::ROLE_GURU:
+                $pembimbing = $user->pembimbing;
+                // Total siswa bimbingan dari penetapan prakerin
+                $data['totalSiswaBimbingan'] = PenetapanPrakerin::whereHas('dudiJurusan', function ($query) use ($pembimbing) {
+                    $query->where('pembimbing_id', $pembimbing->id);
+                })->count();
+            
+                $data['totalLokasiPrakerin'] = DudiJurusan::where('pembimbing_id', $pembimbing->id)
+                    ->distinct('id')
+                    ->count('id');
+
                 break;
                 
             default:

@@ -63,14 +63,14 @@
                 <h4>Siswa Bimbingan</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
-                    <h2>10 Siswa</h2>
+                    <h2>{{ $totalSiswaBimbingan }}  Siswa</h2>
                 </div>
             </div>
             <div class="card-item">
                 <h4>Lokasi Prakerin</h4>
                 <div class="detail-card">
                     <img src="img/lokasi-icon.png" alt="">
-                    <h2>3 Lokasi Prakerin</h2>
+                    <h2>{{ $totalLokasiPrakerin }} Lokasi Prakerin</h2>
                 </div>
             </div>
         </div>
