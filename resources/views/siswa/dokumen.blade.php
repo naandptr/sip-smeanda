@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'siswa/dokumen'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Dokumen Prakerin')
@@ -96,3 +100,7 @@
     </div>
 </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/siswa/dokumen.js') }}"></script>
+@endpush

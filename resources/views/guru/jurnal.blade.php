@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'guru/jurnal'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Jurnal Kegiatan Siswa')
@@ -19,8 +23,7 @@
                         <th>NIS</th>
                         <th>SISWA</th>
                         <th>KELAS</th>
-                        <th>TANGGAL</th>
-                        <th>STATUS</th>
+                        <th>CAPAIAN</th>
                         <th style="width: 250px;">AKSI</th>
                     </tr>
                 </thead>
@@ -29,29 +32,15 @@
                         <td>0031652858</td>
                         <td>Arslan Allen</td>
                         <td>XII Animasi I</td>
-                        <td>20/08/2025</td>
-                        <td><div class="status-badge">REVISI</div></td>
-                        <td class="btn-aksi">
-                            <!-- Tombol Lihat -->
-                            <button type="button" class="btn-icon btn-open-jurnal" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal">
-                                <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
-                            </button>
-                            <x-modal_detail_jurnal></x-modal_detail_jurnal>
-
-                            <!-- Tombol Terima -->
-                            <button type="button" class="btn-open " id="btnAcc">Terima
-                            </button>
-
-                            <!-- Tombol Tolak -->
-                            <button type="button" class="btn-open" id="btnReject" data-bs-toggle="modal" data-bs-target="#modalValidasiJurnal">Tolak
-                            </button>
-                            <x-modal_validasi></x-modal_validasi>
+                        <td>0/1</td>
+                        <td class="data-aksi">
+                            <a href="{{ url('/guru/detail_jurnal') }}"><button class="btn-aksi">Detail</button></a>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="data-footer">
-                        <td colspan="6">
+                        <td colspan="5">
                             <div class="pagination">
                                 <span class="prev">Previous</span>
                                 <span class="page-info">1-3 of 3</span>
@@ -65,3 +54,7 @@
     </div>
 </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/guru/jurnal.js') }}"></script>
+@endpush

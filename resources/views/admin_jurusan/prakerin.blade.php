@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'admin_jurusan/prakerin'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Penetapan Siswa')
@@ -21,7 +25,7 @@
                         <tr>
                             <th>NO</th>
                             <th>NAMA</th>
-                            <th>NAMA DUDI</th>
+                            <th>PENETAPAN DUDI</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -30,7 +34,7 @@
                             <td>1</td>
                             <td>Arslan Allen</td>
                             <td>PT. ABCD Animax Jaya</td>
-                            <td class="btn-aksi">
+                            <td class="data-aksi">
                                 <!-- Tombol Lihat -->
                                 <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
@@ -38,7 +42,7 @@
                                 <x-modal_detail_prakerin></x-modal_detail_prakerin>
 
                                 <!-- Tombol Edit -->
-                                <button class="btn-icon">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalPrakerin">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
                                 <!-- Tombol Hapus -->
@@ -65,3 +69,7 @@
     </div>
 </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/admin_jurusan/prakerin.js') }}"></script>
+@endpush

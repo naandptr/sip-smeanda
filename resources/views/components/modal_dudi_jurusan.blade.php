@@ -1,8 +1,19 @@
-<div class="modal fade" id="modalPembimbing" tabindex="-1" aria-labelledby="modalPembimbing" aria-hidden="true">
+@props(['dudi', 'pembimbing' 'tahunAjar'])
+<div class="modal fade" id="modalDudiJurusan" tabindex="-1" aria-labelledby="modalDudiJurusan" aria-hidden="true">
     <div class="modal-dialog custom-modal">
         <div class="modal-content">
-            <form action="/pembimbing" method="POST" id="formPembimbing">
+            <form action="/dudi" method="POST" id="formDudiJurusan">
                 <div class="modal-form-body">
+                    <div class="modal-form-group">
+                        <label for="lokasiDUDI">Penetapan DUDI<span class="required-label">*</span></label>
+                        <div class="modal-form-value">
+                            <select id="lokasiDUDI" name="lokasiDUDI" required>
+                                <option>PT. ABCD Animax Jaya</option>
+                                <option>TVRI Jambi</option>
+                                <option>Yadi Percetakan</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="modal-form-group">
                         <label for="namaPembimbing">Nama Pembimbing<span class="required-label">*</span></label>
                         <div class="modal-form-value">
@@ -10,16 +21,6 @@
                                 <option>Siti Menenun</option>
                                 <option>Mulyono</option>
                                 <option>Panjar Granowo</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-form-group">
-                        <label for="lokasiDUDI">Lokasi DUDI<span class="required-label">*</span></label>
-                        <div class="modal-form-value">
-                            <select id="lokasiDUDI" name="lokasiDUDI" required>
-                                <option>PT. ABCD Animax Jaya</option>
-                                <option>TVRI Jambi</option>
-                                <option>Yadi Percetakan</option>
                             </select>
                         </div>
                     </div>

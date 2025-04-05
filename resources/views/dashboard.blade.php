@@ -7,11 +7,13 @@
     <h1>Selamat Datang</h1>
 
     @php
-        $role = session('role', Auth::user()->role ?? 'siswa');
+        use App\Models\User;
+        $role = Auth::user()->role ?? User::ROLE_SISWA; // Gunakan konstanta default
     @endphp
 
 
-    @if ($role === 'siswa')
+    {{-- Dashboard Siswa --}}
+    @if ($role === User::ROLE_SISWA)
     <div class="card-container">
         <div class="card-item">
             <h4>Nomor Induk Siswa</h4>
@@ -54,7 +56,8 @@
         </div>
     </div>
     
-    @elseif ($role === 'guru')
+    {{-- Dashboard Guru --}}
+    @elseif ($role === User::ROLE_GURU)
         <div class="card-container">
             <div class="card-item">
                 <h4>Siswa Bimbingan</h4>
@@ -72,56 +75,50 @@
             </div>
         </div>
 
-    @elseif ($role === 'admin_jurusan')
+    {{-- Dashboard Admin Jurusan --}}
+    @elseif ($role === User::ROLE_ADMIN_JURUSAN)
         <div class="card-container">
             <div class="card-item">
                 <h4>Siswa Jurusan</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
-                    <h2>60 Siswa</h2>
+                    <h2>{{ $totalSiswa }} Siswa</h2>
                 </div>
             </div>
             <div class="card-item">
                 <h4>Lokasi Prakerin</h4>
                 <div class="detail-card">
                     <img src="img/lokasi-icon.png" alt="">
-                    <h2>10 Lokasi Prakerin</h2>
+                    <h2>{{ $totalLokasiPrakerin }} Lokasi Prakerin</h2>
                 </div>
             </div>
         </div>
 
-    @elseif ($role === 'admin_utama')
+    {{-- Dashboard Admin Utama --}}
+    @elseif ($role === User::ROLE_ADMIN_UTAMA)
         <div class="card-container">
             <div class="card-item">
                 <h4>User</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
-                    <h2>100 User</h2>
+                    <h2>{{ $totalUsers }} User</h2>
                 </div>
             </div>
             <div class="card-item">
                 <h4>Jurusan</h4>
                 <div class="detail-card">
                     <img src="img/lokasi-icon.png" alt="">
-                    <h2>9 Jurusan</h2>
+                    <h2>{{ $totalJurusan }} Jurusan</h2>
                 </div>
             </div>
             <div class="card-item">
                 <h4>Kelas</h4>
                 <div class="detail-card">
                     <img src="img/lokasi-icon.png" alt="">
-                    <h2>20 Kelas</h2>
+                    <h2>{{ $totalKelas }} Kelas</h2>
                 </div>
             </div>
         </div>
     @endif
-
-
-    <hr>
-    <p>Role uji coba:</p>
-    <a href="/switch-role/siswa">Siswa</a>
-    <a href="/switch-role/guru">Guru</a>
-    <a href="/switch-role/admin_jurusan">Admin Jurusan</a>
-    <a href="/switch-role/admin_utama">Admin Utama</a>
 </div>
 @endsection

@@ -28,10 +28,10 @@
                             <td>0031652858</td>
                             <td>Arslan Allen</td>
                             <td>XII Animasi I</td>
-                            <td class="btn-aksi">
+                            <td class="data-aksi">
                                 <!-- Tombol Lihat -->
-                                <button type="button" class="btn-open" data-bs-toggle="modal" data-bs-target="#modalDetailSiswa">
-                                    Detail
+                                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswa">
+                                    <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
                                 <x-modal_detail_siswa></x-modal_detail_siswa>
                             </td>

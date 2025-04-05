@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'siswa/jurnal'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Jurnal Kegiatan')
@@ -12,7 +16,7 @@
     <div class="jurnal-section data-section">
         <!-- Tombol Buat Jurnal -->
         <div class="jurnal-action data-action">
-            <button type="button" class="btn-open btn-open-jurnal" data-bs-toggle="modal" data-bs-target="#modalJurnal">Buat Jurnal</button>
+            <button type="button" class="btn-open" id="tambahJurnal" data-bs-toggle="modal" data-bs-target="#modalJurnal">Buat Jurnal</button>
             <x-modal_jurnal></x-modal_jurnal>
         </div>
 
@@ -26,7 +30,7 @@
                             <th>TANGGAL</th>
                             <th>DESKRIPSI</th>
                             <th>STATUS</th>
-                            <th>KOMENTAR</th>
+                            <th>CATATAN</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -35,9 +39,9 @@
                             <td>1</td>
                             <td>13/02/2025</td>
                             <td>Skibidi</td>
-                            <td><div class="status-badge">REVISI</div></td>
-                            <td>Terdapat typo, perbaiki.</td>
-                            <td class="btn-aksi">
+                            <td><div class="status-badge">MENUNGGU</div></td>
+                            <td>-</td>
+                            <td class="data-aksi">
                                 <!-- Tombol Lihat -->
                                 <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
@@ -59,7 +63,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="jurnal-footer data-footer">
-                            <td colspan="5">
+                            <td colspan="6">
                                 <div class="pagination">
                                     <span class="prev">Previous</span>
                                     <span class="page-info">1-3 of 3</span>
@@ -74,3 +78,7 @@
     </div>
 </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/siswa/jurnal.js') }}"></script>
+@endpush

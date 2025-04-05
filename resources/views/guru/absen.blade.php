@@ -18,10 +18,6 @@
                         <th>NIS</th>
                         <th>SISWA</th>
                         <th>KELAS</th>
-                        <th>TANGGAL</th>
-                        <th>JENIS ABSEN</th>
-                        <th>STATUS</th>
-                        <th>KETERANGAN</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -30,21 +26,14 @@
                         <td>0031652858</td>
                         <td>Arslan Allen</td>
                         <td>XII Animasi I</td>
-                        <td>20/05/2025</td>
-                        <td>Absen Datang</td>
-                        <td>Hadir</td>
-                        <td>-</td>
-                        <td class="btn-aksi">
-                            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailAbsen">
-                                <img src="{{ asset('img/show-icon.png') }}" alt="">
-                            </button>
-                            <x-modal_detail_absen></x-modal_detail_absen>
+                        <td class="data-aksi">
+                            <a href="{{ url('/guru/detail_absen') }}"><button class="btn-aksi">Detail</button></a>
                         </td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr class="data-footer">
-                        <td colspan="8">
+                        <td colspan="4">
                             <div class="pagination">
                                 <span class="prev">Previous</span>
                                 <span class="page-info">1-3 of 3</span>

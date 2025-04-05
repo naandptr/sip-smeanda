@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'admin_utama/jurusan'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Data Jurusan')
@@ -11,7 +15,7 @@
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open btn-open-jurusan" data-bs-toggle="modal" data-bs-target="#modalJurusan">Tambah Jurusan</button>
+            <button class="btn-open" id="tambahJurusan" data-bs-toggle="modal" data-bs-target="#modalJurusan">Tambah Jurusan</button>
             <x-modal_jurusan></x-modal_jurusan>
         </div>
         <div class="data-content">
@@ -27,22 +31,24 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach($jurusan as $index => $data)
                         <tr>
-                            <td>1</td>
-                            <td>Animasi</td>
-                            <td>Animasi</td>
-                            <td>Aktif</td>
-                            <td class="btn-aksi">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $data->kode_jurusan }}</td>
+                            <td>{{ $data->nama_jurusan }}</td>
+                            <td>{{ $data->status }}</td>
+                            <td class="data-aksi">
                                 <!-- Tombol Edit -->
-                                <button class="btn-icon">
+                                <button class="btn-icon editJurusan" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
                                 <!-- Tombol Hapus -->
-                                <button class="btn-icon">
+                                <button class="btn-icon deleteJurusan" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">
@@ -61,3 +67,5 @@
     </div>
 </div>
 @endsection
+
+

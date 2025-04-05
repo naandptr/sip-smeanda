@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'admin_utama/user'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Data User')
@@ -11,8 +15,8 @@
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open btn-open-user" data-bs-toggle="modal" data-bs-target="#modalUser">Tambah User</button>
-            <x-modal_user></x-modal_user>
+            <button class="btn-open" id="tambahUser" data-bs-toggle="modal" data-bs-target="#modalUser">Tambah User</button>
+            <x-modal_user :jurusans="$jurusans" :kelas="$kelas" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">
@@ -27,28 +31,30 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach ($users as $index => $user)
                         <tr>
-                            <td>1</td>
-                            <td>Arslan Allen</td>
-                            <td>Siswa</td>
-                            <td>Aktif</td>
-                            <td class="btn-aksi">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $user['username'] }}</td>
+                            <td>{{ $user['role'] }}</td>
+                            <td>{{ $user['status'] }}</td>
+                            <td class="data-aksi">
                                 <!-- Tombol Lihat -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailUser">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailUser-{{ $user['id'] }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <x-modal_detail_user></x-modal_detail_user>
-
+                                <x-modal_detail_user :user="$user" :modalId="'modalDetailUser-' . $user['id']" />
+                          
                                 <!-- Tombol Edit -->
-                                <button class="btn-icon">
+                                <button class="btn-icon editUser" data-id="{{ $user['id'] }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
                                 <!-- Tombol Hapus -->
-                                <button class="btn-icon">
+                                <button class="btn-icon deleteUser" data-id="{{ $user['id'] }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">

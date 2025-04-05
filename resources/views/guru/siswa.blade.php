@@ -28,7 +28,7 @@
                         <td>Arslan Allen</td>
                         <td>XII Animasi I</td>
                         <td><div class="status-badge">SELESAI</div></td>
-                        <td>
+                        <td class="data-aksi">
                             <!-- Tombol Lihat -->
                             <button type="button" class="btn-icon btn-open-siswa" data-bs-toggle="modal" data-bs-target="#modalDetailSiswa">
                                 <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">

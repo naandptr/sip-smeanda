@@ -30,22 +30,22 @@
                             <td>Arslan Allen</td>
                             <td>XII Animasi I</td>
                             <td>
-                                <button class="btn-open">
+                                <button class="btn-aksi">
                                     Unduh
                                 </button>
                             </td>
                             <td>
-                                <button class="btn-open">
+                                <button class="btn-aksi">
                                     Unduh
                                 </button>
                             </td>
                             <td>
-                                <button class="btn-open">
+                                <button class="btn-aksi">
                                     Unduh
                                 </button>
                             </td>
                             <td>
-                                <button class="btn-open">
+                                <button class="btn-aksi">
                                     Unduh
                                 </button>
                             </td>

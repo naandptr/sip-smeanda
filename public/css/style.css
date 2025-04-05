@@ -817,7 +817,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 /* Kolom aksi tidak terlalu lebar */
-.btn-aksi {
+.data-aksi {
     display: flex;
     gap: 5px;
     flex-wrap: wrap; /* Biar tombol turun ke bawah kalau sempit */
@@ -848,7 +848,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     border-radius: 0;
 }
 
-.modal-form-body {
+.modal-form-body, .extra-fields {
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -877,6 +877,11 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     width: 70%;
 }
 
+.modal-form-value textarea {
+    width: 100%;
+    max-height: 60px;
+}
+
 #deskripsiView {
     width: 100%;
     min-height: 150px;
@@ -886,7 +891,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     resize: vertical;
 }
 
-.modal-form-value input, .modal-form-value select {
+.modal-form-value input, .modal-form-value select, .modal-form-value .password-default {
     width: 100%;
     border-radius: 4px;
     padding: 8px 12px;
@@ -899,10 +904,6 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 20px; /* 142.857% */
 }
 
-.btn-aksi {
-    display: flex;
-    align-items: center;
-}
 
 .btn-icon {
     background: none; /* Hilangkan background */
@@ -921,6 +922,16 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 .btn-icon:focus {
     outline: none; /* Hilangkan outline saat diklik */
+}
+
+.btn-aksi {
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: var(--colors-white, #FFF);
+    border: 1px solid var(--colors-primary-50, #F0F9FF);
+    background: var(--colors-primary-500, #0EA5E9);
+    font-size: 14px;
+    font-weight: 800;
 }
 
 .modal-absen-footer, .modal-form-footer {
@@ -1004,14 +1015,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 
 /* Nilai dan Akun */
-.nilai, .akun {
-    display: flex;
-    flex-direction: column;
-    padding: 34px 60px;
-    gap: 20px;
-}
-
-.info-nilai {
+.nilai-form-container {
     display: flex;
     flex-direction: column;
     padding: 16px 24px;
@@ -1022,17 +1026,66 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
 }
 
-.item-nilai {
+.nilai-form-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.nilai-header-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 0px;
+}
+.nilai-header-value {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
 }
 
-.detail-nilai {
-    width: 70%;
-    padding: 10px 6px;
+.nilai-header-value select, .nilai-header-value input {
+    width: 100%;
     border-radius: 4px;
-    background: var(--colors-gray-200, #E2E8F0);
+    border: 1px solid var(--colors-gray-400, #94A3B8);
+    background: var(--colors-gray-100, #F1F5F9);
+}
+
+.nilai-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.nilai-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.catatan-nilai {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 4px;
+}
+
+.catatan-nilai label {
+    color: var(--color-black, #000);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.catatan-nilai textarea {
+    border-radius: 4px;
+    height: 40px;
+    border: 1px solid var(--colors-gray-400, #94A3B8);
+    background: var(--colors-gray-100, #F1F5F9);
+}
+
+.nilai-form-footer {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
 }
 
 .info-akun {
@@ -1210,7 +1263,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     width: 100%;
 }
 
-.modal-form-value #komentar {
+.modal-form-value #catatan {
     height: 100%;
     width: 100%;
     border-radius: 4px;

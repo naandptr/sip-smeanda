@@ -1,24 +1,20 @@
 @php
-    $role = session('role', 'siswa'); // Default ke 'siswa' jika belum ada session
-    $nama = '';
+    use Illuminate\Support\Facades\Auth;
+    use App\Models\User;
 
-    // Menentukan nama berdasarkan role
-    switch ($role) {
-        case 'siswa':
-            $nama = 'Arslan Allen';
-            break;
-        case 'guru':
-            $nama = 'Siti Menenun';
-            break;
-        case 'admin_jurusan':
-            $nama = 'Admin Animasi';
-            break;
-        case 'admin_utama':
-            $nama = 'Admin Utama';
-            break;
-        default:
-            $nama = 'User';
-            break;
+    $user = Auth::user();
+    $nama = 'User'; // Default jika tidak ada user yang login
+
+    if ($user) {
+        if ($user->role === User::ROLE_ADMIN_UTAMA) {
+            $nama = $user->username; 
+        } elseif ($user->role === 'Siswa') {
+            $nama = $user->siswa->nama ?? 'User';
+        } elseif ($user->role === 'Guru') {
+            $nama = $user->pembimbing->nama ?? 'User';
+        } elseif ($user->role === 'Admin Jurusan') {
+            $nama = $user->adminJurusan->nama ?? 'User';
+        }
     }
 @endphp
 
@@ -43,7 +39,14 @@
                 loading="lazy"
             />
             <h5 class="ms-2 mb-0">{{ $nama }}</h5>
-            <button class="btn-logout">Logout</button>
+            {{-- <button class="btn-logout">Logout</button> --}}
+            
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>

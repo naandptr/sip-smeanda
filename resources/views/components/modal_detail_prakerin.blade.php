@@ -33,6 +33,12 @@
                         </div>
                     </div>
                     <div class="modal-view-item">
+                        <h5 class="modal-view-label">Tahun Ajaran</h5>
+                        <div class="modal-view-value">
+                            <h5>2024/2025</h5>
+                        </div>
+                    </div>
+                    <div class="modal-view-item">
                         <h5 class="modal-view-label">Tanggal Mulai</h5>
                         <div class="modal-view-value">
                             <h5>20/01/2025</h5>

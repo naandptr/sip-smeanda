@@ -14,12 +14,22 @@
                         </div>
                     </div>
                     <div class="modal-form-group">
-                        <label for="lokasiDUDI">Lokasi DUDI<span class="required-label">*</span></label>
+                        <label for="dudiSiswa">Penetapan DUDI<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <select id="lokasiDUDI" name="lokasiDUDI" required>
+                            <select id="dudiSiswa" name="dudiSiswa" required>
                                 <option>PT. ABCD Animax Jaya</option>
                                 <option>TVRI Jambi</option>
                                 <option>Yadi Percetakan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-form-group">
+                        <label for="thnAjarPrakerin">Tahun Ajaran<span class="required-label">*</span></label>
+                        <div class="modal-form-value">
+                            <select id="thnAjarPrakerin" name="thnAjarPrakerin" required>
+                                <option>2024/2025</option>
+                                <option>2023/2024</option>
+                                <option>2022/2023</option>
                             </select>
                         </div>
                     </div>

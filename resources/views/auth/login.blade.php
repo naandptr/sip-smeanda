@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'auth/login'; 
+@endphp
+
 @extends('layouts.auth')
 
 @section('title', 'Login')
@@ -16,8 +20,15 @@
                 <h1>MASUK</h1>
                 <h4>Masuk ke akunmu untuk mengakses kegiatan prakerin</h4>
             </div>
+
+            @if (session('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
     
-            <form action="/login" method="POST" class="auth-form" id="loginForm">
+            <form action="{{ route('login') }}" method="POST" class="auth-form" id="loginForm">
+                @csrf
                 <div class="auth-group">
                     <div class="auth-field">
                         <label for="username">Username</label>
@@ -33,7 +44,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit">Login</button>
+                    <button type="submit" class="btn-submit" id="submitLogin">Login</button>
                 </div>
             </form>
         </div>
@@ -45,3 +56,7 @@
     </div>
 </div>
 @endsection
+
+{{-- @push('page_scripts')
+    <script src="{{ asset('js/auth/login.js') }}"></script>
+@endpush --}}

@@ -15,7 +15,6 @@
                             <textarea id="summernote" name="content" required></textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-form-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>

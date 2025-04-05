@@ -13,14 +13,14 @@
                 </div>
                 <div class="modal-view-body">
                     @if ($role === 'guru')
-                    <div class="modal-view-item">
-                        <h5 class="modal-view-label">Nama Lengkap</h5>
-                        <div class="modal-view-value">
-                            <h5>Arslan Allen</h5>
+                        <div class="modal-view-item">
+                            <h5 class="modal-view-label">Nama Lengkap</h5>
+                            <div class="modal-view-value">
+                                <h5>Arslan Allen</h5>
+                            </div>
                         </div>
-                    </div>
                     @endif
-                    
+
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Tanggal</h5>
                         <div class="modal-view-value">
@@ -31,6 +31,12 @@
                         <h5 class="modal-view-label">Deskripsi Kegiatan</h5>
                         <div class="modal-view-value desc-box">
                             <h5>Kegiatan yang dilaksanakan hari ini adalah...</h5>
+                        </div>
+                    </div>
+                    <div class="modal-view-item">
+                        <h5 class="modal-view-label">Catatan Pembimbing</h5>
+                        <div class="modal-view-value desc-box">
+                            <h5>-</h5>
                         </div>
                     </div>
                 </div>

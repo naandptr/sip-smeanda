@@ -78,33 +78,21 @@
                         </div>
                     </div>
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">CV</h5>
+                        <h5 class="modal-view-label">Portofolio</h5>
                         <div class="modal-view-status">
                             <div class="status-badge">SELESAI</div>
                         </div>
                     </div>
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">CV</h5>
+                        <h5 class="modal-view-label">Laporan Akhir</h5>
                         <div class="modal-view-status">
                             <div class="status-badge">SELESAI</div>
                         </div>
                     </div>
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">CV</h5>
+                        <h5 class="modal-view-label">Sertifikat</h5>
                         <div class="modal-view-status">
                             <div class="status-badge">SELESAI</div>
-                        </div>
-                    </div>
-                    <div class="modal-view-item">
-                        <h5 class="modal-view-label">Nilai</h5>
-                        <div class="modal-view-value">
-                            <h5>0</h5>
-                        </div>
-                    </div>
-                    <div class="modal-view-item">
-                        <h5 class="modal-view-label">Status Prakerin</h5>
-                        <div class="modal-view-value">
-                            <h5>Prakerin</h5>
                         </div>
                     </div>
                 </div>

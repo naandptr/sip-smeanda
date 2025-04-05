@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'admin_utama/kelas'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Data Kelas')
@@ -11,8 +15,8 @@
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open btn-open-kelas" data-bs-toggle="modal" data-bs-target="#modalKelas">Tambah Kelas</button>
-            <x-modal_kelas></x-modal_kelas>
+            <button class="btn-open" id="tambahKelas" data-bs-toggle="modal" data-bs-target="#modalKelas">Tambah Kelas</button>
+            <x-modal_kelas :jurusan="$jurusan" :tahunAjar="$tahunAjar" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">
@@ -27,23 +31,23 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach($kelas as $index => $data)
                         <tr>
-                            <td>1</td>
-                            <td>XII Animasi 1</td>
-                            <td>Animasi</td>
-                            <td>2024/2025</td>
-                            <td class="btn-aksi">
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $data->nama_kelas }}</td>
+                            <td>{{ $data->jurusan->nama_jurusan }}</td>
+                            <td>{{ $data->tahunAjar->tahun_ajaran }}</td>
+                            <td class="data-aksi">
+                                <button class="btn-icon editKelas" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon">
+                                <button class="btn-icon deleteKelas" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
-                    </tbody>
+                        @endforeach
+                    </tbody>                    
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">

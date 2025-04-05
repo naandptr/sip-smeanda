@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'siswa/absen'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Absensi Harian')
@@ -12,7 +16,7 @@
     <div class="absen-section data-section">
         <!-- Tombol Buat Absen -->
         <div class="absen-action data-action">
-            <button class="btn-open btn-open-absen" data-bs-toggle="modal" data-bs-target="#modalAbsen">Buat Absen</button>
+            <button class="btn-open" id="tambahAbsen" data-bs-toggle="modal" data-bs-target="#modalAbsen">Buat Absen</button>
             <x-modal_absen></x-modal_absen>
         </div>
 
@@ -37,7 +41,7 @@
                             <td>Absen Datang</td>
                             <td>Hadir</td>
                             <td>-</td>
-                            <td class="btn-aksi">
+                            <td class="data-aksi">
                                 <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailAbsen">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="">
                                 </button>
@@ -62,3 +66,7 @@
     </div>
 </div>
 @endsection
+
+@push('page_scripts')
+    <script src="{{ asset('js/siswa/absen.js') }}"></script>
+@endpush

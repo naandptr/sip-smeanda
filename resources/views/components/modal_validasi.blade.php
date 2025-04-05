@@ -7,7 +7,7 @@
                 </div>
                 <div class="modal-form-body">
                     <div class="modal-form-value validasi-value">
-                        <textarea name="komentar" id="komentar" cols="30" rows="10" placeholder="Jelaskan alasan..."></textarea>
+                        <textarea name="catatan" id="catatan" cols="30" rows="10" placeholder="Masukkan catatan..."></textarea>
                     </div>
                     <div class="modal-form-footer">
                         <button type="button" class="btn-cancel" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

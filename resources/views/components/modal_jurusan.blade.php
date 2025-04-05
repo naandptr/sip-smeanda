@@ -1,7 +1,8 @@
 <div class="modal fade" id="modalJurusan" tabindex="-1" aria-labelledby="modalJurusan" aria-hidden="true">
     <div class="modal-dialog custom-modal">
         <div class="modal-content">
-            <form action="/jurusan" method="POST" id="formJurusan">
+            <form id="formJurusan" method="POST" action="{{ isset($jurusan) ? route('jurusan.update', $jurusan->id) : route('jurusan.store') }}">
+                @csrf
                 <div class="modal-form-body">
                     <div class="modal-form-group">
                         <label for="kodeJurusan">Kode Jurusan<span class="required-label">*</span></label>
@@ -27,7 +28,8 @@
                 </div>
                 <div class="modal-form-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="submit" class="btn-submit" id="submitJurusan">Simpan</button>
+                    <button type="submit" class="btn-submit" id="updateJurusan">Simpan</button>
                 </div>
             </form>
         </div>
