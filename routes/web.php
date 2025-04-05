@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Route untuk Admin Jurusan
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group(function () {
-    Route::view('/siswa-jurusan', 'admin_jurusan.siswa')->name('jurusan.siswa');
+    Route::get('/siswa-jurusan', [AdminJurusan\SiswaController::class, 'index'])->name('jurusan.siswa');
     Route::view('/dokumen-siswa', 'admin_jurusan.dokumen')->name('jurusan.dokumen');
 
     // Route CRUD Dudi Jurusan
@@ -44,7 +44,13 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
     Route::patch('/kelola-dudi-jurusan/{id}/update', [AdminJurusan\DudiJurusanController::class, 'update'])->name('dudi-jurusan.update');
     Route::delete('/kelola-dudi-jurusan/{id}/delete', [AdminJurusan\DudiJurusanController::class, 'destroy'])->name('dudi-jurusan.destroy');
 
-    Route::view('/kelola-prakerin', 'admin_jurusan.prakerin')->name('jurusan.prakerin');
+    // Route CRUD Prakerin
+    Route::get('/kelola-prakerin', [AdminJurusan\PenetapanPrakerinController::class, 'index'])->name('jurusan.prakerin');
+    Route::post('/kelola-prakerin', [AdminJurusan\PenetapanPrakerinController::class, 'store'])->name('prakerin.store');
+    Route::get('/kelola-prakerin/{id}/edit', [AdminJurusan\PenetapanPrakerinController::class, 'edit'])->name('prakerin.edit');
+    Route::patch('/kelola-prakerin/{id}/update', [AdminJurusan\PenetapanPrakerinController::class, 'update'])->name('prakerin.update');
+    Route::delete('/kelola-prakerin/{id}/delete', [AdminJurusan\PenetapanPrakerinController::class, 'destroy'])->name('prakerin.destroy');
+
     Route::view('/akun-admin', 'admin_jurusan.akun')->name('jurusan.akun');
 });
 

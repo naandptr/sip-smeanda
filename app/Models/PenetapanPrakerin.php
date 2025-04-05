@@ -20,6 +20,11 @@ class PenetapanPrakerin extends Model
         'status'
     ];
 
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
+
     public function dudiJurusan()
     {
         return $this->belongsTo(DudiJurusan::class, 'dudi_jurusan_id');
@@ -28,5 +33,20 @@ class PenetapanPrakerin extends Model
     public function tahunAjar()
     {
         return $this->belongsTo(TahunAjar::class, 'tahun_ajar_id');
+    }
+
+    public function absen()
+    {
+        return $this->hasMany(Absen::class, 'penetapan_prakerin_id');
+    }
+
+    public function jurnal()
+    {
+        return $this->hasMany(Jurnal::class, 'penetapan_prakerin_id');
+    }
+
+    public function penilaian()
+    {
+        return $this->hasMany(Penilaian::class, 'penetapan_prakerin_id');
     }
 }

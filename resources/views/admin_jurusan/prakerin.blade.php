@@ -15,8 +15,8 @@
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open btn-open-prakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">Tambah Penetapan</button>
-            <x-modal_prakerin></x-modal_prakerin>
+            <button class="btn-open" id="tambahPrakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">Tambah Penetapan</button>
+            <x-modal_prakerin :siswa="$siswa" :dudiJurusan="$dudiJurusan" :tahunAjar="$tahunAjar" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">
@@ -30,27 +30,27 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach ($penetapanPrakerin as $index => $data)
                         <tr>
-                            <td>1</td>
-                            <td>Arslan Allen</td>
-                            <td>PT. ABCD Animax Jaya</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $data->siswa->nama }}</td>
+                            <td>{{ $data->dudiJurusan->dudi->nama_dudi ?? '-' }}</td>
                             <td class="data-aksi">
                                 <!-- Tombol Lihat -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin-{{ $data->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <x-modal_detail_prakerin></x-modal_detail_prakerin>
+                                <x-modal_detail_prakerin :penetapanPrakerin="$data" :modalId="'modalDetailPrakerin-' .$data->id" />
 
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalPrakerin">
+                                <button class="btn-icon editPrakerin" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon">
+                                <button class="btn-icon deletePrakerin" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">

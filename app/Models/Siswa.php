@@ -50,6 +50,11 @@ class Siswa extends Authenticatable
         return $this->hasMany(PenetapanPrakerin::class, 'siswa_id', 'id');
     }
 
+    public function penetapanPrakerinTerbaru()
+    {
+        return $this->hasOne(PenetapanPrakerin::class)->latest('tanggal_mulai');
+    }
+
     // Siswa bisa memiliki lebih dari satu dokumen
     public function dokumen()
     {

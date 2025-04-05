@@ -16,26 +16,29 @@
                     <thead class="data-header">
                         <tr>
                             <th>NO</th>
-                            <th>NIS</th>
+                            <th>NISN</th>
                             <th>SISWA</th>
                             <th>KELAS</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach ($siswa as $index => $s)
                         <tr>
-                            <td>1</td>
-                            <td>0031652858</td>
-                            <td>Arslan Allen</td>
-                            <td>XII Animasi I</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $s->nisn }}</td>
+                            <td>{{ $s->nama }}</td>
+                            <td>{{ $s->kelas->nama_kelas }}</td>
                             <td class="data-aksi">
-                                <!-- Tombol Lihat -->
-                                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswa">
+                                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswaJurusan-{{ $s->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <x-modal_detail_siswa></x-modal_detail_siswa>
+                                <x-modal_detail_siswa_jurusan :siswa="$s" 
+                                :penetapan="$s->penetapanPrakerin->first()"
+                                :modalId="'modalDetailSiswaJurusan-' . $s->id" />
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">

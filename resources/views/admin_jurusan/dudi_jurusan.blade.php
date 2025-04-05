@@ -33,7 +33,7 @@
                     <tbody class="data-body">
                         @foreach($dudiJurusan as $index => $data)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->pembimbing->nama }}</td>
                             <td>{{ $data->dudi->nama_dudi }}</td>
                             <td>{{ $data->tahunAjar->tahun_ajaran }}</td>

@@ -14,14 +14,25 @@ use App\Models\Pembimbing;
 class DudiJurusanController extends Controller
 {
     public function index()
-    {
-        $dudiJurusan = DudiJurusan::orderBy('dudi_id', 'asc')->get();
-        $dudi = Dudi::all();
-        $jurusan = Jurusan::where('status', 'aktif')->get();
-        $tahunAjar = TahunAjar::where('status', 'aktif')->get();
-        $pembimbing = Pembimbing::all();
-        return view('admin_jurusan.dudi_jurusan', compact('dudiJurusan', 'dudi', 'jurusan', 'tahunAjar', 'pembimbing'));
-    }
+{
+    $jurusanId = Auth::user()->adminJurusan->jurusan_id;
+
+    $dudiJurusan = DudiJurusan::with(['pembimbing', 'tahunAjar'])
+        ->where('jurusan_id', $jurusanId)
+        ->get()
+        ->sortBy([
+            fn($a, $b) => strcmp($a->pembimbing->nama ?? '', $b->pembimbing->nama ?? ''),
+            fn($a, $b) => strcmp($a->tahunAjar->tahun ?? '', $b->tahunAjar->tahun ?? ''),
+            fn($a, $b) => strcmp($a->dudi->nama_dudi ?? '', $b->dudi->nama_dudi ?? ''),
+        ]);
+
+    $dudi = Dudi::all();
+    $tahunAjar = TahunAjar::where('status', 'aktif')->get();
+    $pembimbing = Pembimbing::orderBy('nama', 'asc')->get();
+
+    return view('admin_jurusan.dudi_jurusan', compact('dudiJurusan', 'dudi', 'tahunAjar', 'pembimbing'));
+}
+
 
     public function store(Request $request)
     {
