@@ -40,31 +40,31 @@
         <script src="{{ asset('js/admin_utama/tahun_ajar.js') }}"></script>
     @endif
 
-    @if($page_name === 'admin_jurusan_dudi_jurusan')
+    @if($page_name === 'admin_jurusan/dudi_jurusan')
         <script src="{{ asset('js/admin_jurusan/dudi_jurusan.js') }}"></script>
     @endif
 
-    @if($page_name === 'admin_jurusan_prakerin')
+    @if($page_name === 'admin_jurusan/prakerin')
         <script src="{{ asset('js/admin_jurusan/prakerin.js') }}"></script>
     @endif
     
-    @if($page_name === 'guru_jurnal')
+    @if($page_name === 'guru/jurnal')
         <script src="{{ asset('js/guru/jurnal.js') }}"></script>
     @endif
 
-    @if($page_name === 'guru_nilai')
+    @if($page_name === 'guru/nilai')
         <script src="{{ asset('js/guru/nilai.js') }}"></script>
     @endif
 
-    @if($page_name === 'siswa_absen')
+    @if($page_name === 'siswa/absen')
         <script src="{{ asset('js/siswa/absen.js') }}"></script>
     @endif
 
-    @if($page_name === 'siswa_jurnal')
+    @if($page_name === 'siswa/jurnal')
         <script src="{{ asset('js/siswa/jurnal.js') }}"></script>
     @endif
 
-    @if($page_name === 'siswa_dokumen')
+    @if($page_name === 'siswa/dokumen')
         <script src="{{ asset('js/siswa/dokumen.js') }}"></script>
     @endif
 @endif

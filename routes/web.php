@@ -39,10 +39,10 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
 
     // Route CRUD Dudi Jurusan
     Route::get('/kelola-dudi-jurusan', [AdminJurusan\DudiJurusanController::class, 'index'])->name('jurusan.dudi-jurusan');
-    Route::post('/kelola-dudi-jurusan', [AdminUtama\KelasController::class, 'store'])->name('dudi-jurusan.store');
-    Route::get('/kelola-dudi-jurusan/{id}/edit', [AdminUtama\KelasController::class, 'edit'])->name('dudi-jurusan.edit');
-    Route::patch('/kelola-dudi-jurusan/{id}/update', [AdminUtama\KelasController::class, 'update'])->name('dudi-jurusan.update');
-    Route::delete('/kelola-dudi-jurusan/{id}/delete', [AdminUtama\KelasController::class, 'destroy'])->name('dudi-jurusan.destroy');
+    Route::post('/kelola-dudi-jurusan', [AdminJurusan\DudiJurusanController::class, 'store'])->name('dudi-jurusan.store');
+    Route::get('/kelola-dudi-jurusan/{id}/edit', [AdminJurusan\DudiJurusanController::class, 'edit'])->name('dudi-jurusan.edit');
+    Route::patch('/kelola-dudi-jurusan/{id}/update', [AdminJurusan\DudiJurusanController::class, 'update'])->name('dudi-jurusan.update');
+    Route::delete('/kelola-dudi-jurusan/{id}/delete', [AdminJurusan\DudiJurusanController::class, 'destroy'])->name('dudi-jurusan.destroy');
 
     Route::view('/kelola-prakerin', 'admin_jurusan.prakerin')->name('jurusan.prakerin');
     Route::view('/akun-admin', 'admin_jurusan.akun')->name('jurusan.akun');

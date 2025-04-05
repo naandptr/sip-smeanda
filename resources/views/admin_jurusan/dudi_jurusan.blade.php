@@ -31,22 +31,22 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach($dudiJurusan as $index => $data)
                         <tr>
-                            <td>1</td>
-                            <td>Siti Menenun</td>
-                            <td>PT. ABCD Animax Jaya</td>
-                            <td>2024/2025</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $data->pembimbing->nama }}</td>
+                            <td>{{ $data->dudi->nama_dudi }}</td>
+                            <td>{{ $data->tahunAjar->tahun_ajaran }}</td>
                             <td class="data-aksi">
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDudiJurusan">
+                                <button class="btn-icon editDudiJurusan" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon">
+                                <button class="btn-icon deleteDudiJurusan" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">
@@ -65,7 +65,3 @@
     </div>
 </div>
 @endsection
-
-@push('page_scripts')
-    <script src="{{ asset('js/admin_jurusan/dudi_jurusan.js') }}"></script>
-@endpush

@@ -1,16 +1,16 @@
-@props(['dudi', 'pembimbing' 'tahunAjar'])
+@props(['dudi', 'pembimbing', 'tahunAjar'])
 <div class="modal fade" id="modalDudiJurusan" tabindex="-1" aria-labelledby="modalDudiJurusan" aria-hidden="true">
     <div class="modal-dialog custom-modal">
         <div class="modal-content">
-            <form action="/dudi" method="POST" id="formDudiJurusan">
+            <form id="formDudiJurusan" action="{{ isset($dudiJurusan) ? route('dudi-jurusan.update', $dudiJurusan->id) : route('dudi-jurusan.store') }}">
                 <div class="modal-form-body">
                     <div class="modal-form-group">
-                        <label for="lokasiDUDI">Penetapan DUDI<span class="required-label">*</span></label>
+                        <label for="lokasiDudi">Penetapan DUDI<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <select id="lokasiDUDI" name="lokasiDUDI" required>
-                                <option>PT. ABCD Animax Jaya</option>
-                                <option>TVRI Jambi</option>
-                                <option>Yadi Percetakan</option>
+                            <select id="lokasiDudi" name="lokasiDudi" required>
+                                @foreach($dudi as $data)
+                                    <option value="{{ $data->id }}">{{ $data->nama_dudi }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -18,9 +18,9 @@
                         <label for="namaPembimbing">Nama Pembimbing<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="namaPembimbing" name="namaPembimbing" required>
-                                <option>Siti Menenun</option>
-                                <option>Mulyono</option>
-                                <option>Panjar Granowo</option>
+                                @foreach($pembimbing as $data)
+                                    <option value="{{ $data->id }}">{{ $data->nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -28,9 +28,9 @@
                         <label for="tahunAjar">Tahun Ajaran<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="tahunAjar" name="tahunAjar" required>
-                                <option>2024/2025</option>
-                                <option>2023/2024</option>
-                                <option>2022/2023</option>
+                                @foreach($tahunAjar as $data)
+                                    <option value="{{ $data->id }}">{{ $data->tahun_ajaran }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -38,7 +38,8 @@
                 </div>
                 <div class="modal-form-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="submit" class="btn-submit" id="submitDudiJurusan">Simpan</button>
+                    <button type="submit" class="btn-submit" id="updateDudiJurusan">Simpan</button>
                 </div>
             </form>
         </div>
