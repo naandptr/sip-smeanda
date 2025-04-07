@@ -31,25 +31,33 @@
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">CV</h5>
                         <div class="modal-view-status">
-                            <div class="status-badge">SELESAI</div>
+                            <div class="status-badge {{ $siswa->status_cv }}">
+                                {{ strtoupper($siswa->status_cv) }}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Portofolio</h5>
                         <div class="modal-view-status">
-                            <div class="status-badge">SELESAI</div>
+                            <div class="status-badge {{ $siswa->status_portofolio }}">
+                                {{ strtoupper($siswa->status_portofolio) }}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Laporan Akhir</h5>
                         <div class="modal-view-status">
-                            <div class="status-badge">SELESAI</div>
+                            <div class="status-badge {{ $siswa->status_laporan }}">
+                                {{ strtoupper($siswa->status_laporan) }}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Sertifikat</h5>
                         <div class="modal-view-status">
-                            <div class="status-badge">SELESAI</div>
+                            <div class="status-badge {{ $siswa->status_sertifikat }}">
+                                {{ strtoupper($siswa->status_sertifikat) }}
+                            </div>
                         </div>
                     </div>
                 </div>

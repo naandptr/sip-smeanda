@@ -19,12 +19,20 @@ class SiswaController extends Controller
                 $q->latest('tanggal_mulai');
             },
             'penetapanPrakerin.dudiJurusan.dudi',
-            'penetapanPrakerin.dudiJurusan.pembimbing'
+            'penetapanPrakerin.dudiJurusan.pembimbing',
+            'dokumen'
         ])
         ->whereHas('kelas', function ($q) use ($jurusanId) {
             $q->where('jurusan_id', $jurusanId);
         })
         ->get();
+
+        foreach ($siswa as $s) {
+            $s->status_cv = $s->dokumen->where('jenis', 'CV')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $s->status_portofolio = $s->dokumen->where('jenis', 'Portofolio')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $s->status_laporan = $s->dokumen->where('jenis', 'Laporan')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $s->status_sertifikat = $s->dokumen->where('jenis', 'Sertifikat')->isNotEmpty() ? 'selesai' : 'menunggu';
+        }
 
         return view('admin_jurusan.siswa', compact('siswa'));
     }
