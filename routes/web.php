@@ -37,7 +37,10 @@ Route::middleware(['auth'])->group(function () {
 // Route untuk Admin Jurusan
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group(function () {
     Route::get('/siswa-jurusan', [AdminJurusan\SiswaController::class, 'index'])->name('jurusan.siswa');
-    Route::view('/dokumen-siswa', 'admin_jurusan.dokumen')->name('jurusan.dokumen');
+    
+    // Route Dokumen Siswa Jurusan
+    Route::get('/dokumen-siswa', [AdminJurusan\DokumenController::class, 'index'])->name('jurusan.dokumen');
+    Route::get('/dokumen-siswa/{id}/download', [AdminJurusan\DokumenController::class, 'download'])->name('dokumen-siswa.download');
 
     // Route CRUD Dudi Jurusan
     Route::get('/kelola-dudi-jurusan', [AdminJurusan\DudiJurusanController::class, 'index'])->name('jurusan.dudi-jurusan');

@@ -25,31 +25,61 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach($daftarSiswa as $index => $siswa)
                         <tr>
-                            <td>1</td>
-                            <td>Arslan Allen</td>
-                            <td>XII Animasi I</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $siswa->nama }}</td>
+                            <td>{{ $siswa->kelas->nama_kelas }}</td>
                             <td>
-                                <button class="btn-aksi">
-                                    Unduh
-                                </button>
+                                @php
+                                    $cv = $siswa->dokumen->firstWhere('jenis', 'CV');
+                                @endphp
+                                @if($cv)
+                                    <form action="{{ route('dokumen-siswa.download', $cv->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn-aksi">Unduh</button>
+                                    </form>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                             <td>
-                                <button class="btn-aksi">
-                                    Unduh
-                                </button>
+                                @php
+                                    $portofolio = $siswa->dokumen->firstWhere('jenis', 'Portofolio');
+                                @endphp
+                                @if($portofolio)
+                                    <form action="{{ route('dokumen-siswa.download', $portofolio->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn-aksi">Unduh</button>
+                                    </form>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                             <td>
-                                <button class="btn-aksi">
-                                    Unduh
-                                </button>
+                                @php
+                                    $laporan = $siswa->dokumen->firstWhere('jenis', 'Laporan');
+                                @endphp
+                                @if($laporan)
+                                    <form action="{{ route('dokumen-siswa.download', $laporan->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn-aksi">Unduh</button>
+                                    </form>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                             <td>
-                                <button class="btn-aksi">
-                                    Unduh
-                                </button>
+                                @php
+                                    $sertifikat = $siswa->dokumen->firstWhere('jenis', 'Sertifikat');
+                                @endphp
+                                @if($sertifikat)
+                                    <form action="{{ route('dokumen-siswa.download', $sertifikat->id) }}" method="GET" style="display:inline;">
+                                        <button type="submit" class="btn-aksi">Unduh</button>
+                                    </form>
+                                @else
+                                    <span>-</span>
+                                @endif
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">

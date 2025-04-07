@@ -930,6 +930,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     color: var(--colors-white, #FFF);
     border: 1px solid var(--colors-primary-50, #F0F9FF);
     background: var(--colors-primary-500, #0EA5E9);
+    text-decoration: none;
     font-size: 14px;
     font-weight: 800;
 }
