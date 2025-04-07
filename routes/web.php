@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User; 
 use App\Http\Controllers\AdminUtama;
 use App\Http\Controllers\AdminJurusan;
+use App\Http\Controllers\Pembimbing;
 
 
 Route::middleware(['web'])->group(function () {
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
 
 // Route untuk Guru
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function () {
-    Route::view('/siswa-bimbingan', 'guru.siswa')->name('guru.siswa');
+    Route::get('/siswa-bimbingan', [Pembimbing\SiswaController::class, 'index'])->name('guru.siswa');
     Route::view('/absen-siswa', 'guru.absen')->name('guru.absen');
     Route::view('/jurnal-siswa', 'guru.jurnal')->name('guru.jurnal');
     Route::view('/nilai-siswa', 'guru.nilai')->name('guru.nilai');

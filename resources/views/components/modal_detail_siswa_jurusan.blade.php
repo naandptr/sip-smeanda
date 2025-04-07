@@ -24,7 +24,7 @@
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Durasi Prakerin</h5>
                         <div class="modal-view-value">
-                            <h5>{{ \Carbon\Carbon::parse($penetapan->tanggal_mulai)->translatedFormat('d F Y') }} - {{ \Carbon\Carbon::parse($penetapan->tanggal_selesai)->translatedFormat('d F Y') }}
+                            <h5>{{ $penetapan ? \Carbon\Carbon::parse($penetapan->tanggal_mulai)->translatedFormat('d F Y') . ' - ' . \Carbon\Carbon::parse($penetapan->tanggal_selesai)->translatedFormat('d F Y') : '-' }}
                             </h5>
                         </div>
                     </div>

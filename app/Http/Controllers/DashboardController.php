@@ -38,10 +38,9 @@ class DashboardController extends Controller
                 )
                 ->count();
 
-                // Menghitung total lokasi prakerin berdasarkan siswa yang ada di jurusan        
-                $data['totalLokasiPrakerin'] = DudiJurusan::whereHas('siswa.kelas', function ($query) use ($user) {
-                    $query->where('jurusan_id', $user->adminJurusan->jurusan_id);
-                })->count();
+                // Menghitung total lokasi prakerin di jurusan   
+                $data['totalLokasiPrakerin'] = DudiJurusan::where('jurusan_id', $user->adminJurusan->jurusan_id)
+                ->count();
                 break;
 
             case User::ROLE_GURU:
