@@ -32,7 +32,6 @@ class DashboardController extends Controller
 
             case User::ROLE_ADMIN_JURUSAN:
                 // Menghitung total siswa berdasarkan jurusan yang diambil dari kelas
-    
                 $data['totalSiswa'] = Siswa::join('tbl_kelas', 'tbl_siswa.kelas_id', '=', 'tbl_kelas.id')
                 ->where('tbl_kelas.jurusan_id', $user->adminJurusan->jurusan_id
                 )
@@ -54,6 +53,18 @@ class DashboardController extends Controller
                     ->distinct('id')
                     ->count('id');
 
+                break;
+
+            case User::ROLE_SISWA;
+                $siswa = Siswa::with([
+                    'penetapanPrakerin.dudiJurusan.dudi',
+                    'penetapanPrakerin.dudiJurusan.pembimbing'
+                ])->where('user_id', $user->id)->first();
+            
+                $penetapan = $siswa->penetapanPrakerin->sortByDesc('tanggal_mulai')->first();
+            
+                $data['siswa'] = $siswa;
+                $data['penetapan'] = $penetapan;
                 break;
                 
             default:

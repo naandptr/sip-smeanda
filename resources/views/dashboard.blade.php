@@ -19,7 +19,7 @@
             <h4>Nomor Induk Siswa</h4>
             <div class="detail-card">
                 <img src="img/nis-icon.png" alt="">
-                <h2>0031652858</h2>
+                <h2>{{ $siswa->nisn ?? '-' }}</h2>
             </div>
         </div>
         <div class="card-item">
@@ -27,8 +27,8 @@
             <div class="detail-card">
                 <img src="img/lokasi-icon.png" alt="">
                 <div class="detail-lokasi">
-                    <h2>TVRI Jambi</h2>
-                    <p>Telanaipura</>
+                    <h2>{{ $penetapan->dudiJurusan->dudi->nama_dudi ?? '-' }}</h2>
+                    <p>{{ $penetapan->dudiJurusan->dudi->alamat ?? '-' }}</>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <h4>Guru Pembimbing</h4>
             <div class="detail-card">
                 <img src="img/guru-icon.png" alt="">
-                <h2>Mulyono</h2>
+                <h2>{{ $penetapan->dudiJurusan->pembimbing->nama ?? '-' }}</h2>
             </div>
         </div>
     </div>

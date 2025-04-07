@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Http\Controllers\AdminUtama;
 use App\Http\Controllers\AdminJurusan;
 use App\Http\Controllers\Pembimbing;
+use App\Http\Controllers\Siswa;
 
 
 Route::middleware(['web'])->group(function () {
@@ -66,7 +67,7 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function
     
 // Route untuk Siswa
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(function () {
-    Route::view('/info-prakerin', 'siswa.info_prakerin')->name('siswa.info');
+    Route::get('/info-prakerin', [Siswa\InfoPrakerinController::class, 'index'])->name('siswa.info');
     Route::view('/dokumen-prakerin', 'siswa.dokumen')->name('siswa.dokumen');
     Route::view('/absen-prakerin', 'siswa.absen')->name('siswa.absen');
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
