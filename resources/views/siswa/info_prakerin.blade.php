@@ -15,13 +15,13 @@
             <div class="info-item">
                 <h4>Tanggal Mulai Prakerin</h4>
                 <div class="info-value">
-                    <h5>{{ \Carbon\Carbon::parse($penetapan->tanggal_mulai)->format('d/m/Y') ?? '-' }}</h5>
+                    <h5>{{ $penetapan?->tanggal_mulai ? \Carbon\Carbon::parse($penetapan->tanggal_mulai)->format('d/m/Y') : '-' }}</h5>
                 </div>
             </div>
             <div class="info-item">
                 <h4>Tanggal Selesai Prakerin</h4>
                 <div class="info-value">
-                    <h5>{{ \Carbon\Carbon::parse($penetapan->tanggal_selesai)->format('d/m/Y') ?? '-' }}</h5>
+                    <h5>{{ $penetapan?->tanggal_selesai ? \Carbon\Carbon::parse($penetapan->tanggal_selesai)->format('d/m/Y') : '-' }}</h5>
                 </div>
             </div>
         </div>
