@@ -76,8 +76,9 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(functio
     Route::post('/dokumen-prakerin/upload/{jenis}', [Siswa\DokumenController::class, 'upload'])->name('dokumen.upload');
     Route::get('/dokumen/download/{id}', [Siswa\DokumenController::class, 'download'])->name('dokumen.download');
 
+    Route::get('/absen-prakerin', [Siswa\AbsenController::class, 'index'])->name('siswa.absen');
+    Route::post('/absen-prakerin', [Siswa\AbsenController::class, 'store'])->name('absen.store');
 
-    Route::view('/absen-prakerin', 'siswa.absen')->name('siswa.absen');
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
     Route::view('/akun-siswa', 'siswa.nilai')->name('siswa.akun');
 });

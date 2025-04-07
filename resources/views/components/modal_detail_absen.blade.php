@@ -9,7 +9,11 @@
                 </div>
                 <div class="modal-view-body">
                     <div class="modal-view-item">
-                        <img src="{{ asset('img/absen-photo.png') }}" alt="">
+                        <!-- Preview Gambar -->
+                        <img id="previewImage" src="" alt="Foto Absen" style="max-width: 100%; border-radius: 12px; display: none;">
+                        
+                        <!-- Preview PDF -->
+                        <iframe id="previewPDF" src="" width="100%" height="500px" style="border: none; display: none;"></iframe>
                     </div>
                 </div>
             </div>

@@ -35,19 +35,23 @@
                         </tr>
                     </thead>
                     <tbody class="absen-body data-body">
+                        @foreach ($dataAbsen as $absen)
                         <tr>
-                            <td>1</td>
-                            <td>13/02/2025</td>
-                            <td>Absen Datang</td>
-                            <td>Hadir</td>
-                            <td>-</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y') }}</td>
+                            <td>{{ ucfirst($absen->jenis_absen) }}</td>
+                            <td>{{ $absen->status_kehadiran ?? '-' }}</td>
+                            <td>{{ $absen->keterangan ?? '-' }}</td>
                             <td class="data-aksi">
-                                <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailAbsen">
-                                    <img src="{{ asset('img/show-icon.png') }}" alt="">
+                                <button type="button" class="btn-icon show-detail-absen"
+                                    data-bs-toggle="modal" data-bs-target="#modalDetailAbsen"
+                                    data-file-url="{{ Storage::url($absen->file) }}">
+                                    <img src="{{ asset('img/show-icon.png') }}" alt="Detail">
                                 </button>
-                                <x-modal_detail_absen></x-modal_detail_absen>
+                                <x-modal_detail_absen />
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="absen-footer data-footer">
@@ -66,7 +70,3 @@
     </div>
 </div>
 @endsection
-
-@push('page_scripts')
-    <script src="{{ asset('js/siswa/absen.js') }}"></script>
-@endpush

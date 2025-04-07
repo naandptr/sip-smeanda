@@ -12,13 +12,13 @@ class Absen extends Model
     protected $table = 'tbl_absen';
 
     protected $fillable = [
-        'penetapan_prakerin_id', // Foreign key ke tabel penetapan prakerin
+        'penetapan_prakerin_id', 
         'tanggal',
         'jenis_absen',
         'status_kehadiran',
         'keterangan',
         'file',
-        'absen_datang_id' // Foreign key ke tabel absen
+        'absen_datang_id' 
     ];
 
     public function penetapanPrakerin()
