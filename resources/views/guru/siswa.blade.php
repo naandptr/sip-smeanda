@@ -18,7 +18,7 @@
                         <th>NIS</th>
                         <th>SISWA</th>
                         <th>KELAS</th>
-                        <th>STATUS</th>
+                        <th>STATUS PRAKERIN</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -28,7 +28,24 @@
                         <td>{{ $s->nisn }}</td>
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->kelas->nama_kelas }}</td>
-                        <td><div class="status-badge">SELESAI</div></td>
+                        @php
+                            $status = strtolower($s->penetapanPrakerin->first()?->status ?? 'belum_dimulai');
+                            $statusClass = match($status) {
+                                'belum_dimulai' => 'not-started',
+                                'berlangsung' => 'ongoing',
+                                'selesai' => 'selesai',
+                                'dibatalkan' => 'canceled',
+                                default => 'not-started',
+                            };
+                            $statusLabel = match($status) {
+                                'belum_dimulai' => 'BELUM DIMULAI',
+                                'berlangsung' => 'BERLANGSUNG',
+                                'selesai' => 'SELESAI',
+                                'dibatalkan' => 'DIBATALKAN',
+                                default => 'BELUM DIMULAI',
+                            };
+                        @endphp
+                        <td><div class="status-badge {{ $statusClass }}">{{ $statusLabel }}</div></td>
                         <td class="data-aksi">
                             <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswaBimbingan-{{ $s->id }}">
                                 <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">

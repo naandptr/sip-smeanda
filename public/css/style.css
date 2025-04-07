@@ -718,15 +718,33 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 .status-badge {
     display: inline-block;
-    color: var(--colors-red-600, #DC2626);
     font-size: 12px;
     font-style: normal;
     font-weight: 800;
     line-height: 120%; /* 14.4px */
     border-radius: 999px;
-    background: var(--colors-red-100, #FEE2E2);
     padding: 0 8px;
     text-align: center;
+}
+
+.not-started {
+    color: var(--colors-slate-600, #475569);
+    background: var(--colors-slate-100, #F1F5F9);
+}
+
+.pending, .ongoing {
+    color: var(--colors-yellow-600, #CA8A04);
+    background: var(--colors-yellow-100, #FEF9C3);
+}
+
+.aktif, .selesai {
+    color: var(--colors-green-600, #16A34A);
+    background: var(--colors-green-100, #DCFCE7);
+}
+
+.nonaktif, .canceled {
+    color: var(--colors-red-600, #DC2626);
+    background: var(--colors-red-100, #FEE2E2);
 }
 
 /* Styling Status */
