@@ -1,42 +1,36 @@
 $(document).ready(function() {
-    // ===== Validasi PDF  =====
     function validateFile(input, label) {
         let file = input.files[0];
         if (file) {
             let fileName = file.name;
             let fileSize = file.size;
             let fileType = file.type;
-
-            // Cek ekstensi manual 
             let validExtensions = ['.pdf'];
             let fileExtension = fileName.slice(fileName.lastIndexOf('.')).toLowerCase();
 
             if ((!fileType || fileType !== 'application/pdf') && !validExtensions.includes(fileExtension)) {
                 alert('Hanya file PDF yang diperbolehkan!');
-                $(input).val(''); // Reset input file
+                $(input).val('');
                 $(label).text('No file chosen');
                 return;
             }
 
-            // Validasi ukuran file (maksimal 2MB)
             if (fileSize > 2 * 1024 * 1024) {
                 alert('Ukuran file maksimal 2MB!');
-                $(input).val(''); // Reset input file
+                $(input).val('');
                 $(label).text('No file chosen');
                 return;
             }
 
-            // Jika valid, tampilkan nama file
             $(label).text(fileName);
         } else {
             $(label).text('No file chosen');
         }
     }
 
-    // ===== Event Listener untuk Input File =====
     let fileInputs = [
         { inputId: '#cvInput', labelId: '#cvName' },
-        { inputId: '#portoInput', labelId: '#portoName' },
+        { inputId: '#portofolioInput', labelId: '#portofolioName' },
         { inputId: '#laporanInput', labelId: '#laporanName' },
         { inputId: '#sertifikatInput', labelId: '#sertifikatName' }
     ];
@@ -47,11 +41,15 @@ $(document).ready(function() {
         });
     });
 
-    $(".formDokumen").submit(function(e) {
-        let fileInput = form.find("input[type='file']");
-        let fileName = fileInput.val().split("\\").pop();
-
-        if (!fileName) {
+    $(".form-dokumen").submit(function(e) {
+        e.preventDefault(); // cegah submit bawaan
+    
+        const form = $(this);
+        const jenis = form.data("jenis"); // ambil dari data-jenis
+        const fileInput = form.find("input[name='dokumen']")[0];
+        const file = fileInput.files[0];
+    
+        if (!file) {
             Swal.fire({
                 imageUrl: "/img/error-icon.png",
                 title: "File belum dipilih!",
@@ -59,7 +57,7 @@ $(document).ready(function() {
             });
             return;
         }
-
+    
         Swal.fire({
             imageUrl: "/img/confirm-icon.png",
             title: "Apakah kamu yakin ingin submit file ini?",
@@ -70,9 +68,40 @@ $(document).ready(function() {
             reverseButtons: true 
         }).then((result) => {
             if (result.isConfirmed) {
-                form.off("submit").submit(); 
+                const formData = new FormData();
+                formData.append("dokumen", file);
+    
+                $.ajax({
+                    url: "/dokumen-prakerin/upload/" + jenis,
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil!",
+                            text: response.message || "File berhasil diunggah.",
+                        });
+                    
+                        // Ganti tampilan file name jadi link download
+                        const labelId = "#" + jenis + "Name"; // misal: #cvName, #portoName
+                        const fileLink = `<a href="${response.file_url}" target="_blank">${response.file_name}</a>`;
+                        $(labelId).html(fileLink);
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Gagal!",
+                            text: xhr.responseJSON?.message || "Terjadi kesalahan saat upload.",
+                        });
+                    }
+                });
             }
         });
-        return;
     });
+    
 });

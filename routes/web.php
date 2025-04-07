@@ -68,7 +68,12 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function
 // Route untuk Siswa
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(function () {
     Route::get('/info-prakerin', [Siswa\InfoPrakerinController::class, 'index'])->name('siswa.info');
-    Route::view('/dokumen-prakerin', 'siswa.dokumen')->name('siswa.dokumen');
+
+    Route::get('/dokumen-prakerin', [Siswa\DokumenController::class, 'index'])->name('siswa.dokumen');
+    Route::post('/dokumen-prakerin/upload/{jenis}', [Siswa\DokumenController::class, 'upload'])->name('dokumen.upload');
+    Route::get('/dokumen/download/{id}', [Siswa\DokumenController::class, 'download'])->name('dokumen.download');
+
+
     Route::view('/absen-prakerin', 'siswa.absen')->name('siswa.absen');
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
     Route::view('/akun-siswa', 'siswa.nilai')->name('siswa.akun');
