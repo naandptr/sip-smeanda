@@ -62,7 +62,10 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
 // Route untuk Guru
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function () {
     Route::get('/siswa-bimbingan', [Pembimbing\SiswaController::class, 'index'])->name('guru.siswa');
-    Route::view('/absen-siswa', 'guru.absen')->name('guru.absen');
+
+    Route::get('/absen-siswa', [Pembimbing\AbsenSiswaController::class, 'index'])->name('guru.absen');
+    Route::get('/absen-siswa/detail/{id}', [Pembimbing\AbsenSiswaController::class, 'detail'])->name('absen-detail.guru');
+
     Route::view('/jurnal-siswa', 'guru.jurnal')->name('guru.jurnal');
     Route::view('/nilai-siswa', 'guru.nilai')->name('guru.nilai');
     Route::view('/akun-guru', 'guru.akun')->name('guru.akun');

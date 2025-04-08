@@ -155,14 +155,6 @@ $(document).ready(function () {
             return;
         }
 
-        // Swal.fire({
-        //     imageUrl: "/img/success-icon.png",
-        //     title: "Sukses! Absen harian telah berhasil diproses",
-        //     confirmButtonText: "OK"
-        // }).then(() => {
-          
-        //     $("#formAbsen").off("submit").submit();
-        // });
         $.ajax({
             url: $("#formAbsen").attr("action"),
             method: "POST",

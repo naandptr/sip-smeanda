@@ -22,14 +22,18 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
+                    @foreach ($siswaBimbingan as $siswa)
                     <tr>
-                        <td>0031652858</td>
-                        <td>Arslan Allen</td>
-                        <td>XII Animasi I</td>
+                        <td>{{ $siswa->nis }}</td>
+                        <td>{{ $siswa->nama }}</td>
+                        <td>{{ $siswa->kelas->nama_kelas }}</td>
                         <td class="data-aksi">
-                            <a href="{{ url('/guru/detail_absen') }}"><button class="btn-aksi">Detail</button></a>
+                            <a href="{{ route('absen-detail.guru', $siswa->id) }}">
+                                <button class="btn-aksi">Detail</button>
+                            </a>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr class="data-footer">

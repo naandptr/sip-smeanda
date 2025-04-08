@@ -13,7 +13,7 @@ class Siswa extends Authenticatable
     protected $table = 'tbl_siswa';
 
     protected $fillable = [
-        'nisn',
+        'nis',
         'nama',
         'user_id', // Foreign key ke tabel users
         'kelas_id', // Foreign key ke tabel kelas

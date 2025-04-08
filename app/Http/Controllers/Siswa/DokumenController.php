@@ -36,8 +36,8 @@ class DokumenController extends Controller
         }
 
         if ($request->hasFile('dokumen')) {
-            $folder = "dokumen/{$siswa->nisn}";
-            $filename = "{$siswa->nisn}_" . Str::slug($jenis) . ".pdf";
+            $folder = "dokumen/{$siswa->nis}";
+            $filename = "{$siswa->nis}_" . Str::slug($jenis) . ".pdf";
             $stored = $request->file('dokumen')->storeAs($folder, $filename, 'public');
 
             if (!$stored) {

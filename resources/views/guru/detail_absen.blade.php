@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'guru/detail_absen'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Absen Harian Siswa')
@@ -26,22 +30,26 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
+                    @foreach ($absenList as $absen)
                     <tr>
-                        <td>0031652858</td>
-                        <td>Arslan Allen</td>
-                        <td>XII Animasi I</td>
-                        <td>20/05/2025</td>
-                        <td>Absen Datang</td>
-                        <td>Hadir</td>
-                        <td>-</td>
+                        <td>{{ $siswa->nis }}</td>
+                        <td>{{ $siswa->nama }}</td>
+                        <td>{{ $siswa->kelas->nama_kelas }}</td>
+                        <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d/m/Y') }}</td>
+                        <td>{{ $absen->jenis_absen }}</td>
+                        <td>{{ $absen->status_kehadiran ?? '-' }}</td>
+                        <td>{{ $absen->keterangan ?? '-' }}</td>
                         <td class="data-aksi">
-                            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailAbsen">
-                                <img src="{{ asset('img/show-icon.png') }}" alt="">
-                            </button>
-                            <x-modal_detail_absen></x-modal_detail_absen>
+                            <button type="button" class="btn-icon show-detail-absen"
+                                    data-bs-toggle="modal" data-bs-target="#modalDetailAbsen"
+                                    data-file-url="{{ Storage::url($absen->file) }}">
+                                    <img src="{{ asset('img/show-icon.png') }}" alt="Detail">
+                                </button>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
+                <x-modal_detail_absen></x-modal_detail_absen>
                 <tfoot>
                     <tr class="data-footer">
                         <td colspan="8">

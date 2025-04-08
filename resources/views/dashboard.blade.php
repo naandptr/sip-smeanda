@@ -19,7 +19,7 @@
             <h4>Nomor Induk Siswa</h4>
             <div class="detail-card">
                 <img src="img/nis-icon.png" alt="">
-                <h2>{{ $siswa->nisn ?? '-' }}</h2>
+                <h2>{{ $siswa->nis ?? '-' }}</h2>
             </div>
         </div>
         <div class="card-item">

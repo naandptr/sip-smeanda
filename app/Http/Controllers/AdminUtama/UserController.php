@@ -42,7 +42,7 @@ class UserController extends Controller
                 if ($user->siswa) {
                     $userData['detail'] = [
                         'nama' => $user->siswa->nama,
-                        'nisn' => $user->siswa->nisn,
+                        'nis' => $user->siswa->nis,
                         'nama_kelas' => $user->siswa->kelas->nama_kelas ?? '-'
                     ];
                 }
@@ -100,14 +100,14 @@ public function store(Request $request)
         if ($request->roleUser == 'Siswa') {
             $request->validate([
                 'namaSiswa' => 'required',
-                'nisnSiswa' => 'required|unique:tbl_siswa,nisn',
+                'nisSiswa' => 'required|unique:tbl_siswa,nis',
                 'kelasSiswa' => 'required|exists:tbl_kelas,id',
             ]);
 
             $siswa = Siswa::create([
                 'user_id' => $user->id,
                 'nama' => $request->namaSiswa,
-                'nisn' => $request->nisnSiswa,
+                'nis' => $request->nisSiswa,
                 'kelas_id' => $request->kelasSiswa,
             ]);
 
@@ -209,13 +209,13 @@ public function store(Request $request)
         if ($request->roleUser == 'Siswa') {
             $request->validate([
                 'namaSiswa' => 'required',
-                'nisnSiswa' => 'required|unique:tbl_siswa,nisn,' . $user->siswa->id,
+                'nisSiswa' => 'required|unique:tbl_siswa,nis,' . $user->siswa->id,
                 'kelasSiswa' => 'required',
             ]);
 
             $user->siswa->update([
                 'nama' => $request->namaSiswa,
-                'nis' => $request->nisUser,
+                'nis' => $request->nisSiswa,
                 'kelas_id' => $request->kelasSiswa,
             ]);
         } elseif ($request->roleUser == 'Guru') {

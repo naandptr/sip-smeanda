@@ -48,6 +48,10 @@
         <script src="{{ asset('js/admin_jurusan/prakerin.js') }}"></script>
     @endif
     
+    @if($page_name === 'guru/detail_absen')
+        <script src="{{ asset('js/guru/detail_absen.js') }}"></script>
+    @endif
+
     @if($page_name === 'guru/jurnal')
         <script src="{{ asset('js/guru/jurnal.js') }}"></script>
     @endif

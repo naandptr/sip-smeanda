@@ -67,10 +67,10 @@ class AbsenController extends Controller
 
      
         $ext = $request->file('fileAbsen')->getClientOriginalExtension();
-        $folderNisn = 'absen/' . $siswa->nisn;
-        $namaFile = $siswa->nisn . '_' . strtolower(str_replace(' ', '_', $jenis)) . '_' . $today->format('Ymd') . '.' . $ext;
+        $folderNis = 'absen/' . $siswa->nis;
+        $namaFile = $siswa->nis . '_' . strtolower(str_replace(' ', '_', $jenis)) . '_' . $today->format('Ymd') . '.' . $ext;
 
-        $filePath = $request->file('fileAbsen')->storeAs('public/' . $folderNisn, $namaFile);
+        $filePath = $request->file('fileAbsen')->storeAs('public/' . $folderNis, $namaFile);
 
 
         $absen = new Absen([
