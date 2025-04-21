@@ -1,7 +1,3 @@
-@php 
-    $page_name = 'guru/jurnal'; 
-@endphp
-
 @extends('layouts.app')
 
 @section('title', 'Jurnal Kegiatan Siswa')
@@ -28,15 +24,19 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
+                    @foreach ($siswaBimbingan as $siswa)
                     <tr>
-                        <td>0031652858</td>
-                        <td>Arslan Allen</td>
-                        <td>XII Animasi I</td>
-                        <td>0/1</td>
+                        <td>{{ $siswa['siswa']->nis }}</td>
+                        <td>{{ $siswa['siswa']->nama }}</td>
+                        <td>{{ $siswa['kelas'] }}</td>
+                        <td>{{ $siswa['jurnal_validasi'] }}/{{ $siswa['jurnal_terkirim'] }}</td>
                         <td class="data-aksi">
-                            <a href="{{ url('/guru/detail_jurnal') }}"><button class="btn-aksi">Detail</button></a>
+                            <a href="{{ route('jurnal.detail', $siswa['siswa']->id) }}">
+                                <button class="btn-aksi">Detail</button>
+                            </a>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr class="data-footer">
@@ -55,6 +55,3 @@
 </div>
 @endsection
 
-@push('page_scripts')
-    <script src="{{ asset('js/guru/jurnal.js') }}"></script>
-@endpush

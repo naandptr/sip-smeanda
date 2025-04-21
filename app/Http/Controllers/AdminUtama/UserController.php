@@ -94,6 +94,7 @@ public function store(Request $request)
             'password' => bcrypt('123456'),
             'role' => $request->roleUser,
             'status' => User::STATUS_PENDING,
+            'is_default_password' => true,
         ]);
 
         // Simpan data tambahan berdasarkan role

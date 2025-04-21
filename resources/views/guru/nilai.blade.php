@@ -2,7 +2,6 @@
     $page_name = 'guru/nilai'; 
 @endphp
 
-
 @extends('layouts.app')
 
 @section('title', 'Penilaian')
@@ -16,7 +15,7 @@
 
     <div class="data-section">
         <div class="data-action">
-            <a href="{{ url('/guru/tambah_nilai') }}"><button class="btn-open">+ Penilaian</button></a>
+            <a href="{{ route('nilai.form') }}"><button class="btn-open">+ Penilaian</button></a>
         </div>
         <div class="data-content">
             <div class="table-wrapper">
@@ -30,16 +29,18 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
+                        @foreach ($siswaBimbingan as $siswa)
                         <tr>
-                            <td>321323314</td>
-                            <td>Arslan Allen</td>
-                            <td>XII Animasi 1</td>
+                            <td>{{ $siswa->nis }}</td>
+                            <td>{{ $siswa->nama }}</td>
+                            <td>{{ $siswa->kelas->nama_kelas }}</td>
                             <td class="data-aksi">
-                                <button class="btn-aksi">
-                                    Unduh
-                                </button>
+                                <a href="{{ route('nilai.download', $siswa->penilaian->id) }}">
+                                    <button class="btn-aksi">Unduh</button>
+                                </a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">
@@ -59,6 +60,3 @@
 </div>
 @endsection
 
-@push('page_scripts')
-    <script src="{{ asset('js/guru/nilai.js') }}"></script>
-@endpush

@@ -39,8 +39,8 @@
                     <img src="{{ asset('img/jurnal-icon.png') }}" alt="jurnal kegiatan" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Jurnal Kegiatan</h4>
                 </a>
-                <a href="{{ route('siswa.akun') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.akun') ? 'active' : '' }}">
-                    <img src="{{ asset('img/akun-icon.png') }}" alt="akun" height="20" />
+                <a href="{{ route('akun.show') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('akun') ? 'active' : '' }}">
+                    <img src="{{ asset('img/akun-icon.png') }}" alt="dashboard" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Akun</h4>
                 </a>
 
@@ -61,11 +61,11 @@
                     <img src="{{ asset('img/nilai-icon.png') }}" alt="nilai" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Penilaian</h4>
                 </a>
-                <a href="{{ route('guru.akun') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ Request::is('guru/akun') ? 'active' : '' }}">
-                    <img src="{{ asset('img/akun-icon.png') }}" alt="akun" height="20" />
+                <a href="{{ route('akun.show') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('akun') ? 'active' : '' }}">
+                    <img src="{{ asset('img/akun-icon.png') }}" alt="dashboard" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Akun</h4>
                 </a>
-
+                
             @elseif ($role === User::ROLE_ADMIN_JURUSAN)
                 <a href="{{ route('jurusan.siswa') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('jurusan.siswa') ? 'active' : '' }}">
                     <img src="{{ asset('img/siswa-icon.png') }}" alt="data siswa" height="20" />
@@ -83,8 +83,8 @@
                     <img src="{{ asset('img/prakerin-icon.png') }}" alt="penetapan siswa" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan Siswa</h4>
                 </a>
-                <a href="{{ route('jurusan.akun') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('jurusan.akun') ? 'active' : '' }}">
-                    <img src="{{ asset('img/akun-icon.png') }}" alt="akun" height="20" />
+                <a href="{{ route('akun.show') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('akun') ? 'active' : '' }}">
+                    <img src="{{ asset('img/akun-icon.png') }}" alt="dashboard" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Akun</h4>
                 </a>
 

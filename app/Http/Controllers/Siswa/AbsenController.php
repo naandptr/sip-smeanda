@@ -17,6 +17,10 @@ class AbsenController extends Controller
         $siswa = Auth::user()->siswa;
         $penetapan = PenetapanPrakerin::where('siswa_id', $siswa->id)->first();
 
+        if (!$penetapan) {
+            return view('siswa.absen', ['dataAbsen' => []]);
+        }
+
         $dataAbsen = Absen::where('penetapan_prakerin_id', $penetapan->id)
             ->orderBy('tanggal', 'desc')
             ->get();

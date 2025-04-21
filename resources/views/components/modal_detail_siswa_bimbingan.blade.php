@@ -12,7 +12,7 @@
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">NIS</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $siswa->nisn ?? '-' }}</h5>
+                            <h5>{{ $siswa->nis ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">

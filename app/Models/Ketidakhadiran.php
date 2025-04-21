@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PenilaianDetail extends Model
+class Ketidakhadiran extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_penilaian_detail';
+    protected $table = 'tbl_ketidakhadiran';
 
     protected $fillable = [
         'penilaian_id',
-        'tujuan_pembelajaran',
-        'skor',
-        'deskripsi'
+        'sakit',
+        'ijin',
+        'tanpa_keterangan'
     ];
 
     public function penilaian()

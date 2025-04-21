@@ -16,6 +16,7 @@ class AdminSeeder extends Seeder
             'username' => 'adminutama',
             'email' => 'admin@sekolah.sch.id',
             'password' => Hash::make('password123'), 
+            'is_default_password' => false,
             'role' => User::ROLE_ADMIN_UTAMA, 
             'status' => User::STATUS_AKTIF,
             'email_verified_at' => now(), 

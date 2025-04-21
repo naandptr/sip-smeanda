@@ -1,11 +1,9 @@
 $(document).ready(function() {
-    // =========== CRUD JURUSAN ============
-    // Memastikan form kosong saat klik tombol tambah jurusan
     $("#tambahJurusan").click(function () {
-        $("#modalJurusan form")[0].reset(); // Kosongkan form
+        $("#modalJurusan form")[0].reset();
         $('#status').val('Aktif');
-        $("#updateJurusan").hide(); // Sembunyikan tombol Update
-        $("#submitJurusan").show(); // Tampilkan tombol Simpan
+        $("#updateJurusan").hide(); 
+        $("#submitJurusan").show(); 
         $("#modalJurusan").modal("show");
     });
 
@@ -17,15 +15,15 @@ $(document).ready(function() {
             $("#namaJurusan").val(data.nama_jurusan);
             $("#statusJurusan").val(data.status);
     
-            $("#submitJurusan").hide(); // Sembunyikan tombol Simpan
-            $("#updateJurusan").show().data("id", id); // Tampilkan tombol Update dengan ID
+            $("#submitJurusan").hide();
+            $("#updateJurusan").show().data("id", id);
             $("#modalJurusan").modal("show");
         });
     });
 
     $("#submitJurusan").click(function () {
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true);
         $.ajax({
             url: "/kelola-jurusan",
             method: "POST",
@@ -43,11 +41,10 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                // Menampilkan pesan kesalahan dari server
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -55,7 +52,7 @@ $(document).ready(function() {
     $("#updateJurusan").click(function () {
         let id = $(this).data("id");
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true);
 
         $.ajax({
             url: `/kelola-jurusan/${id}/update`,
@@ -78,7 +75,7 @@ $(document).ready(function() {
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -107,7 +104,7 @@ $(document).ready(function() {
                         });
                     },
                     error: function (xhr) {
-                        console.log(xhr.responseText); // Debugging
+                        console.log(xhr.responseText); 
                         Swal.fire("Error!", xhr.responseJSON.message, "error");
                     }
                 });

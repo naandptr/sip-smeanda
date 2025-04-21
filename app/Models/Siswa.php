@@ -37,10 +37,10 @@ class Siswa extends Authenticatable
         return $this->hasOneThrough(
             Jurusan::class,
             Kelas::class,
-            'id',        // Foreign key di Kelas yang mengarah ke Jurusan
-            'id',        // Primary key di Jurusan
-            'kelas_id',  // Foreign key di Siswa yang mengarah ke Kelas
-            'jurusan_id' // Foreign key di Kelas yang mengarah ke Jurusan
+            'id',       
+            'id',     
+            'kelas_id',  
+            'jurusan_id' 
         );
     }
 

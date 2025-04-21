@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'guru/detail_jurnal'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Jurnal Kegiatan Siswa')
@@ -25,25 +29,47 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
+                    @foreach ($jurnalList as $jurnal)
                     <tr>
-                        <td>0031652858</td>
-                        <td>Arslan Allen</td>
-                        <td>XII Animasi I</td>
-                        <td>20/08/2025</td>
-                        <td><div class="status-badge">MENUNGGU</div></td>
+                        <td>{{ $siswa->nis }}</td>
+                        <td>{{ $siswa->nama }}</td>
+                        <td>{{ $siswa->kelas->nama_kelas ?? '-' }}</td>
+                        <td>{{ \Carbon\Carbon::parse($jurnal->tanggal)->format('d/m/Y') }}</td>
+                        <td>
+                            @php
+                                    $status = strtolower($jurnal->validasi->status_validasi ?? '-');
+                                    $badgeClass = match($status) {
+                                        'menunggu' => 'pending',
+                                        'selesai' => 'selesai',
+                                        default => '',
+                                    };
+                            @endphp
+                            <div class="status-badge {{ $badgeClass }}">{{ $jurnal->validasi->status_validasi ?? '-' }}</div>
+                        </td>
                         <td class="data-aksi">
                             <!-- Tombol Lihat -->
-                            <button type="button" class="btn-icon btn-open-jurnal" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal">
+                            <button type="button" class="btn-icon btn-open-jurnal" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal{{ $jurnal->id }}">
                                 <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                             </button>
-                            <x-modal_detail_jurnal></x-modal_detail_jurnal>
+                            <x-modal_detail_jurnal :jurnal="$jurnal" :modalId="'modalDetailJurnal'.$jurnal->id" />
+
 
                             <!-- Tombol Validasi -->
-                            <button type="button" class="btn-aksi" id="btnValidasi" data-bs-toggle="modal" data-bs-target="#modalValidasiJurnal">Validasi
-                            </button>
-                            <x-modal_validasi></x-modal_validasi>
+                            @php
+                                $sudahValidasi = \App\Models\Validasi::where('jurnal_id', $jurnal->id)
+                                    ->where('status_validasi', 'Selesai')
+                                    ->exists();
+                            @endphp
+
+                            @if (!$sudahValidasi)
+                                <button class="btn-validasi" data-bs-toggle="modal" data-bs-target="#modalValidasiJurnal{{ $jurnal->id }}">
+                                    Validasi
+                                </button>
+                            @endif
+                            <x-modal_validasi :jurnal="$jurnal" />
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr class="data-footer">

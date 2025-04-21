@@ -8,7 +8,7 @@
 
     @php
         use App\Models\User;
-        $role = Auth::user()->role ?? User::ROLE_SISWA; // Gunakan konstanta default
+        $role = Auth::user()->role ?? User::ROLE_SISWA; 
     @endphp
 
 

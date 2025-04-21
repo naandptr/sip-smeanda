@@ -1,12 +1,16 @@
 <div class="modal fade" id="modalJurnal" tabindex="-1" aria-labelledby="modalJurnal" aria-hidden="true">
     <div class="modal-dialog custom-modal">
         <div class="modal-content">
-            <form action="/jurnal" method="POST" id="formJurnal">
+            <form method="POST" id="formJurnal" action="{{ route('jurnal.store') }}" enctype="multipart/form-data">
+                @csrf
                 <div class="modal-form-body">
                     <div class="modal-form-group">
                         <label for="tglJurnal">Tanggal<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="date" name="tglJurnal" id="tglJurnal" required>
+                            <input type="text" 
+                                id="tglJurnal" 
+                                value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y') }}" 
+                                disabled>
                         </div>
                     </div>
                     <div class="modal-form-group">
@@ -18,7 +22,7 @@
                 </div>
                 <div class="modal-form-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="submit" class="btn-submit" id="submitJurnal">Simpan</button>
                 </div>
             </form>
         </div>

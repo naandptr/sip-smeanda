@@ -12,33 +12,26 @@
 
         <div class="auth-body">
             <div class="auth-header">
-                <h1>UBAH PASSWORD</h1>
-                <h4>Sebelum masuk untuk akses, harap ganti password Anda.</h4>
+                <h1>PERBARUI KATA SANDI</h1>
+                <h4>Perbaru kata sandi Anda.</h4>
             </div>
-    
-            <form action="/reset_password" method="POST" class="auth-form" id="resetPassword">
-                @csrf
+            <form action="{{ route('ganti-password-awal.store') }}" method="POST" class="auth-form" id="formGantiPasswordAwal">
+                @csrf         
                 <div class="auth-group">        
                     <div class="auth-field">
-                        <label for="emailUser">Masukkan Email</label>
-                        <input type="email" id="emailUser" name="emailUser" required>
-                    </div>
-                </div>
-                <div class="auth-group">        
-                    <div class="auth-field">
-                        <label for="newPwFirst">Create Password</label>
+                        <label for="newPw">Create Password</label>
                         <div class="pass-wrapper">
-                            <input type="password" name="new-pw" id="newPwFirst" required>
-                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="newPwFirst" alt="Toggle Password">
+                            <input type="password" name="new-pw" id="newPw" required>
+                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="newPw" alt="Toggle Password">
                         </div>
                     </div>
                 </div>
                 <div class="auth-group">        
                     <div class="auth-field">
-                        <label for="confirmPwFirst">Re-enter Password</label>
+                        <label for="confirmPw">Re-enter Password</label>
                         <div class="pass-wrapper">
-                            <input type="password" name="confirm-pw" id="confirmPwFirst" required>
-                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPwFirst" alt="Toggle Password">
+                            <input type="password" name="confirm-pw" id="confirmPw" required>
+                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPw" alt="Toggle Password">
                         </div>
                     </div>
                 </div>

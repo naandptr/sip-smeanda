@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="auth-container">
-    <!-- Bagian Kiri: Form Login -->
     <div class="auth-section">
         <div class="auth-brand">
             <img src="{{ asset('img/logo-icon.png') }}" height="49" alt="Logo SMKN 2" loading="lazy"/>
@@ -45,18 +44,14 @@
                 </div>
                 <div class="auth-button">
                     <button type="submit" class="btn-submit" id="submitLogin">Login</button>
+                    <a href="{{ route('lupa-password') }}" class="btn-lupa-pass">Lupa Kata Sandi?</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Bagian Kanan: Ilustrasi -->
     <div class="auth-image">
         <img src="{{ asset('img/login.png') }}" alt="Ilustrasi Keamanan Login">
     </div>
 </div>
 @endsection
-
-{{-- @push('page_scripts')
-    <script src="{{ asset('js/auth/login.js') }}"></script>
-@endpush --}}

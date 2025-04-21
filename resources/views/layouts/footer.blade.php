@@ -52,12 +52,16 @@
         <script src="{{ asset('js/guru/detail_absen.js') }}"></script>
     @endif
 
-    @if($page_name === 'guru/jurnal')
-        <script src="{{ asset('js/guru/jurnal.js') }}"></script>
+    @if($page_name === 'guru/detail_jurnal')
+        <script src="{{ asset('js/guru/detail_jurnal.js') }}"></script>
     @endif
 
     @if($page_name === 'guru/nilai')
         <script src="{{ asset('js/guru/nilai.js') }}"></script>
+    @endif
+
+    @if($page_name === 'guru/tambah_nilai')
+        <script src="{{ asset('js/guru/tambah_nilai.js') }}"></script>
     @endif
 
     @if($page_name === 'siswa/absen')
@@ -70,6 +74,10 @@
 
     @if($page_name === 'siswa/dokumen')
         <script src="{{ asset('js/siswa/dokumen.js') }}"></script>
+    @endif
+
+    @if($page_name === 'akun/ganti_password')
+        <script src="{{ asset('js/akun/ganti_password.js') }}"></script>
     @endif
 @endif
 
@@ -84,6 +92,8 @@
 <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
 
+<!-- DOMPurify -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 
 
 

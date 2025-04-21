@@ -42,8 +42,6 @@
                                 <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailLokasi-{{ $data->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-        
-                                <x-modal_detail_lokasi :dudi="$data" :modalId="'modalDetailLokasi-' . $data->id" />
                                 <!-- Tombol Edit -->
                                 <button class="btn-icon editLokasi" data-id="{{ $data->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
@@ -56,6 +54,7 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    <x-modal_detail_lokasi :dudi="$data" :modalId="'modalDetailLokasi-' . $data->id" />
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">

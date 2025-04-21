@@ -8,19 +8,16 @@
 
 @section('content')
 <div class="absen data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Absensi Harian</h1>
     </div>
 
     <div class="absen-section data-section">
-        <!-- Tombol Buat Absen -->
         <div class="absen-action data-action">
             <button class="btn-open" id="tambahAbsen" data-bs-toggle="modal" data-bs-target="#modalAbsen">Buat Absen</button>
             <x-modal_absen></x-modal_absen>
         </div>
 
-        <!-- Tabel Absensi -->
         <div class="absen-content data-content">
             <div class="table-wrapper">
                 <table class="absen-table data-table">

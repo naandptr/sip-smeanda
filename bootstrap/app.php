@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
             'account.status' => \App\Http\Middleware\CheckAccountStatus::class,
+            'check.default.password' => \App\Http\Middleware\CekDefaultPassword::class,
         ]);
         
         // Middleware groups

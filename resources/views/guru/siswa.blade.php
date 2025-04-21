@@ -25,7 +25,7 @@
                 <tbody class="data-body">
                     @foreach ($siswa as $index => $s)
                     <tr>
-                        <td>{{ $s->nisn }}</td>
+                        <td>{{ $s->nis }}</td>
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->kelas->nama_kelas }}</td>
                         @php

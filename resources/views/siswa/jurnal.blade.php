@@ -1,5 +1,6 @@
 @php 
     $page_name = 'siswa/jurnal'; 
+    use Illuminate\Support\Str;
 @endphp
 
 @extends('layouts.app')
@@ -8,19 +9,16 @@
 
 @section('content')
 <div class="jurnal data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Jurnal Kegiatan</h1>
     </div>
 
     <div class="jurnal-section data-section">
-        <!-- Tombol Buat Jurnal -->
         <div class="jurnal-action data-action">
             <button type="button" class="btn-open" id="tambahJurnal" data-bs-toggle="modal" data-bs-target="#modalJurnal">Buat Jurnal</button>
             <x-modal_jurnal></x-modal_jurnal>
         </div>
 
-        <!-- Tabel Buat Absen-->
         <div class="jurnal-content data-content">
             <div class="table-wrapper">
                 <table class="jurnal-table data-table">
@@ -35,31 +33,40 @@
                         </tr>
                     </thead>
                     <tbody class="jurnal-body data-body">
+                        @foreach ($jurnalList as $jurnal)
                         <tr>
-                            <td>1</td>
-                            <td>13/02/2025</td>
-                            <td>Skibidi</td>
-                            <td><div class="status-badge">MENUNGGU</div></td>
-                            <td>-</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ \Carbon\Carbon::parse($jurnal->tanggal)->format('d/m/Y') }}</td>
+                            <td>
+                                <div class="deskripsi-cell">
+                                    {!! limitHtml($jurnal->deskripsi, 50) !!}
+                                </div>
+                            </td>                                                               
+                            <td>
+                                @php
+                                    $status = strtolower($jurnal->validasi->status_validasi ?? '-');
+                                    $badgeClass = match($status) {
+                                        'menunggu' => 'pending',
+                                        'selesai' => 'selesai',
+                                        default => '',
+                                    };
+                                @endphp
+                                <div class="status-badge {{ $badgeClass }}">{{ $jurnal->validasi->status_validasi ?? '-' }}</div>
+                            </td>
+                            <td><div class="deskripsi-cell">
+                                {!! Str::limit(strip_tags($jurnal->validasi->catatan ?? '-'), 50) !!}
+                            </div></td>
                             <td class="data-aksi">
-                                <!-- Tombol Lihat -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal-{{ $jurnal->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <x-modal_detail_jurnal></x-modal_detail_jurnal>
-
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon btn-open-jurnal" data-mode="edit"
-                                    data-id="1" data-tanggal="13/02/2025" data-deskripsi="Skibidi">
-                                    <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
-                                </button>
-
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon btn-hapus-jurnal" data-id="1">
+                                <x-modal_detail_jurnal :jurnal="$jurnal" :modalId="'modalDetailJurnal-' . $jurnal->id" />
+                                <button class="btn-icon deleteJurnal" data-id="{{ $jurnal->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="jurnal-footer data-footer">
@@ -78,7 +85,3 @@
     </div>
 </div>
 @endsection
-
-@push('page_scripts')
-    <script src="{{ asset('js/siswa/jurnal.js') }}"></script>
-@endpush

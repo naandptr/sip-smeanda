@@ -28,7 +28,7 @@
                         <input type="email" id="emailUser" name="emailUser" required>
                     </div>
                 </div>
-                <div class="auth-group">        
+                {{-- <div class="auth-group">        
                     <div class="auth-field">
                         <label for="newPw">Create Password</label>
                         <div class="pass-wrapper">
@@ -45,7 +45,7 @@
                             <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPw" alt="Toggle Password">
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="auth-button">
                     <button type="submit" class="btn-submit" id="submitSetup">Kirim Tautan</button>
                 </div>

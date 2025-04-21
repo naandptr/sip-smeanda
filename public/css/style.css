@@ -293,6 +293,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     display: flex;
     flex-direction: column;
     gap: 16px;
+    width: 100%;
 }
 
 .auth-header h1 {
@@ -308,13 +309,29 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     opacity: 0.75;
 }
 
+.auth-button {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
+}
+
 .auth-button button {
     width: 100%;
     border-radius: 4px;
     background: var(--colors-primary-500, #0EA5E9);
     color: var(--colors-white, #FFF);
     font-weight: 800;
-    line-height: 120%; /* 19.2px */
+    line-height: 120%; 
+}
+
+.btn-lupa-pass {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; 
+    text-decoration: none;
 }
 
 .brand-text {
@@ -678,10 +695,31 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     padding: 8px;
 }
 
+.deskripsi-cell {
+    max-height: 120px;
+    white-space: normal;  
+    overflow-wrap: break-word; 
+}
+
+.deskripsi-cell ul {
+    padding-left: 1rem; 
+    margin: 0.5rem 0;
+}
+
+.deskripsi-cell ol {
+    padding-left: 1rem; 
+    margin: 0.5rem 0;
+}
+
+.deskripsi-cell li {
+    margin-left: 0;
+    padding-left: 0;
+}
+
 .pagination {
     display: flex; 
-    justify-content: space-between; /* Previous kiri, Next kanan */
-    align-items: center; /* Pusatkan vertikal */
+    justify-content: space-between; 
+    align-items: center; 
     margin: 0;
     padding: 8px 16px;
 }
@@ -725,6 +763,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     border-radius: 999px;
     padding: 0 8px;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .not-started {
@@ -732,7 +771,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     background: var(--colors-slate-100, #F1F5F9);
 }
 
-.pending, .ongoing, .menunggu {
+.pending, .ongoing {
     color: var(--colors-yellow-600, #CA8A04);
     background: var(--colors-yellow-100, #FEF9C3);
 }
@@ -1013,25 +1052,29 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 150%;
 }
 
-
-
 .note-editor {
     width: 100% !important;  
     min-height: 250px;     
     border-radius: 4px;
     border: 1px solid var(--colors-gray-300, #CBD5E1);
     background: var(--colors-white, #FFF);
-    color: var(--Colors-gray-500, #64748B);
 
     /* Body Regular */
-    font-family: "Nunito Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 20px !important; 
+    color: var(--Colors-gray-500, #64748B) !important;
 }
 
-
+.note-editable, 
+.note-editable * {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    color: #64748B !important;
+} 
 
 /* Nilai dan Akun */
 .nilai-form-container {
@@ -1254,6 +1297,10 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     background: var(--colors-white, #FFF);
     width: 70%;
     padding: 8px 12px;
+    align-items: flex-start;
+    flex-wrap: wrap; 
+    word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .model-view-value h5 {
@@ -1267,9 +1314,11 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .desc-box {
-    min-height: 100px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-black, #000) !important;
 }
-
 
 /* Modal Validasi */
 .modal-form-header h4 {

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User; 
@@ -14,24 +15,38 @@ use App\Http\Controllers\Siswa;
 Route::middleware(['web'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/lupa-password', [AuthController::class, 'showLupaPasswordForm'])->name('lupa-password');
+    Route::post('/lupa-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
+
+    // Ganti password awal 
+    Route::get('/ganti-password-awal', [AuthController::class, 'changePasswordFormAwal'])->name('ganti-password-awal');
+    Route::post('/ganti-password-awal', [AuthController::class, 'changePasswordAwal'])->name('ganti-password-awal.store');
+
+    // Lupa Password
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password-form', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 // Email Verification Route
 Route::get('/verify-account/{token}', [AuthController::class, 'verifyAccount'])->name('verify-account');
 
-// // Dashboard
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
-
-Route::middleware(['auth', 'account.status'])->group(function () {
+Route::middleware(['auth', 'account.status', 'check.default.password'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
-
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-akun', [AuthController::class, 'showSetupForm'])->name('setup-akun');
     Route::post('/setup-akun', [AuthController::class, 'setupAccount']);
+
+    Route::get('/akun', [AuthController::class, 'showAccount'])->name('akun.show');
+
+
+    // Lupa password
+    Route::get('/ganti-password', [AuthController::class, 'changePasswordForm'])->name('akun.show.ganti_password');
+    Route::post('/ganti-password', [AuthController::class, 'changePassword'])->name('akun.ganti_password');
 });
 
 // Route untuk Admin Jurusan
@@ -59,15 +74,26 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
     Route::view('/akun-admin', 'admin_jurusan.akun')->name('jurusan.akun');
 });
 
-// Route untuk Guru
+// Route untuk Guru Pembimbing
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function () {
     Route::get('/siswa-bimbingan', [Pembimbing\SiswaController::class, 'index'])->name('guru.siswa');
 
     Route::get('/absen-siswa', [Pembimbing\AbsenSiswaController::class, 'index'])->name('guru.absen');
     Route::get('/absen-siswa/detail/{id}', [Pembimbing\AbsenSiswaController::class, 'detail'])->name('absen-detail.guru');
 
-    Route::view('/jurnal-siswa', 'guru.jurnal')->name('guru.jurnal');
-    Route::view('/nilai-siswa', 'guru.nilai')->name('guru.nilai');
+    Route::get('/jurnal-siswa', [Pembimbing\JurnalSiswaController::class, 'index'])->name('guru.jurnal');
+    Route::get('/jurnal-siswa/{siswa}', [Pembimbing\JurnalSiswaController::class, 'detail'])->name('jurnal.detail');
+    Route::post('/jurnal-validasi/{id}', [Pembimbing\JurnalSiswaController::class, 'validasi'])->name('validasi.store');
+
+    Route::get('/penilaian', [Pembimbing\PenilaianController::class, 'index'])->name('guru.nilai');
+    Route::get('/get-siswa-bimbingan/{id}', [Pembimbing\PenilaianController::class, 'getDataSiswa']);
+    Route::get('/tambah_nilai', [Pembimbing\PenilaianController::class, 'showForm'])->name('nilai.form');
+    Route::post('/tambah_nilai/detail/simpan', [Pembimbing\PenilaianController::class, 'simpanDetailNilaiSementara'])->name('nilai.detail.simpan');
+    Route::delete('/tambah_nilai/detail/hapus/{index}', [Pembimbing\PenilaianController::class, 'hapusDetailNilaiSementara'])->name('nilai.detail.hapus');
+    Route::post('/tambah_nilai/store', [Pembimbing\PenilaianController::class, 'store'])->name('nilai.store');
+    Route::get('/penilaian/download/{id}', [Pembimbing\PenilaianController::class, 'downloadPenilaianPDF'])->name('nilai.download');
+
+
     Route::view('/akun-guru', 'guru.akun')->name('guru.akun');
 });
     
@@ -83,6 +109,12 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(functio
     Route::post('/absen-prakerin', [Siswa\AbsenController::class, 'store'])->name('absen.store');
 
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
+    Route::get('/jurnal-prakerin', [Siswa\JurnalController::class, 'index'])->name('siswa.jurnal');
+    Route::post('/jurnal-prakerin', [Siswa\JurnalController::class, 'store'])->name('jurnal.store');
+    Route::post('/upload-image-jurnal', [Siswa\JurnalController::class, 'uploadImage'])->name('jurnal.upload-image');;
+
+    Route::delete('/jurnal-prakerin/{id}/delete', [Siswa\JurnalController::class, 'destroy'])->name('jurnal.destroy');
+
     Route::view('/akun-siswa', 'siswa.nilai')->name('siswa.akun');
 });
 
