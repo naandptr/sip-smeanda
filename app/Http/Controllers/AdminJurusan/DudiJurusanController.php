@@ -46,7 +46,6 @@ class DudiJurusanController extends Controller
 
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        // Cek apakah DUDI ini sudah punya pembimbing di tahun ajaran dan jurusan yang sama
         $exists = DudiJurusan::where('dudi_id', $request->dudi_id)
         ->where('jurusan_id', $jurusanId)
         ->where('tahun_ajar_id', $request->tahun_ajar_id)
@@ -59,7 +58,6 @@ class DudiJurusanController extends Controller
             ], 422);
         }
 
-        // Cek apakah pembimbing sudah ditugaskan ke DUDI yang sama pada tahun ajaran yang sama
         $doubleAssignment = DudiJurusan::where('pembimbing_id', $request->pembimbing_id)
             ->where('tahun_ajar_id', $request->tahun_ajar_id)
             ->where('dudi_id', $request->dudi_id)
@@ -99,7 +97,6 @@ class DudiJurusanController extends Controller
         $dudiJurusan = DudiJurusan::findOrFail($id);
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        // Cek jika ada data lain (selain yang sedang diupdate) dengan kombinasi yang sama
         $exists = DudiJurusan::where('id', '!=', $id)
         ->where('dudi_id', $request->dudi_id)
         ->where('jurusan_id', $jurusanId)

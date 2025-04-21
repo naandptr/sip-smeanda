@@ -74,40 +74,25 @@ class User extends Authenticatable implements MustVerifyEmail
         ])->save();
     }
 
-    // Tambahkan method ini untuk memastikan update bekerja
     public function update(array $attributes = [], array $options = [])
     {
         return parent::update($attributes, $options);
     }
 
-    /**
-     * Relasi one-to-one dengan Siswa
-     * (Untuk user dengan role Siswa)
-     */
     public function siswa()
     {
         return $this->hasOne(Siswa::class, 'user_id', 'id');
     }
 
-    /**
-     * Relasi one-to-one dengan Pembimbing
-     * (Untuk user dengan role Guru)
-     */
     public function pembimbing()
     {
         return $this->hasOne(Pembimbing::class, 'user_id', 'id');
     }
 
-    /**
-     * Relasi one-to-one dengan AdminJurusan
-     * (Untuk user dengan role Admin Jurusan)
-     */
     public function adminJurusan()
     {
         return $this->hasOne(AdminJurusan::class, 'user_id', 'id');
     }
-
-    // ========== METHOD ROLE CHECKER ========== //
 
     public function isAdminUtama()
     {
@@ -128,14 +113,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->role === self::ROLE_SISWA;
     }
-
-    // protected static function boot()
-    // {
-    //     parent::boot();
-    //     static::creating(function ($user) {
-    //         if (empty($user->password)) {
-    //             $user->password = bcrypt('123456');
-    //         }
-    //     });
-    // }
 }

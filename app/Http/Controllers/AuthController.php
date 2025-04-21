@@ -18,96 +18,39 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->validate([
-    //         'username' => 'required|string',
-    //         'password' => 'required|string',
-    //     ]);
-
-    //     Log::info('Login attempt for: '.$credentials['username']);
-
-    //     $user = User::where('username', $credentials['username'])->first();
-
-    //     if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
-    //         Log::info('Auth attempt successful, user: '.Auth::user()->username);
-    //         return redirect()->intended(route('dashboard'));
-    //     } else {
-    //         Log::warning('Auth attempt failed for: '.$credentials['username']);
-    //         return back()->withErrors(['username' => 'Login gagal']);
-    //     }
-        
-
-    //     if (!Hash::check($credentials['password'], $user->password)) {
-    //         Log::warning('Password mismatch for: '.$user->username);
-    //         return back()->withErrors(['password' => 'Password salah']);
-    //     }
-        
-    //     Log::info('Password match for user: '.$user->username);
-        
-    //     if ($user->role !== User::ROLE_ADMIN_UTAMA && !$user->hasVerifiedEmail()) {
-    //         return back()->withErrors(['email' => 'Email belum diverifikasi']);
-    //     }
-
-    //     Auth::login($user);
-
-    //     if ($user->status === User::STATUS_PENDING) {
-    //         Log::info('Redirecting user to setup account: '.$user->username);
-    //         Log::info('User status saat login: ' . json_encode($user->status));
-    //         return redirect()->route('setup-akun');
-    //     } else {
-    //         Log::info('User status is not pending: '.$user->username);
-    //     }
-        
-    //     if ($user->status !== User::STATUS_AKTIF) {
-    //         Log::warning('User  account is inactive: '.$user->username);
-    //         return back()->withErrors(['username' => 'Akun dinonaktifkan']);
-    //     }
-
-    //     return redirect()->intended(route('dashboard'));
-    // }
-
     public function login(Request $request)
     {
-        // Validasi input
         $credentials = $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Cari user berdasarkan username
         $user = User::where('username', $credentials['username'])->first();
 
-        // Jika user tidak ditemukan
         if (!$user) {
             return back()->withErrors(['username' => 'Akun tidak ditemukan.']);
         }
 
-        // Jika password salah
         if (!Hash::check($credentials['password'], $user->password)) {
-            Auth::logout(); // Logout pengguna jika password salah
+            Auth::logout(); 
             return back()->withErrors(['password' => 'Password salah']);
         }
 
-        // Cek apakah email sudah diverifikasi
         if (!$user->hasVerifiedEmail()) {
-            Auth::login($user); // Login user untuk proses setup akun
+            Auth::login($user);
             return redirect()->route('setup-akun');
         }
 
-        // Cek apakah password masih default
         if ($user->is_default_password) {
-            Auth::login($user); // Login user untuk ganti password awal
+            Auth::login($user); 
             return redirect()->route('ganti-password-awal');
         }
 
-        // Cek apakah status akun aktif
         if ($user->status !== User::STATUS_AKTIF) {
             Auth::logout();
             return back()->withErrors(['username' => 'Akun dinonaktifkan']);
         }
 
-        // Kalau semua valid, login user dan arahkan ke dashboard
         Auth::login($user);
         return redirect()->intended(route('dashboard'));
     }
@@ -150,12 +93,9 @@ class AuthController extends Controller
 
         $validated = $request->validate([
             'emailUser' => 'required|email|unique:tbl_users,email',
-            // 'newPw' => 'required|string|min:6',
-            // 'confirmPw' => 'required|same:newPw',
         ]);
 
         $user->email = $validated['emailUser'];
-        // $user->password = Hash::make($validated['newPw']);
         $user->email_verification_token = Str::random(60);
         
         if (!$user->save()) {

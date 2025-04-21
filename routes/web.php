@@ -18,7 +18,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/lupa-password', [AuthController::class, 'showLupaPasswordForm'])->name('lupa-password');
     Route::post('/lupa-password', [ResetPasswordController::class, 'sendResetLink'])->name('password.email');
 
-    // Ganti password awal 
+    // Ganti Password Awal 
     Route::get('/ganti-password-awal', [AuthController::class, 'changePasswordFormAwal'])->name('ganti-password-awal');
     Route::post('/ganti-password-awal', [AuthController::class, 'changePasswordAwal'])->name('ganti-password-awal.store');
 
@@ -42,7 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/setup-akun', [AuthController::class, 'setupAccount']);
 
     Route::get('/akun', [AuthController::class, 'showAccount'])->name('akun.show');
-
 
     // Lupa password
     Route::get('/ganti-password', [AuthController::class, 'changePasswordForm'])->name('akun.show.ganti_password');
@@ -70,8 +69,6 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
     Route::get('/kelola-prakerin/{id}/edit', [AdminJurusan\PenetapanPrakerinController::class, 'edit'])->name('prakerin.edit');
     Route::patch('/kelola-prakerin/{id}/update', [AdminJurusan\PenetapanPrakerinController::class, 'update'])->name('prakerin.update');
     Route::delete('/kelola-prakerin/{id}/delete', [AdminJurusan\PenetapanPrakerinController::class, 'destroy'])->name('prakerin.destroy');
-
-    Route::view('/akun-admin', 'admin_jurusan.akun')->name('jurusan.akun');
 });
 
 // Route untuk Guru Pembimbing
@@ -92,9 +89,6 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function
     Route::delete('/tambah_nilai/detail/hapus/{index}', [Pembimbing\PenilaianController::class, 'hapusDetailNilaiSementara'])->name('nilai.detail.hapus');
     Route::post('/tambah_nilai/store', [Pembimbing\PenilaianController::class, 'store'])->name('nilai.store');
     Route::get('/penilaian/download/{id}', [Pembimbing\PenilaianController::class, 'downloadPenilaianPDF'])->name('nilai.download');
-
-
-    Route::view('/akun-guru', 'guru.akun')->name('guru.akun');
 });
     
 // Route untuk Siswa
@@ -114,8 +108,6 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(functio
     Route::post('/upload-image-jurnal', [Siswa\JurnalController::class, 'uploadImage'])->name('jurnal.upload-image');;
 
     Route::delete('/jurnal-prakerin/{id}/delete', [Siswa\JurnalController::class, 'destroy'])->name('jurnal.destroy');
-
-    Route::view('/akun-siswa', 'siswa.nilai')->name('siswa.akun');
 });
 
 // Route untuk Admin Utama
@@ -156,7 +148,6 @@ Route::middleware(['auth', 'role:'.User::ROLE_ADMIN_UTAMA])->group(function () {
     Route::patch('/kelola-lokasi/{id}/update', [AdminUtama\DudiController::class, 'update'])->name('lokasi.update');
     Route::delete('/kelola-lokasi/{id}/delete', [AdminUtama\DudiController::class, 'destroy'])->name('lokasi.destroy');
 });
-
 
 // Fallback route
 Route::fallback(function () {

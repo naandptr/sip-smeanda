@@ -48,10 +48,10 @@ class DudiJurusan extends Model
         return $this->hasManyThrough(
             Siswa::class,
             PenetapanPrakerin::class,
-            'dudi_jurusan_id', // Foreign key di PenetapanPrakerin menuju DudiJurusan
-            'id', // Primary key di Siswa
-            'id', // Primary key di DudiJurusan
-            'siswa_id' // Foreign key di PenetapanPrakerin menuju Siswa
+            'dudi_jurusan_id', 
+            'id',
+            'id',
+            'siswa_id'
         );
     }
 

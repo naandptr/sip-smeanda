@@ -18,7 +18,6 @@ class DashboardController extends Controller
         $user = Auth::user();
         $role = $user->role;
 
-        // Data umum untuk semua user
         $data = [
             'role' => $role,
         ];
@@ -31,20 +30,17 @@ class DashboardController extends Controller
                 break;
 
             case User::ROLE_ADMIN_JURUSAN:
-                // Menghitung total siswa berdasarkan jurusan yang diambil dari kelas
                 $data['totalSiswa'] = Siswa::join('tbl_kelas', 'tbl_siswa.kelas_id', '=', 'tbl_kelas.id')
                 ->where('tbl_kelas.jurusan_id', $user->adminJurusan->jurusan_id
                 )
                 ->count();
-
-                // Menghitung total lokasi prakerin di jurusan   
+ 
                 $data['totalLokasiPrakerin'] = DudiJurusan::where('jurusan_id', $user->adminJurusan->jurusan_id)
                 ->count();
                 break;
 
             case User::ROLE_GURU:
                 $pembimbing = $user->pembimbing;
-                // Total siswa bimbingan dari penetapan prakerin
                 $data['totalSiswaBimbingan'] = PenetapanPrakerin::whereHas('dudiJurusan', function ($query) use ($pembimbing) {
                     $query->where('pembimbing_id', $pembimbing->id);
                 })->count();

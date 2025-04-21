@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // =========== CRUD KELAS ============
-    // Memastikan form kosong saat klik tombol tambah kelas
     $("#tambahPrakerin").click(function () {
         $("#modalPrakerin form")[0].reset(); 
         $("#updatePrakerin").hide(); 
@@ -8,7 +6,6 @@ $(document).ready(function() {
         $("#modalPrakerin").modal("show");
     });
 
-    // Klik tombol edit
     $(".editPrakerin").click(function () {
         let id = $(this).data("id");
 
@@ -24,7 +21,6 @@ $(document).ready(function() {
         });
     });
 
-    // Simpan Kelas (Tambah)
     $("#submitPrakerin").click(function () {
         const submitBtn = $(this);
         submitBtn.prop('disabled', true); 

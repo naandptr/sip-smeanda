@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckAccountStatus
 {
-    // app/Http/Middleware/CheckAccountStatus.php
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
             $user = Auth::user();
             
-            // Skip untuk admin utama
             if ($user->role === User::ROLE_ADMIN_UTAMA) {
                 return $next($request);
             }

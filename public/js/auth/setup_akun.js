@@ -1,12 +1,10 @@
 $(document).ready(function () {
-    // Handle form submission
     $('#setupForm').submit(function(e) {
         e.preventDefault();
         
         const form = $(this);
         const submitBtn = $('#submitSetup');
         
-        // Show loading state
         submitBtn.prop('disabled', true);
         submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Mengirim...');
         

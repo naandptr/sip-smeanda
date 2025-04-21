@@ -1,31 +1,27 @@
 $(document).ready(function() {
-    // =========== CRUD KELAS ============
-    // Memastikan form kosong saat klik tombol tambah kelas
     $("#tambahKelas").click(function () {
-        $("#modalKelas form")[0].reset(); // Kosongkan form
-        $("#updateKelas").hide(); // Sembunyikan tombol Update
-        $("#submitKelas").show(); // Tampilkan tombol Simpan
+        $("#modalKelas form")[0].reset();
+        $("#updateKelas").hide(); 
+        $("#submitKelas").show(); 
         $("#modalKelas").modal("show");
     });
 
-    // Klik tombol edit
     $(".editKelas").click(function () {
         let id = $(this).data("id");
 
         $.get(`/kelola-kelas/${id}/edit`, function (data) {
             $('#namaKelas').val(data.nama_kelas);
-            $('#namaJurusan').val(data.jurusan_id); // Pastikan select option diisi dengan value
+            $('#namaJurusan').val(data.jurusan_id); 
             $('#tahunAjarKelas').val(data.tahun_ajar_id);
-            $("#submitKelas").hide(); // Sembunyikan tombol Simpan
-            $("#updateKelas").show().data("id", id); // Tampilkan tombol Update dengan ID
+            $("#submitKelas").hide(); 
+            $("#updateKelas").show().data("id", id); 
             $('#modalKelas').modal('show');
         });
     });
 
-    // Simpan Kelas (Tambah)
     $("#submitKelas").click(function () {
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true); 
         $.ajax({
             url: "/kelola-kelas",
             method: "POST",
@@ -34,8 +30,8 @@ $(document).ready(function() {
             },
             data: {
                 nama_kelas: $("#namaKelas").val(),
-                jurusan_id: $("#namaJurusan").val(),  // Ambil ID jurusan dari select
-                tahun_ajar_id: $("#tahunAjarKelas").val() // Ambil ID tahun ajar
+                jurusan_id: $("#namaJurusan").val(),  
+                tahun_ajar_id: $("#tahunAjarKelas").val() 
             },
             success: function (response) {
                 Swal.fire("Berhasil!", response.message, "success").then(() => {
@@ -43,11 +39,11 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); // Debugging
+                console.log(xhr.responseText); 
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -56,7 +52,7 @@ $(document).ready(function() {
     $("#updateKelas").click(function () {
         let id = $(this).data("id");
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true);
         $.ajax({
             url: `/kelola-kelas/${id}/update`,
             method: "PATCH",
@@ -65,8 +61,8 @@ $(document).ready(function() {
             },
             data: {
                 nama_kelas: $("#namaKelas").val(),
-                jurusan_id: $("#namaJurusan").val(), // Ambil ID jurusan dari select
-                tahun_ajar_id: $("#tahunAjarKelas").val() // Ambil ID tahun ajar
+                jurusan_id: $("#namaJurusan").val(), 
+                tahun_ajar_id: $("#tahunAjarKelas").val() 
             },
             success: function (response) {
                 Swal.fire("Berhasil!", response.message, "success").then(() => {
@@ -74,11 +70,11 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); // Debugging
+                console.log(xhr.responseText); 
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -96,7 +92,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/kelola-kelas/${id}/delete`, // Perbaiki URL
+                    url: `/kelola-kelas/${id}/delete`,
                     method: "DELETE", 
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -107,7 +103,7 @@ $(document).ready(function() {
                         });
                     },
                     error: function (xhr) {
-                        console.log(xhr.responseText); // Debugging
+                        console.log(xhr.responseText); 
                         Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
                     }
                 });

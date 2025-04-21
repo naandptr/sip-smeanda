@@ -17,7 +17,6 @@
                         </div>
                     </div>
 
-                    {{-- Role spesifik --}}
                     @if ($user['role'] === 'Siswa')
                         <div class="modal-view-item">
                             <h5 class="modal-view-label">Nama Lengkap</h5>
@@ -65,7 +64,6 @@
                         </div>
                     @endif
 
-                    {{-- Role dan Status (selalu tampil) --}}
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Email</h5>
                         <div class="modal-view-value">

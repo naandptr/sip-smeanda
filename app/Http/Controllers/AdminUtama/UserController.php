@@ -14,67 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    // public function index()
-    // {
-    //     $users = User::with([
-    //         'siswa.kelas',         
-    //         'pembimbing', 
-    //         'adminJurusan.jurusan' 
-    //     ])
-    //     ->whereNotIn('role', ['Admin Utama']) 
-    //         ->orderBy('created_at', 'desc')
-    //         ->get();
-
-    //     $formattedUsers = $users->map(function ($user) {
-    //         $userData = [
-    //             'id' => $user->id,
-    //             'username' => $user->username,
-    //             'role' => $user->role,
-    //             'email' => $user->email,
-    //             'status' => $user->status
-    //         ];
-
-    //         switch ($user->role) {
-    //             case 'Siswa':
-    //                 if ($user->siswa) {
-    //                     $userData['detail'] = [
-    //                         'nama' => $user->siswa->nama,
-    //                         'nis' => $user->siswa->nis,
-    //                         'nama_kelas' => $user->siswa->kelas->nama_kelas ?? '-'
-    //                     ];
-    //                 }
-    //                 break;
-
-    //             case 'Guru':
-    //                 if ($user->pembimbing) {
-    //                     $userData['detail'] = [
-    //                         'nama' => $user->pembimbing->nama,
-    //                         'nip' => $user->pembimbing->nip,
-    //                         'telp' => $user->pembimbing->telp
-    //                     ];
-    //                 }
-    //                 break;
-
-    //             case 'Admin Jurusan':
-    //                 if ($user->adminJurusan) {
-    //                     $userData['detail'] = [
-    //                         'nama' => $user->adminJurusan->nama,
-    //                         'nama_jurusan' => $user->adminJurusan->jurusan->nama_jurusan ?? '-'
-    //                     ];
-    //                 }
-    //                 break;
-    //         }
-
-    //         return $userData;
-    //     });
-
-    //     return view('admin_utama.user', [
-    //         'users' => $formattedUsers,
-    //         'jurusans' => Jurusan::all(), 
-    //         'kelas' => Kelas::all() 
-    //     ]);
-    // }
-
     public function index()
     {
         $users = User::with([
@@ -125,7 +64,6 @@ class UserController extends Controller
                     }
                     break;
             }
-
             return $userData;
         });
 

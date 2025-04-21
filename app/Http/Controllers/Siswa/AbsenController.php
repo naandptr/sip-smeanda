@@ -53,12 +53,10 @@ class AbsenController extends Controller
             ->whereDate('tanggal', $today)
             ->get();
 
-        // Cek absen datang
         if ($jenis === 'Absen Datang' && $existingAbsen->where('jenis_absen', 'Absen Datang')->count() > 0) {
             return response()->json(['message' => 'Anda sudah mengisi absen datang hari ini.'], 400);
         }
 
-        // Cek absen pulang
         if ($jenis === 'Absen Pulang') {
             $absenDatang = $existingAbsen->where('jenis_absen', 'Absen Datang')->first();
             if (!$absenDatang) {

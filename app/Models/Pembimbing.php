@@ -16,16 +16,14 @@ class Pembimbing extends Authenticatable
         'nip',
         'nama',
         'telp',
-        'user_id', // Foreign key ke tabel users
+        'user_id', 
     ];
 
-    // Pembimbing memiliki akun user
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // Pembimbing bisa membimbing banyak lokasi prakerin tiap tahun ajaran
     public function dudiJurusan()
     {
         return $this->hasMany(dudiJurusan::class, 'pembimbing_id', 'id');

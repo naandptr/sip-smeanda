@@ -1,10 +1,8 @@
 $(document).ready(function() {
-    // ===== Toggle Sidebar =====
     $(".toggle-btn").on("click", function () {
         $(".layout").toggleClass("collapsed");
     });
 
-    // ===== Toggle Password =====
     $(".pass-wrapper input").on("input", function () {
         $(this).siblings(".toggle-password").toggle($(this).val().length > 0);
     });

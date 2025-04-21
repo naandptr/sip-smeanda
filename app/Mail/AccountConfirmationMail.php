@@ -20,16 +20,6 @@ class AccountConfirmationMail extends Mailable
         $this->token = $token;
     }
 
-    // public function build()
-    // {
-    //     return $this->subject('Konfirmasi Akun Sistem Informasi Prakerin')
-    //                 ->view('emails.account_confirmation')
-    //                 ->with([
-    //                     'user' => $this->user,
-    //                     'token' => $this->token,
-    //                 ]);
-    // }
-
     public function build()
     {
         return $this->subject('Verifikasi Akun')

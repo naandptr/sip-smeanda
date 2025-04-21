@@ -18,16 +18,6 @@ class PenetapanPrakerinController extends Controller
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        // $dataPrakerin = PenetapanPrakerin::with(['siswa', 'dudiJurusan.dudi', 'tahunAjar'])
-        // ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
-        //     $query->where('jurusan_id', $jurusanId);
-        // })
-        //     ->get()
-        //     ->sortBy(fn($a) => $a->siswa->nama ?? '')
-        //     ->sortBy(fn($a) => $a->dudiJurusan->dudi->nama_dudi ?? '')
-        //     ->sortByDesc(fn($a) => $a->tahunAjar->periode_mulai ?? '')
-        //     ->sortByDesc(fn($a) => $a->tanggal_mulai);
-
         $dataPrakerin = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
             ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
                 $query->where('jurusan_id', $jurusanId);
@@ -72,7 +62,6 @@ class PenetapanPrakerinController extends Controller
         $tanggalSelesai = Carbon::parse($request->tanggal_selesai);
         $tahunAjar = TahunAjar::findOrFail($request->tahun_ajar_id);
 
-        // Validasi apakah tanggal berada dalam rentang tahun ajar
         if (
             $tanggalMulai->lt(Carbon::parse($tahunAjar->periode_mulai)) ||
             $tanggalSelesai->gt(Carbon::parse($tahunAjar->periode_selesai))
@@ -83,7 +72,6 @@ class PenetapanPrakerinController extends Controller
             ], 422);
         }
 
-        // Cek jika siswa sudah punya penetapan dengan status aktif
         $cekPenetapan = PenetapanPrakerin::where('siswa_id', $siswaId)
             ->whereIn('status', ['Berlangsung', 'Belum Dimulai'])
             ->exists();
@@ -95,7 +83,6 @@ class PenetapanPrakerinController extends Controller
             ], 422);
         }
 
-        // Tentukan status berdasarkan tanggal hari ini
         $now = Carbon::now();
         if ($now->lt($tanggalMulai)) {
             $status = 'Belum Dimulai';
@@ -105,7 +92,6 @@ class PenetapanPrakerinController extends Controller
             $status = 'Selesai';
         }
 
-        // Simpan data
         PenetapanPrakerin::create([
             'siswa_id' => $siswaId,
             'dudi_jurusan_id' => $request->dudi_jurusan_id,
@@ -140,7 +126,6 @@ class PenetapanPrakerinController extends Controller
         $tanggalSelesai = Carbon::parse($request->tanggal_selesai);
         $tahunAjar = TahunAjar::findOrFail($request->tahun_ajar_id);
 
-        // Validasi tanggal dalam tahun ajar
         if (
             $tanggalMulai->lt(Carbon::parse($tahunAjar->periode_mulai)) ||
             $tanggalSelesai->gt(Carbon::parse($tahunAjar->periode_selesai))
@@ -151,11 +136,10 @@ class PenetapanPrakerinController extends Controller
             ], 422);
         }
 
-        // Cek jika siswa punya penetapan lain yang aktif (bukan dirinya sendiri)
         $cekPenetapan = PenetapanPrakerin::where('siswa_id', $siswaId)
             ->where('id', '!=', $penetapan->id)
             ->whereIn('status', ['Berlangsung', 'Belum Dimulai'])
-            ->get(); // ✅ tambahin ini
+            ->get(); 
 
         if ($cekPenetapan->isNotEmpty()) {
             return response()->json([
@@ -164,7 +148,6 @@ class PenetapanPrakerinController extends Controller
             ], 422);
         }
 
-        // Tentukan status berdasarkan waktu sekarang
         $now = Carbon::now();
         if ($now->lt($tanggalMulai)) {
             $status = 'Belum Dimulai';

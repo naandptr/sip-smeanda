@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // =========== CRUD KELAS ============
-    // Memastikan form kosong saat klik tombol tambah kelas
     $("#tambahDudiJurusan").click(function () {
         $("#modalDudiJurusan form")[0].reset(); 
         $("#updateDudiJurusan").hide(); 
@@ -8,7 +6,6 @@ $(document).ready(function() {
         $("#modalDudiJurusan").modal("show");
     });
 
-    // Klik tombol edit
     $(".editDudiJurusan").click(function () {
         let id = $(this).data("id");
 
@@ -22,7 +19,6 @@ $(document).ready(function() {
         });
     });
 
-    // Simpan Kelas (Tambah)
     $("#submitDudiJurusan").click(function () {
         const submitBtn = $(this);
         submitBtn.prop('disabled', true); 
@@ -52,7 +48,6 @@ $(document).ready(function() {
         });
     });
 
-    // Update Kelas
     $("#updateDudiJurusan").click(function () {
         let id = $(this).data("id");
         const submitBtn = $(this);

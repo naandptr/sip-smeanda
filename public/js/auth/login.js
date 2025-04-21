@@ -1,12 +1,10 @@
 $(document).ready(function() {
-    // Handle form submission
     $('#loginForm').submit(function(e) {
         e.preventDefault();
         
         const form = $(this);
         const submitBtn = $('#submitLogin');
         
-        // Show loading state
         submitBtn.prop('disabled', true);
         submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Memproses...');
         
@@ -15,8 +13,7 @@ $(document).ready(function() {
             method: 'POST',
             data: form.serialize(),
             success: function(response) {
-                // Redirect to the intended page
-                window.location.href = response.redirectUrl; // Pastikan server mengembalikan URL ini
+                window.location.href = response.redirectUrl; 
             },
             error: function(xhr) {
                 submitBtn.prop('disabled', false);

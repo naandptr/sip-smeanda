@@ -5,7 +5,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    box-sizing: border-box; /* Mencegah overflow */
+    box-sizing: border-box; 
 }
 
 /* Heading Styles */
@@ -18,27 +18,27 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 .layout {
     display: grid;
-    grid-template-rows: 60px 1fr; /* Navbar + Main Container */
+    grid-template-rows: 60px 1fr; 
     grid-template-columns: 240px 1fr;
-    height: 100vh; /* Full tinggi layar */
-    overflow: hidden; /* Hindari overflow horizontal */
+    height: 100vh; 
+    overflow: hidden;
     transition: grid-template-columns 0.3s ease;
 }
 
 .layout.collapsed {
-    grid-template-columns: 80px 1fr; /* Sidebar mengecil */
+    grid-template-columns: 80px 1fr; 
 }
 
 /* Navbar */
 .navbar {
-    grid-row: 1 / 2; /* Di baris pertama */
+    grid-row: 1 / 2; 
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px; /* Tinggi navbar */
+    height: 60px; 
     background: #fff;
-    z-index: 1000; /* Navbar tetap di atas */
+    z-index: 1000; 
 }
 
 #brand {
@@ -49,7 +49,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 #brand h5 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 #avatar {
@@ -60,7 +60,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 #avatar h5 {
     color: var(--color-black, #000);
     font-weight: 500;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%;
 }
 
 .btn-logout {
@@ -72,7 +72,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     border: 1px solid var(--colors-primary-50, #F0F9FF);
     background: var(--colors-primary-500, #0EA5E9);
     font-weight: 800;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .btn-logout:hover {
@@ -80,10 +80,9 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
   
 /* Sidebar */
-
 .sidebar {
     grid-row: 2 / 3; 
-    height: 100%; /* Sesuai tinggi layar */
+    height: 100%; 
     background: #fff;
     overflow-y: auto;
     transition: all 0.3s ease;
@@ -100,7 +99,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     letter-spacing: 1px;
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 24px */
+    line-height: 120%; 
 
 }
 
@@ -114,7 +113,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .layout.collapsed .sidebar-header {
-    align-items: center; /* Tombol toggle di tengah */
+    align-items: center;
 }
 
 .layout .toggle-btn {
@@ -128,28 +127,22 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 .menu:hover {
     border-radius: 4px;
-    background: var(--colors-primary-50, #F0F9FF); /* Warna highlight untuk yang aktif */
+    background: var(--colors-primary-50, #F0F9FF); 
 }
 
 .menu.active {
     border-radius: 4px;
-    background: var(--colors-primary-50, #F0F9FF); /* Warna highlight untuk yang aktif */
+    background: var(--colors-primary-50, #F0F9FF);
 }
 
 .menu-text, #menuText {
     transition: opacity 0.3s ease;
 }
 
-/* Menyembunyikan teks jika sidebar di-collapse */
 .layout.collapsed .menu-text,
 .layout.collapsed #menuText {
     display: none;
 }
-
-/* .sidebar .active {
-    border-radius: 5px;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-} */
   
 .sidebar-sticky {
     position: relative;
@@ -189,7 +182,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .menu h4 {
     color: var(--colors-gray-600, #475569);
     font-weight: 500;
-    line-height: 120%; /* 19.2px */
+    line-height: 120%; 
     
 }
 
@@ -197,14 +190,14 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .content {
     grid-row: 2 / 3;
     padding: 0px;
-    overflow-y: auto; /* Scroll jika konten panjang */
-    overflow-x: auto; /* Scroll jika konten panjang */
+    overflow-y: auto; 
+    overflow-x: auto; 
 }
 
 .content h1 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 500;
-    line-height: 120%; /* 38.4px */
+    line-height: 120%; 
 }
 
 /* Sweet Alert */
@@ -299,13 +292,13 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .auth-header h1 {
     color: #313131;
     font-weight: 800;
-    line-height: 120%; /* 38.4px */
+    line-height: 120%;
 }
 
 .auth-header h4 {
     color: #313131;
     font-weight: 500;
-    line-height: 120%; /* 19.2px */
+    line-height: 120%; 
     opacity: 0.75;
 }
 
@@ -337,16 +330,12 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .brand-text {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .auth-image img {
     border-radius: 30px;
 }
-
-
-
-
 
 /* Dashboard */
 .dashboard {
@@ -380,7 +369,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .card-item h4 {
     color: var(--color-black, #000);
     font-weight: 500;
-    line-height: 120%; /* 19.2px */
+    line-height: 120%;
 }
 
 .list-item {
@@ -403,7 +392,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .detail-card h2 + .detail-lokasi h2 {
     color: var(--color-black, #000);
     font-weight: 400;
-    line-height: 120%; /* 28.8px */
+    line-height: 120%; 
 }
 
 .detail-lokasi {
@@ -415,7 +404,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .detail-lokasi p {
     color: var(--colors-gray-800, #1E293B);
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px; 
 }
 
 /* Informasi Prakerin */
@@ -437,7 +426,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .header h1 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 38.4px */
+    line-height: 120%; 
 }
 
 .info-section {
@@ -462,7 +451,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .info-header h2 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 28.8px */
+    line-height: 120%;
 }
 
 .info-content {
@@ -485,7 +474,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .info-item h4 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 500;
-    line-height: 20px; /* 125% */
+    line-height: 20px; 
 }
 
 .info-value {
@@ -498,7 +487,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .info-value h5 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 500;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 /* Dokumen Prakerin */
@@ -531,7 +520,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .document-title h2 {
     color: var(--colors-primary-900, #0C4A6E);
     font-weight: 800;
-    line-height: 120%; /* 28.8px */
+    line-height: 120%; 
 }
 
 .document form {
@@ -553,7 +542,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .document-input h4 {
     color: var(--Colors-gray-500, #64748B);
     font-weight: 500;
-    line-height: 20px; /* 125% */
+    line-height: 20px;
 }
 
 .document-upload {
@@ -573,7 +562,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .file-btn:hover {
@@ -584,7 +573,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     color: var(--colors-gray-500, #64748B);
     font-style: italic;
     font-weight: 500;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%;
 }
 
 .document-action {
@@ -604,7 +593,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 800;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .btn-cancel {
@@ -617,7 +606,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 800;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .btn-close {
@@ -656,8 +645,8 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .data-content {
-    width: 100%; /* Pastikan container mengikuti lebar */
-    overflow-x: auto; /* Jika tabel besar, scroll horizontal */
+    width: 100%; 
+    overflow-x: auto; 
     border-radius: 8px;
     background: var(--Colors-white, #FFF);
     /* double shadow */
@@ -665,9 +654,9 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .data-table {
-    width: 100%; /* Tabel memenuhi lebar container */
-    border-collapse: collapse; /* Menggabungkan border */
-    table-layout: fixed; /* Opsional: Atur kolom secara merata */
+    width: 100%;
+    border-collapse: collapse; 
+    table-layout: fixed; 
 }
 
 .data-header th {
@@ -678,16 +667,16 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 12px;
     font-style: normal;
     font-weight: 800;
-    line-height: 20px; /* 166.667% */
+    line-height: 20px; 
 }
 
 .data-body tr {
-    border-bottom: 0.1px solid #f0f0f0; /* Garis tipis di bawah setiap baris */
+    border-bottom: 0.1px solid #f0f0f0; 
     color: var(--color-black, #000);
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
-    line-height: 120%; /* 14.4px */
+    line-height: 120%; 
 }
 
 .data-body td {
@@ -725,33 +714,33 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .prev {
-    order: 0; /* Previous di kiri */
+    order: 0; 
     color: var(--colors-gray-300, #CBD5E1);
     text-align: center;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
-    line-height: 120%; /* 14.4px */
+    line-height: 120%; 
 }
 
 .page-info {
-    margin: 1 auto; /* Pusatkan secara horizontal */
+    margin: 1 auto; 
     color: var(--colors-gray-500, #64748B);
     text-align: center;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
-    line-height: 120%; /* 14.4px */
+    line-height: 120%; 
 }
 
 .next {
-    order: 2; /* Next di kanan */
+    order: 2; 
     color: var(--colors-gray-300, #CBD5E1);
     text-align: center;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
-    line-height: 120%; /* 14.4px */
+    line-height: 120%; 
 }
 
 .status-badge {
@@ -759,7 +748,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 12px;
     font-style: normal;
     font-weight: 800;
-    line-height: 120%; /* 14.4px */
+    line-height: 120%; 
     border-radius: 999px;
     padding: 0 8px;
     text-align: center;
@@ -841,46 +830,38 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     transform: translateX(26px);
 }
 
-
-/* Bungkus tabel agar bisa discroll saat layar kecil */
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
 }
 
-/* Pastikan tabel tidak melebar melebihi container */
 .data-table {
     width: 100%;
     min-width: 800px;
     border-collapse: collapse;
 }
 
-/* Jaga agar header dan footer sejajar */
 .data-table thead th,
 .data-table tfoot td {
     position: sticky;
 }
 
-/* Header tetap di atas */
 .data-table thead th {
     top: 0;
     z-index: 5;
 }
 
-/* Footer tetap di bawah */
 .data-table tfoot td {
     bottom: 0;
     z-index: 5;
 }
 
-/* Kolom aksi tidak terlalu lebar */
 .data-aksi {
     display: flex;
     gap: 5px;
-    flex-wrap: wrap; /* Biar tombol turun ke bawah kalau sempit */
+    flex-wrap: wrap; 
 }
 
-/* Ukuran tombol lebih kecil agar tidak melebar */
 .btn-validasi {
     font-size: 12px;
     padding: 4px 6px;
@@ -891,9 +872,6 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     width: 18px;
     height: 18px;
 }
-
-
-
 
 /* Modal Form */
 .modal-content form {
@@ -923,7 +901,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .required-label {
@@ -958,27 +936,27 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px; 
 }
 
 
 .btn-icon {
-    background: none; /* Hilangkan background */
-    border: none; /* Hilangkan border */
-    padding: 0; /* Hilangkan padding */
-    cursor: pointer; /* Pointer saat hover */
-    display: inline-flex; /* Hilangkan extra spacing */
-    align-items: center; /* Posisikan icon di tengah */
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer; 
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
 }
 
 .btn-icon img {
-    width: 24px; /* Atur ukuran ikon */
+    width: 24px; 
     height: auto;
 }
 
 .btn-icon:focus {
-    outline: none; /* Hilangkan outline saat diklik */
+    outline: none; 
 }
 
 .btn-aksi {
@@ -999,15 +977,15 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .custom-modal {
-    max-width: 60%;  /* Atur ukuran sesuai kebutuhan */
-    margin: auto;     /* Tetap di tengah */
+    max-width: 60%;  
+    margin: auto;    
 }
 
 .modal.show .custom-modal {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Supaya modal tetap berada di tengah vertikal */
+    min-height: 100vh; 
 }
 
 .filepond--root {
@@ -1028,7 +1006,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 150%; /* 21px */
+    line-height: 150%;
     letter-spacing: -0.14px;
 }
 
@@ -1038,7 +1016,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 8px;
     font-style: normal;
     font-weight: 400;
-    line-height: 150%; /* 12px */
+    line-height: 150%; 
     text-decoration: none;
 }
 
@@ -1162,7 +1140,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 .info-akun tr {
-    border-bottom: 0.1px solid #f0f0f0; /* Garis tipis di bawah setiap baris */
+    border-bottom: 0.1px solid #f0f0f0;
     
 }
 
@@ -1189,7 +1167,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
-    line-height: 120%; /* 38.4px */
+    line-height: 120%;
 }
 
 .pass-group, .auth-group {
@@ -1212,13 +1190,13 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     font-size: 16px;
     background: white;
     width: 100%;
-    padding-right: 40px; /* Ruang untuk icon */
+    padding-right: 40px; 
 }
 
-/* Label langsung di atas garis input */
+
 .pass-item label, .auth-field label {
     position: absolute;
-    top: -8px; /* Mepet di atas garis input */
+    top: -8px; 
     left: 12px;
     color: var(--color-black, #000);
     font-family: "Nunito Sans";
@@ -1239,7 +1217,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     cursor: pointer;
     width: 20px;
     height: 20px;
-    display: none; /* Icon awalnya tidak tampil */
+    display: none; 
 }
 
 .pass-button {
@@ -1253,7 +1231,6 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     margin-top: 5px;
     font-weight: bold;
 }
-
 
 /* Modal Detail Siswa */
 .modal-view-content {
@@ -1282,7 +1259,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     justify-content: space-between;
     align-items: start;
     font-weight: 400;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%; 
 }
 
 .modal-view-label {
@@ -1324,7 +1301,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 .modal-form-header h4 {
     color: var(--color-black, #000);
     font-weight: 800;
-    line-height: 120%; /* 19.2px */
+    line-height: 120%; 
 }
 
 .validasi-value {
@@ -1358,11 +1335,11 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 /* breakpoint */
 @media (max-width: 992px) {
     .layout {
-        grid-template-columns: 240px 1fr; /* Default */
+        grid-template-columns: 240px 1fr; 
     }
     
     .layout.collapsed {
-        grid-template-columns: 80px 1fr; /* Collapse */
+        grid-template-columns: 80px 1fr; 
     }
     
 }

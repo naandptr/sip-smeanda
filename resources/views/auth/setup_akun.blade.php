@@ -28,24 +28,6 @@
                         <input type="email" id="emailUser" name="emailUser" required>
                     </div>
                 </div>
-                {{-- <div class="auth-group">        
-                    <div class="auth-field">
-                        <label for="newPw">Create Password</label>
-                        <div class="pass-wrapper">
-                            <input type="password" name="newPw" id="newPw" required>
-                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="newPw" alt="Toggle Password">
-                        </div>
-                    </div>
-                </div>
-                <div class="auth-group">        
-                    <div class="auth-field">
-                        <label for="confirmPw">Re-enter Password</label>
-                        <div class="pass-wrapper">
-                            <input type="password" name="confirmPw" id="confirmPw" required>
-                            <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPw" alt="Toggle Password">
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="auth-button">
                     <button type="submit" class="btn-submit" id="submitSetup">Kirim Tautan</button>
                 </div>

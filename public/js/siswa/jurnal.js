@@ -1,11 +1,9 @@
 $(document).ready(function () {
-    // ===== Modal Jurnal Shown =====
     $("#modalJurnal").on("shown.bs.modal", function () {
         console.log("Modal Jurnal Dibuka!");
         initSummernote();
     });
 
-    // ===== Inisialisasi Summernote =====
     function initSummernote() {
         $('#summernote').summernote({
             height: 200,
@@ -67,7 +65,6 @@ $(document).ready(function () {
         });
     }
 
-    // ===== Button Tambah / Lihat Jurnal =====
     $("#tambahJurnal").click(function () {
         const mode = $(this).data("mode");
         const tanggal = $(this).data("tanggal");
@@ -103,7 +100,6 @@ $(document).ready(function () {
         }
     });
 
-    // ===== Submit Form Jurnal =====
     $("#formJurnal").submit(function (e) {
         e.preventDefault();
 
@@ -141,7 +137,6 @@ $(document).ready(function () {
         });
     });
 
-    // ===== Hapus Jurnal =====
     $(".deleteJurnal").click(function () {
         const id = $(this).data("id");
 
@@ -171,7 +166,6 @@ $(document).ready(function () {
         });
     });
 
-    // ===== Modal Jurnal Closed =====
     $("#modalJurnal").on("hidden.bs.modal", function () {
         console.log("Modal Jurnal Ditutup, Summernote di-destroy!");
         if ($("#summernote").next(".note-editor").length) {
@@ -185,7 +179,6 @@ $(document).ready(function () {
     
         const comments = tempDiv.querySelectorAll('*');
         comments.forEach(el => {
-            // Hapus atribut gaya
             el.removeAttribute('style');
             el.removeAttribute('class');
             el.removeAttribute('id');

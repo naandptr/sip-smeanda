@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Data User</h1>
     </div>
@@ -38,17 +37,15 @@
                             <td>{{ $user['role'] }}</td>
                             <td>{{ $user['status'] }}</td>
                             <td class="data-aksi">
-                                <!-- Tombol Lihat -->
                                 <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailUser-{{ $user['id'] }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
                                 <x-modal_detail_user :user="$user" :modalId="'modalDetailUser-' . $user['id']" />
                           
-                                <!-- Tombol Edit -->
                                 <button class="btn-icon editUser" data-id="{{ $user['id'] }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
+
                                 <button class="btn-icon deleteUser" data-id="{{ $user['id'] }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>

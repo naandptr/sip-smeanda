@@ -1,10 +1,8 @@
 $(document).ready(function() {
-    // =========== CRUD LOKASI PRAKERIN ============
-    // Memastikan form kosong saat klik tombol tambah lokasi
     $("#tambahLokasi").click(function () {
-        $("#modalLokasi form")[0].reset(); // Kosongkan form
-        $("#updateLokasi").hide(); // Sembunyikan tombol Update
-        $("#submitLokasi").show(); // Tampilkan tombol Simpan
+        $("#modalLokasi form")[0].reset(); 
+        $("#updateLokasi").hide(); 
+        $("#submitLokasi").show(); 
         $("#modalLokasi").modal("show");
     });
 
@@ -18,15 +16,15 @@ $(document).ready(function() {
             $("#telpDudi").val(data.telp);
             $("#emailDudi").val(data.email);
     
-            $("#submitLokasi").hide(); // Sembunyikan tombol Simpan
-            $("#updateLokasi").show().data("id", id); // Tampilkan tombol Update dengan ID
+            $("#submitLokasi").hide();
+            $("#updateLokasi").show().data("id", id);
             $("#modalLokasi").modal("show");
         });
     });
 
     $("#submitLokasi").click(function () {
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true); 
         $.ajax({
             url: "/kelola-lokasi",
             method: "POST",
@@ -46,11 +44,11 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); // Debugging
+                console.log(xhr.responseText);
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -58,7 +56,7 @@ $(document).ready(function() {
     $("#updateLokasi").click(function () {
         let id = $(this).data("id");
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true); 
         $.ajax({
             url: `/kelola-lokasi/${id}/update`,
             method: "PATCH",
@@ -78,11 +76,11 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); // Debugging
+                console.log(xhr.responseText); 
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -100,7 +98,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/kelola-lokasi/${id}/delete`, // Perbaiki URL
+                    url: `/kelola-lokasi/${id}/delete`, 
                     method: "DELETE", 
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -111,7 +109,7 @@ $(document).ready(function() {
                         });
                     },
                     error: function (xhr) {
-                        console.log(xhr.responseText); // Debugging
+                        console.log(xhr.responseText); 
                         Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
                     }
                 });

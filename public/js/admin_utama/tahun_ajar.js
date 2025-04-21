@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // =========== CRUD TAHUN AJARAN ============
-    // ===== Toggle Status Tahun Ajaran =====
     $(".toggle-switch").click(function() {
         const tahunId = $(this).data('id');
         const toggleBtn = $(this);
@@ -13,15 +11,12 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    // **Matikan semua toggle dulu**
                     $(".toggle-switch").removeClass("active");
     
-                    // **Set status semua tahun ajaran ke 'Nonaktif' dulu**
                     $(".status-kegiatan").each(function () {
                         $(this).text("Nonaktif").removeClass("aktif").addClass("nonaktif");
                     });
     
-                    // **Aktifkan toggle & update status di baris yang dipilih**
                     toggleBtn.addClass("active");
                     const statusElement = toggleBtn.closest("tr").find(".status-kegiatan");
                     statusElement.text("Aktif").removeClass("nonaktif").addClass("aktif");
@@ -33,12 +28,11 @@ $(document).ready(function() {
         });
     });
 
-    // Memastikan form kosong saat klik tombol tambah tahun ajar
     $("#tambahTahunAjar").click(function () {
-        $("#modalTahunAjar form")[0].reset(); // Kosongkan form
+        $("#modalTahunAjar form")[0].reset(); 
         $('#status').val('Aktif');
-        $("#updateTahunAjar").hide(); // Sembunyikan tombol Update
-        $("#submitTahunAjar").show(); // Tampilkan tombol Simpan
+        $("#updateTahunAjar").hide(); 
+        $("#submitTahunAjar").show(); 
         $("#modalTahunAjar").modal("show");
     });
     
@@ -51,15 +45,15 @@ $(document).ready(function() {
             $("#periode_selesai").val(data.periode_selesai);
             $("#status").val(data.status);
     
-            $("#submitTahunAjar").hide(); // Sembunyikan tombol Simpan
-            $("#updateTahunAjar").show().data("id", id); // Tampilkan tombol Update dengan ID
+            $("#submitTahunAjar").hide(); 
+            $("#updateTahunAjar").show().data("id", id);
             $("#modalTahunAjar").modal("show");
         });
     });
     
     $("#submitTahunAjar").click(function () {
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true); 
 
         $.ajax({
             url: "/kelola-tahun-ajar",
@@ -79,11 +73,10 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                // Menampilkan pesan kesalahan dari server
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -91,7 +84,7 @@ $(document).ready(function() {
     $("#updateTahunAjar").click(function () {
         let id = $(this).data("id");
         const submitBtn = $(this);
-        submitBtn.prop('disabled', true); // Nonaktifkan tombol submit
+        submitBtn.prop('disabled', true);
     
         $.ajax({
             url: `/kelola-tahun-ajar/${id}/update`,
@@ -111,11 +104,10 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                // Menampilkan pesan kesalahan dari server
                 Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
-                submitBtn.prop('disabled', false); // Aktifkan kembali tombol submit
+                submitBtn.prop('disabled', false); 
             }
         });
     });
@@ -133,7 +125,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/kelola-tahun-ajar/${id}/delete`, // Perbaiki URL
+                    url: `/kelola-tahun-ajar/${id}/delete`, 
                     method: "DELETE", 
                     headers: {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -144,7 +136,6 @@ $(document).ready(function() {
                         });
                     },
                     error: function (xhr) {
-                        // Menampilkan pesan kesalahan dari server
                         Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
                     }
                 });
@@ -152,7 +143,6 @@ $(document).ready(function() {
         });
     });
     
-    // ===== Reset Form saat Modal Ditutup =====
     $('#modalTahunAjar').on('hidden.bs.modal', function () {
         $('#formTahunAjar')[0].reset();
         $('#formTahunAjar').attr('action', '/kelola-tahun-ajar');

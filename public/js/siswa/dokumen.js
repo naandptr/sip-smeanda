@@ -42,10 +42,10 @@ $(document).ready(function() {
     });
 
     $(".form-dokumen").submit(function(e) {
-        e.preventDefault(); // cegah submit bawaan
+        e.preventDefault();
     
         const form = $(this);
-        const jenis = form.data("jenis"); // ambil dari data-jenis
+        const jenis = form.data("jenis"); 
         const fileInput = form.find("input[name='dokumen']")[0];
         const file = fileInput.files[0];
     
@@ -87,8 +87,7 @@ $(document).ready(function() {
                             text: response.message || "File berhasil diunggah.",
                         });
                     
-                        // Ganti tampilan file name jadi link download
-                        const labelId = "#" + jenis + "Name"; // misal: #cvName, #portoName
+                        const labelId = "#" + jenis + "Name"; 
                         const fileLink = `<a href="${response.file_url}" target="_blank">${response.file_name}</a>`;
                         $(labelId).html(fileLink);
                     },

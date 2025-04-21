@@ -8,7 +8,6 @@ $(document).ready(function () {
             const fileUrl = this.getAttribute('data-file-url');
             const fileExtension = fileUrl.split('.').pop().toLowerCase();
 
-            // Reset semua preview dulu
             image.style.display = 'none';
             pdf.style.display = 'none';
 
@@ -22,7 +21,6 @@ $(document).ready(function () {
         });
     });
 
-    // ==== Tanggal Otomatis Saat Modal Dibuka ====
     $("#modalAbsen").on("shown.bs.modal", function () {
         console.log("Modal Absen Dibuka!");
         let now = new Date();
@@ -33,17 +31,15 @@ $(document).ready(function () {
         let min = String(now.getMinutes()).padStart(2, '0');
         let ss = String(now.getSeconds()).padStart(2, '0');
 
-        // buat tampilan
         let displayDate = `${dd}/${mm}/${yyyy}`;
         $("#tglAbsenView").val(displayDate);
 
-        // buat server
+
         let localDateTime = `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
         $("#tglAbsenFormatted").val(localDateTime);
 
     });
 
-    // ==== Jenis Absen Handling ====
     $("#jenisAbsen").change(function () {
         let jenis = $(this).val();
 
@@ -56,7 +52,6 @@ $(document).ready(function () {
         }
     });
 
-    // ==== FilePond Init ====
     FilePond.registerPlugin(FilePondPluginImagePreview);
 
 
@@ -75,7 +70,6 @@ $(document).ready(function () {
             </div>
         `
     });
-
 
     FilePond.setOptions({
         server: {
@@ -111,7 +105,6 @@ $(document).ready(function () {
         }
     });
 
- 
     $("#formAbsen").submit(function (e) {
         e.preventDefault();
         let jenis = $("#jenisAbsen").val();
@@ -167,7 +160,7 @@ $(document).ready(function () {
                     title: "Berhasil",
                     text: res.message || "Absen berhasil dikirim!",
                 }).then(() => {
-                    location.reload(); // atau reset form
+                    location.reload(); 
                 });
             },
             error: function (xhr) {
@@ -185,7 +178,6 @@ $(document).ready(function () {
         
     });
 
-   
     $("#modalId").on("shown.bs.modal", function () {
         pond.destroy();
         FilePond.registerPlugin(FilePondPluginImagePreview);

@@ -24,7 +24,7 @@ $(document).ready(function () {
             },
             data: data,
             success: function (response) {
-                console.log(response); // Debug
+                console.log(response);
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',

@@ -1,17 +1,14 @@
 $(document).ready(function() {
-    // ===== CRUD USER ====
-    // Memastikan form kosong saat klik tombol tambah user
     $("#tambahUser").click(function() {
         $("#modalUser form")[0].reset();
         $('#passwordField').show();
         $('#roleUser').prop('disabled', false);
-        $(".extra-fields").hide(); // Sembunyikan semua field tambahan
+        $(".extra-fields").hide(); 
         $("#updateUser").hide();
         $("#submitUser").show();
         $("#modalUser").modal("show");
     });
 
-    // Tampilkan field sesuai role
     $("#roleUser").change(function() {
         const role = $(this).val();
         $(".extra-fields").hide();
@@ -21,18 +18,15 @@ $(document).ready(function() {
         }
     });
 
-    // Edit user
     $(".editUser").click(function() {
         const id = $(this).data("id");
         
         $.get(`/kelola-user/${id}/edit`, function(data) {
-            // Isi form utama
             $("#roleUser").val(data.role).trigger("change");
             $('#roleUser').prop('disabled', true);
             $("#namaUser").val(data.username);
             $('#passwordField').hide();
             
-            // Isi field tambahan berdasarkan role
             if (data.role === 'Siswa' && data.siswa) {
                 $("#namaSiswa").val(data.siswa.nama);
                 $("#nisSiswa").val(data.siswa.nis);
@@ -56,7 +50,6 @@ $(document).ready(function() {
         });
     });
 
-    // Submit tambah user
     $("#submitUser").click(function(e) {
         e.preventDefault();
         
@@ -65,7 +58,6 @@ $(document).ready(function() {
             namaUser: $("#namaUser").val(),
         };
         
-        // Tambahkan data sesuai role
         const role = formData.roleUser;
         if (role === 'Siswa') {
             formData.namaSiswa = $("#namaSiswa").val();
@@ -100,7 +92,6 @@ $(document).ready(function() {
         });
     });
 
-    // Update user
     $("#updateUser").click(function(e) {
         e.preventDefault();
         const id = $(this).data("id");
@@ -110,7 +101,6 @@ $(document).ready(function() {
             _method: "PATCH"
         };
         
-        // Tambahkan data sesuai role
         const role = formData.roleUser;
         if (role === 'Siswa') {
             formData.namaSiswa = $("#namaSiswa").val();
@@ -129,7 +119,7 @@ $(document).ready(function() {
         
         $.ajax({
             url: `/kelola-user/${id}/update`,
-            method: "POST", // Laravel butuh POST untuk PATCH
+            method: "POST", 
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             },
@@ -145,7 +135,6 @@ $(document).ready(function() {
         });
     });
 
-    // Delete user
     $(".deleteUser").click(function() {
         const id = $(this).data("id");
         
