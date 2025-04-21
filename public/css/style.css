@@ -53,6 +53,8 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 }
 
 #avatar {
+    display: flex;
+    align-items: center;
     padding: 0 12px;
     gap: 12px;
 }
@@ -61,6 +63,12 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     color: var(--color-black, #000);
     font-weight: 500;
     line-height: 120%;
+}
+
+.profil {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .btn-logout {
@@ -335,6 +343,9 @@ p { font-size: 12px; font-style: normal; margin: 0;}
 
 .auth-image img {
     border-radius: 30px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 /* Dashboard */
@@ -1331,16 +1342,174 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     background: var(--colors-red-500, #EF4444);
 }
 
+/* Filter */
+.data-filter form {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+.filter-value {
+    border-radius: 5px;
+    border: 1px solid var(--colors-primary-500, #0EA5E9);
+    background: var(--colors-white, #FFF);
+    width: 15%;
+}
+
+.filter-value select {
+    color: var(--color-black, #000);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; 
+    border: none;
+    width: 100%;
+}
+
 
 /* breakpoint */
-@media (max-width: 992px) {
-    .layout {
-        grid-template-columns: 240px 1fr; 
+  
+/* Tablet Portrait & iPad Mini */
+@media (max-width: 1024px) {
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px;
+        gap: 20px;
+    }
+
+    .card-container {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .card-item {
+        width: 100%;
+    }
+}
+  
+/* HP landscape & tablet kecil */
+@media (max-width: 768px) {
+    .card-container {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .card-item {
+        width: 100%;
+    }
+
+    .pass-container {
+        width: 100%;
+    }
+
+    .modal-form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modal-form-value {
+        width: 100%;
+    }
+
+    .auth-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auth-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+}
+/* HP portrait (ukuran kecil) */
+@media (max-width: 576px) {
+
+    /* Heading Styles */
+    h1 { font-size: 26px; font-style: normal; margin: 0;}
+    h2 { font-size: 22px; font-style: normal; margin: 0;}
+    h3 { font-size: 18px; font-style: normal; margin: 0;}
+    h4 { font-size: 14px; font-style: normal; margin: 0;}
+    h5 { font-size: 10px; font-style: normal; margin: 0;}
+    p { font-size: 10px; font-style: normal; margin: 0;}
+
+    .navbar {
+        padding: 0;
+    }
+    #brand img, #avatar img {
+        height: 28px;
     }
     
-    .layout.collapsed {
+    #brand h5 {
+        display: none;
+    }
+
+    .card-container {
+        flex-direction: column;
+    }
+
+    .card-item {
+        width: 100%;
+    }
+
+    .layout {
         grid-template-columns: 80px 1fr; 
     }
-    
+
+    .sidebar-header {
+        display: none;
+    }
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar .menu-text, .sidebar #menuText {
+        display: none;
+    }
+
+    #sidebarMenu {
+        padding-top: 0px ;
+    }
+
+    .toggle-btn {
+        display: none;
+    }    
+
+    .dashboard, .info, .document, .data-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px;
+        gap: 10px;
+    }
+
+    .pass-container {
+        width: 100%;
+    }
+
+    .modal-form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modal-form-value {
+        width: 100%;
+    }
+
+    .auth-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .auth-image img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 }
 

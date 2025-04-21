@@ -31,16 +31,16 @@
         </div>       
 
         <div id="avatar" class="d-flex align-items-center">
-            <img
+            <div class="profil">
+                <img
                 src="{{ asset('img/user-icon.png') }}"
                 class="rounded-circle"
                 height="32"
                 alt="Avatar"
                 loading="lazy"
-            />
-            <h5 class="ms-2 mb-0">{{ $nama }}</h5>
-            {{-- <button class="btn-logout">Logout</button> --}}
-            
+                />
+                <h5 class="ms-2 mb-0">{{ $nama }}</h5>
+            </div>            
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="btn-logout">

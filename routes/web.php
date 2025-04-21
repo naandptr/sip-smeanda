@@ -11,7 +11,6 @@ use App\Http\Controllers\AdminJurusan;
 use App\Http\Controllers\Pembimbing;
 use App\Http\Controllers\Siswa;
 
-
 Route::middleware(['web'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
