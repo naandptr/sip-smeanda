@@ -15,7 +15,7 @@ class JurnalSiswaController extends Controller
     {
         $pembimbingId = Auth::user()->pembimbing->id;
 
-        $siswaBimbingan = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan', 'kelas'])->get()->filter(function ($siswa) use ($pembimbingId) {
+        $dataSiswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan', 'kelas'])->get()->filter(function ($siswa) use ($pembimbingId) {
             $penetapan = $siswa->penetapanPrakerinTerbaru;
             return $penetapan && 
                    $penetapan->dudiJurusan &&
@@ -37,7 +37,17 @@ class JurnalSiswaController extends Controller
             ];
         })->values();
 
-        return view('guru.jurnal', compact('siswaBimbingan'));
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+        $paginatedSiswa = new \Illuminate\Pagination\LengthAwarePaginator(
+            $dataSiswa->forPage($currentPage, $perPage),
+            $dataSiswa->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('guru.jurnal', ['dataSiswa' => $paginatedSiswa]);
     }
 
     public function detail($siswa_id)
@@ -54,11 +64,11 @@ class JurnalSiswaController extends Controller
 
         $penetapan = $siswa->penetapanPrakerinTerbaru;
 
-        $jurnalList = $penetapan
-            ? $penetapan->jurnal()->with('validasi')->get()
+        $dataJurnal = $penetapan
+            ? $penetapan->jurnal()->with('validasi')->paginate(10)
             : collect();
 
-        return view('guru.detail_jurnal', compact('siswa', 'jurnalList'));
+        return view('guru.detail_jurnal', compact('siswa', 'dataJurnal'));
     }
 
     public function validasi(Request $request, $id)

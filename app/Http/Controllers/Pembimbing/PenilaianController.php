@@ -22,18 +22,19 @@ class PenilaianController extends Controller
         $dudiJurusan = DudiJurusan::where('pembimbing_id', $pembimbing)
             ->pluck('id');
 
-        $siswaBimbingan = Siswa::whereHas('penetapanPrakerinTerbaru', function ($query) use ($dudiJurusan) {
+        $siswaQuery = Siswa::whereHas('penetapanPrakerinTerbaru', function ($query) use ($dudiJurusan) {
                 $query->whereIn('dudi_jurusan_id', $dudiJurusan);
             })
             ->whereHas('penetapanPrakerinTerbaru.penilaian') 
-            ->with(['kelas', 'penetapanPrakerinTerbaru.penilaian'])
-            ->get();
+            ->with(['kelas', 'penetapanPrakerinTerbaru.penilaian']);
+        
+        $dataSiswa = $siswaQuery->paginate(10);
 
-            foreach ($siswaBimbingan as $siswa) {
+            foreach ($dataSiswa as $siswa) {
                 $siswa->penilaian = $siswa->penetapanPrakerinTerbaru->penilaian->first() ?? null;
             }
 
-        return view('guru.nilai', compact('siswaBimbingan'));
+        return view('guru.nilai', compact('dataSiswa'));
     }
 
     public function showForm()
@@ -41,12 +42,12 @@ class PenilaianController extends Controller
         
         $pembimbing = Auth::user()->pembimbing->id;
 
-        $siswaBimbingan = Siswa::whereHas('penetapanPrakerinTerbaru.dudiJurusan', function ($query) use ($pembimbing) {
+        $dataSiswa = Siswa::whereHas('penetapanPrakerinTerbaru.dudiJurusan', function ($query) use ($pembimbing) {
             $query->where('pembimbing_id', $pembimbing);
         })->get();
 
         return view('guru.tambah_nilai', [
-            'siswaBimbingan' => $siswaBimbingan,
+            'dataSiswa' => $dataSiswa,
             'detailNilaiSementara' => session('penilaian_detail', []),
         ]);        
     }

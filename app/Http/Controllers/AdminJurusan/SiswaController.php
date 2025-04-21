@@ -13,7 +13,7 @@ class SiswaController extends Controller
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        $siswa = Siswa::with([
+        $dataSiswa = Siswa::with([
             'kelas.jurusan',
             'penetapanPrakerin' => function ($q) {
                 $q->latest('tanggal_mulai');
@@ -25,15 +25,15 @@ class SiswaController extends Controller
         ->whereHas('kelas', function ($q) use ($jurusanId) {
             $q->where('jurusan_id', $jurusanId);
         })
-        ->get();
+        ->paginate(10);
 
-        foreach ($siswa as $s) {
-            $s->status_cv = $s->dokumen->where('jenis', 'CV')->isNotEmpty() ? 'selesai' : 'menunggu';
-            $s->status_portofolio = $s->dokumen->where('jenis', 'Portofolio')->isNotEmpty() ? 'selesai' : 'menunggu';
-            $s->status_laporan = $s->dokumen->where('jenis', 'Laporan')->isNotEmpty() ? 'selesai' : 'menunggu';
-            $s->status_sertifikat = $s->dokumen->where('jenis', 'Sertifikat')->isNotEmpty() ? 'selesai' : 'menunggu';
+        foreach ($dataSiswa as $siswa) {
+            $siswa->status_cv = $siswa->dokumen->where('jenis', 'CV')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $siswa->status_portofolio = $siswa->dokumen->where('jenis', 'Portofolio')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $siswa->status_laporan = $siswa->dokumen->where('jenis', 'Laporan')->isNotEmpty() ? 'selesai' : 'menunggu';
+            $siswa->status_sertifikat = $siswa->dokumen->where('jenis', 'Sertifikat')->isNotEmpty() ? 'selesai' : 'menunggu';
         }
 
-        return view('admin_jurusan.siswa', compact('siswa'));
+        return view('admin_jurusan.siswa', compact('dataSiswa'));
     }
 }

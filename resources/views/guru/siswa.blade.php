@@ -23,13 +23,13 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
-                    @foreach ($siswa as $index => $s)
+                    @foreach ($dataSiswa as $index => $siswa)
                     <tr>
-                        <td>{{ $s->nis }}</td>
-                        <td>{{ $s->nama }}</td>
-                        <td>{{ $s->kelas->nama_kelas }}</td>
+                        <td>{{ $siswa->nis }}</td>
+                        <td>{{ $siswa->nama }}</td>
+                        <td>{{ $siswa->kelas->nama_kelas }}</td>
                         @php
-                            $status = strtolower($s->penetapanPrakerin->first()?->status ?? 'belum_dimulai');
+                            $status = strtolower($siswa->penetapanPrakerin->first()?->status ?? 'belum_dimulai');
                             $statusClass = match($status) {
                                 'belum_dimulai' => 'not-started',
                                 'berlangsung' => 'ongoing',
@@ -47,27 +47,39 @@
                         @endphp
                         <td><div class="status-badge {{ $statusClass }}">{{ $statusLabel }}</div></td>
                         <td class="data-aksi">
-                            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswaBimbingan-{{ $s->id }}">
+                            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailSiswaBimbingan-{{ $siswa->id }}">
                                 <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                             </button>
-                            <x-modal_detail_siswa_bimbingan :siswa="$s" 
-                            :penetapan="$s->penetapanPrakerin->first()"
-                            :modalId="'modalDetailSiswaBimbingan-' . $s->id" />
+                            <x-modal_detail_siswa_bimbingan :siswa="$siswa" 
+                            :penetapan="$siswa->penetapanPrakerin->first()"
+                            :modalId="'modalDetailSiswaBimbingan-' . $siswa->id" />
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
-                    <tr class="siswa-footer">
+                    <tr class="data-footer">
                         <td colspan="5">
-                            <div class="pagination">
-                                <span class="prev">Previous</span>
-                                <span class="page-info">1-3 of 3</span>
-                                <span class="next">Next</span>
+                            <div class="pagination custom-pagination">
+                                @if ($dataSiswa->onFirstPage())
+                                    <span class="prev disabled">Previous</span>
+                                @else
+                                    <a href="{{ $dataSiswa->previousPageUrl() }}" class="prev">Previous</a>
+                                @endif
+                
+                                <span class="page-info">
+                                    {{ $dataSiswa->firstItem() }}-{{ $dataSiswa->lastItem() }} of {{ $dataSiswa->total() }}
+                                </span>
+                
+                                @if ($dataSiswa->hasMorePages())
+                                    <a href="{{ $dataSiswa->nextPageUrl() }}" class="next">Next</a>
+                                @else
+                                    <span class="next disabled">Next</span>
+                                @endif
                             </div>
                         </td>
                     </tr>
-                </tfoot>                
+                </tfoot>               
             </table>
         </div>
     </div>

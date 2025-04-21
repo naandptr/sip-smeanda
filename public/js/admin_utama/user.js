@@ -35,7 +35,7 @@ $(document).ready(function() {
             // Isi field tambahan berdasarkan role
             if (data.role === 'Siswa' && data.siswa) {
                 $("#namaSiswa").val(data.siswa.nama);
-                $("#nisnSiswa").val(data.siswa.nisn);
+                $("#nisSiswa").val(data.siswa.nis);
                 $("#kelasSiswa").val(data.siswa.kelas_id);
             } 
             else if (data.role === 'Guru' && data.pembimbing) {
@@ -69,7 +69,7 @@ $(document).ready(function() {
         const role = formData.roleUser;
         if (role === 'Siswa') {
             formData.namaSiswa = $("#namaSiswa").val();
-            formData.nisnSiswa = $("#nisnSiswa").val();
+            formData.nisSiswa = $("#nisSiswa").val();
             formData.kelasSiswa = $("#kelasSiswa").val();
         } 
         else if (role === 'Guru') {

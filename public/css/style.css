@@ -771,7 +771,7 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     background: var(--colors-slate-100, #F1F5F9);
 }
 
-.pending, .ongoing {
+.pending, .ongoing, .menunggu {
     color: var(--colors-yellow-600, #CA8A04);
     background: var(--colors-yellow-100, #FEF9C3);
 }

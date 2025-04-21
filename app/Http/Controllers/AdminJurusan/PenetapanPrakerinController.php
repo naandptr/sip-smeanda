@@ -18,15 +18,30 @@ class PenetapanPrakerinController extends Controller
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        $penetapanPrakerin = PenetapanPrakerin::with(['siswa', 'dudiJurusan.dudi', 'tahunAjar'])
-        ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
-            $query->where('jurusan_id', $jurusanId);
-        })
-        ->get()
-        ->sortBy(fn($a) => $a->siswa->nama ?? '')
-        ->sortBy(fn($a) => $a->dudiJurusan->dudi->nama_dudi ?? '')
-        ->sortByDesc(fn($a) => $a->tahunAjar->periode_mulai ?? '')
-        ->sortByDesc(fn($a) => $a->tanggal_mulai);
+        // $dataPrakerin = PenetapanPrakerin::with(['siswa', 'dudiJurusan.dudi', 'tahunAjar'])
+        // ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
+        //     $query->where('jurusan_id', $jurusanId);
+        // })
+        //     ->get()
+        //     ->sortBy(fn($a) => $a->siswa->nama ?? '')
+        //     ->sortBy(fn($a) => $a->dudiJurusan->dudi->nama_dudi ?? '')
+        //     ->sortByDesc(fn($a) => $a->tahunAjar->periode_mulai ?? '')
+        //     ->sortByDesc(fn($a) => $a->tanggal_mulai);
+
+        $dataPrakerin = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
+            ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
+                $query->where('jurusan_id', $jurusanId);
+            })
+            ->paginate(10); 
+
+        $sorted = $dataPrakerin->getCollection()->sort(function ($a, $b) {
+            return strcmp($a->siswa->nama ?? '', $b->siswa->nama ?? '')
+                ?: strcmp($a->dudiJurusan->dudi->nama_dudi ?? '', $b->dudiJurusan->dudi->nama_dudi ?? '')
+                ?: strcmp($b->tahunAjar->periode_mulai ?? '', $a->tahunAjar->periode_mulai ?? '')
+                ?: strcmp($b->tanggal_mulai ?? '', $a->tanggal_mulai ?? '');
+        });
+
+        $dataPrakerin->setCollection($sorted);
 
         $siswa = Siswa::whereHas('kelas', function ($query) use ($jurusanId) {
             $query->where('jurusan_id', $jurusanId);
@@ -39,7 +54,7 @@ class PenetapanPrakerinController extends Controller
 
         $tahunAjar = TahunAjar::where('status', 'aktif')->get();
 
-        return view('admin_jurusan.prakerin', compact('penetapanPrakerin', 'siswa', 'dudiJurusan', 'tahunAjar'));
+        return view('admin_jurusan.prakerin', compact('dataPrakerin', 'siswa', 'dudiJurusan', 'tahunAjar'));
     }
 
     public function store(Request $request)

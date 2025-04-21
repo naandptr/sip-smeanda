@@ -20,15 +20,15 @@ class JurnalController extends Controller
         $penetapan = PenetapanPrakerin::where('siswa_id', $siswaId)->first();
 
         if (!$penetapan) {
-            return view('siswa.jurnal', ['jurnalList' => []]);
+            return view('siswa.jurnal', ['dataJurnal' => []]);
         }
 
-        $jurnalList = Jurnal::with('validasi')
+        $dataJurnal = Jurnal::with('validasi')
             ->where('penetapan_prakerin_id', $penetapan->id)
             ->orderBy('tanggal', 'desc')
-            ->get();
+            ->paginate(10);
 
-        return view('siswa.jurnal', compact('jurnalList'));
+        return view('siswa.jurnal', compact('dataJurnal'));
     }
 
     public function store(Request $request)

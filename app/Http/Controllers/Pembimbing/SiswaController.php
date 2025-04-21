@@ -13,7 +13,7 @@ class SiswaController extends Controller
     {
         $pembimbingId = Auth::user()->pembimbing->id;
 
-        $siswa = Siswa::with([
+        $dataSiswa = Siswa::with([
             'kelas.jurusan',
             'penetapanPrakerin' => function ($q) {
                 $q->latest('tanggal_mulai');
@@ -24,8 +24,8 @@ class SiswaController extends Controller
         ->whereHas('penetapanPrakerin.dudiJurusan', function ($q) use ($pembimbingId) {
             $q->where('pembimbing_id', $pembimbingId);
         })
-        ->get();
+        ->paginate(10);
 
-        return view('guru.siswa', compact('siswa'));
+        return view('guru.siswa', compact('dataSiswa'));
     }
 }

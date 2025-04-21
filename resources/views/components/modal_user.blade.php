@@ -40,9 +40,9 @@
                         </div>
                     </div>
                     <div class="modal-form-group">
-                        <label for="nisnSiswa">NISN<span class="required-label">*</span></label>
+                        <label for="nisSiswa">NIS<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="nisnSiswa" name="nisnSiswa">
+                            <input type="text" id="nisSiswa" name="nisSiswa">
                         </div>
                     </div>
                     <div class="modal-form-group">

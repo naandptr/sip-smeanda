@@ -59,10 +59,22 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($users->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $users->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $users->firstItem() }}-{{ $users->lastItem() }} of {{ $users->total() }}
+                                    </span>
+                    
+                                    @if ($users->hasMorePages())
+                                        <a href="{{ $users->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

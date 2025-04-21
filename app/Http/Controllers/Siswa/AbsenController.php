@@ -23,7 +23,7 @@ class AbsenController extends Controller
 
         $dataAbsen = Absen::where('penetapan_prakerin_id', $penetapan->id)
             ->orderBy('tanggal', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('siswa.absen', compact('dataAbsen'));
     }

@@ -14,25 +14,27 @@ use App\Models\Pembimbing;
 class DudiJurusanController extends Controller
 {
     public function index()
-{
-    $jurusanId = Auth::user()->adminJurusan->jurusan_id;
+    {
+        $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-    $dudiJurusan = DudiJurusan::with(['pembimbing', 'tahunAjar'])
-        ->where('jurusan_id', $jurusanId)
-        ->get()
-        ->sortBy([
-            fn($a, $b) => strcmp($a->pembimbing->nama ?? '', $b->pembimbing->nama ?? ''),
-            fn($a, $b) => strcmp($a->tahunAjar->tahun ?? '', $b->tahunAjar->tahun ?? ''),
-            fn($a, $b) => strcmp($a->dudi->nama_dudi ?? '', $b->dudi->nama_dudi ?? ''),
-        ]);
+        $dataDudiJurusan = DudiJurusan::with(['pembimbing', 'tahunAjar', 'dudi'])
+            ->where('jurusan_id', $jurusanId)
+            ->paginate(10);
 
-    $dudi = Dudi::all();
-    $tahunAjar = TahunAjar::where('status', 'aktif')->get();
-    $pembimbing = Pembimbing::orderBy('nama', 'asc')->get();
+        $sorted = $dataDudiJurusan->getCollection()->sort(function ($a, $b) {
+            return strcmp($a->pembimbing->nama ?? '', $b->pembimbing->nama ?? '')
+                ?: strcmp($a->tahunAjar->tahun_ajaran ?? '', $b->tahunAjar->tahun_ajaran ?? '')
+                ?: strcmp($a->dudi->nama_dudi ?? '', $b->dudi->nama_dudi ?? '');
+        });
 
-    return view('admin_jurusan.dudi_jurusan', compact('dudiJurusan', 'dudi', 'tahunAjar', 'pembimbing'));
-}
+        $dataDudiJurusan->setCollection($sorted);
 
+        $dudi = Dudi::all();
+        $tahunAjar = TahunAjar::where('status', 'aktif')->get();
+        $pembimbing = Pembimbing::orderBy('nama', 'asc')->get();
+
+        return view('admin_jurusan.dudi_jurusan', compact('dataDudiJurusan', 'dudi', 'tahunAjar', 'pembimbing'));
+    }
 
     public function store(Request $request)
     {

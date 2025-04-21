@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Data Lokasi</h1>
     </div>
@@ -31,41 +30,50 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach($dudi as $index => $data)
+                        @foreach($dataDudi as $index => $dudi)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $data->nama_dudi }}</td>
-                            <td>{{ $data->alamat }}</td>
-                            <td>{{ $data->bidang_usaha }}</td>
+                            <td>{{ $dudi->nama_dudi }}</td>
+                            <td>{{ $dudi->alamat }}</td>
+                            <td>{{ $dudi->bidang_usaha }}</td>
                             <td class="data-aksi">
-                                <!-- Tombol Lihat -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailLokasi-{{ $data->id }}">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailLokasi-{{ $dudi->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon editLokasi" data-id="{{ $data->id }}">
+                                <x-modal_detail_lokasi :dudi="$dudi" :modalId="'modalDetailLokasi-' . $dudi->id" />
+                                <button class="btn-icon editLokasi" data-id="{{ $dudi->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon deleteLokasi" data-id="{{ $data->id }}">
+                                <button class="btn-icon deleteLokasi" data-id="{{ $dudi->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
-                    <x-modal_detail_lokasi :dudi="$data" :modalId="'modalDetailLokasi-' . $data->id" />
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataDudi->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataDudi->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataDudi->firstItem() }}-{{ $dataDudi->lastItem() }} of {{ $dataDudi->total() }}
+                                    </span>
+                    
+                                    @if ($dataDudi->hasMorePages())
+                                        <a href="{{ $dataDudi->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-                    </tfoot>                
+                    </tfoot>               
                 </table>
             </div>
         </div>

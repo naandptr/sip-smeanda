@@ -14,13 +14,13 @@ class DokumenController extends Controller
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        $daftarSiswa = Siswa::with(['dokumen', 'kelas.jurusan'])
+        $dataSiswa = Siswa::with(['dokumen', 'kelas.jurusan'])
             ->whereHas('kelas', function ($q) use ($jurusanId) {
                 $q->where('jurusan_id', $jurusanId);
             })
-            ->get();
+            ->paginate(10);
 
-        return view('admin_jurusan.dokumen', compact('daftarSiswa'));
+        return view('admin_jurusan.dokumen', compact('dataSiswa'));
     }
 
     public function download($id)

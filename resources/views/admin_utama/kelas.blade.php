@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Data Kelas</h1>
     </div>
@@ -31,17 +30,17 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach($kelas as $index => $data)
+                        @foreach($dataKelas as $index => $kelas)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $data->nama_kelas }}</td>
-                            <td>{{ $data->jurusan->nama_jurusan }}</td>
-                            <td>{{ $data->tahunAjar->tahun_ajaran }}</td>
+                            <td>{{ $kelas->nama_kelas }}</td>
+                            <td>{{ $kelas->jurusan->nama_jurusan }}</td>
+                            <td>{{ $kelas->tahunAjar->tahun_ajaran }}</td>
                             <td class="data-aksi">
-                                <button class="btn-icon editKelas" data-id="{{ $data->id }}">
+                                <button class="btn-icon editKelas" data-id="{{ $kelas->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <button class="btn-icon deleteKelas" data-id="{{ $data->id }}">
+                                <button class="btn-icon deleteKelas" data-id="{{ $kelas->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
@@ -51,14 +50,26 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataKelas->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataKelas->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataKelas->firstItem() }}-{{ $dataKelas->lastItem() }} of {{ $dataKelas->total() }}
+                                    </span>
+                    
+                                    @if ($dataKelas->hasMorePages())
+                                        <a href="{{ $dataKelas->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-                    </tfoot>                
+                    </tfoot>               
                 </table>
             </div>
         </div>

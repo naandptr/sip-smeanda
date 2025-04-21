@@ -31,17 +31,17 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach($dudiJurusan as $index => $data)
+                        @foreach($dataDudiJurusan as $index => $dudiJurusan)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->pembimbing->nama }}</td>
-                            <td>{{ $data->dudi->nama_dudi }}</td>
-                            <td>{{ $data->tahunAjar->tahun_ajaran }}</td>
+                            <td>{{ $dudiJurusan->pembimbing->nama }}</td>
+                            <td>{{ $dudiJurusan->dudi->nama_dudi }}</td>
+                            <td>{{ $dudiJurusan->tahunAjar->tahun_ajaran }}</td>
                             <td class="data-aksi">
-                                <button class="btn-icon editDudiJurusan" data-id="{{ $data->id }}">
+                                <button class="btn-icon editDudiJurusan" data-id="{{ $dudiJurusan->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <button class="btn-icon deleteDudiJurusan" data-id="{{ $data->id }}">
+                                <button class="btn-icon deleteDudiJurusan" data-id="{{ $dudiJurusan->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
@@ -51,14 +51,26 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataDudiJurusan->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataDudiJurusan->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataDudiJurusan->firstItem() }}-{{ $dataDudiJurusan->lastItem() }} of {{ $dataDudiJurusan->total() }}
+                                    </span>
+                    
+                                    @if ($dataDudiJurusan->hasMorePages())
+                                        <a href="{{ $dataDudiJurusan->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-                    </tfoot>                
+                    </tfoot>                 
                 </table>
             </div>
         </div>

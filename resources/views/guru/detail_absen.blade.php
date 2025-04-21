@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
-                    @foreach ($absenList as $absen)
+                    @foreach ($dataAbsen as $absen)
                     <tr>
                         <td>{{ $siswa->nis }}</td>
                         <td>{{ $siswa->nama }}</td>
@@ -53,14 +53,26 @@
                 <tfoot>
                     <tr class="data-footer">
                         <td colspan="8">
-                            <div class="pagination">
-                                <span class="prev">Previous</span>
-                                <span class="page-info">1-3 of 3</span>
-                                <span class="next">Next</span>
+                            <div class="pagination custom-pagination">
+                                @if ($dataAbsen->onFirstPage())
+                                    <span class="prev disabled">Previous</span>
+                                @else
+                                    <a href="{{ $dataAbsen->previousPageUrl() }}" class="prev">Previous</a>
+                                @endif
+                
+                                <span class="page-info">
+                                    {{ $dataAbsen->firstItem() }}-{{ $dataAbsen->lastItem() }} of {{ $dataAbsen->total() }}
+                                </span>
+                
+                                @if ($dataAbsen->hasMorePages())
+                                    <a href="{{ $dataAbsen->nextPageUrl() }}" class="next">Next</a>
+                                @else
+                                    <span class="next disabled">Next</span>
+                                @endif
                             </div>
                         </td>
                     </tr>
-                </tfoot>                
+                </tfoot>                               
             </table>
         </div>
     </div>

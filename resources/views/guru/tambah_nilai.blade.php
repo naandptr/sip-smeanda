@@ -27,7 +27,7 @@
                         <div class="nilai-header-value">
                             <select name="siswaBimbingan" id="siswaBimbingan">
                                 <option value="" selected disabled>Pilih Siswa</option>
-                                @foreach($siswaBimbingan as $siswa)
+                                @foreach($dataSiswa as $siswa)
                                     <option value="{{ $siswa->id }}">{{ $siswa->nama }}</option>
                                 @endforeach
                             </select>

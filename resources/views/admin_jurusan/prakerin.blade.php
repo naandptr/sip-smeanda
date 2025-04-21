@@ -30,22 +30,22 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach ($penetapanPrakerin as $index => $data)
+                        @foreach ($dataPrakerin as $index => $prakerin)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $data->siswa->nama }}</td>
-                            <td>{{ $data->dudiJurusan->dudi->nama_dudi ?? '-' }}</td>
+                            <td>{{ $prakerin->siswa->nama }}</td>
+                            <td>{{ $prakerin->dudiJurusan->dudi->nama_dudi ?? '-' }}</td>
                             <td class="data-aksi">
                                 <!-- Tombol Lihat -->
-                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin-{{ $data->id }}">
+                                <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin-{{ $prakerin->id }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
-                                <x-modal_detail_prakerin :penetapanPrakerin="$data" :modalId="'modalDetailPrakerin-' .$data->id" />
+                                <x-modal_detail_prakerin :prakerin="$prakerin" :modalId="'modalDetailPrakerin-' .$prakerin->id" />
 
-                                <button class="btn-icon editPrakerin" data-id="{{ $data->id }}">
+                                <button class="btn-icon editPrakerin" data-id="{{ $prakerin->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <button class="btn-icon deletePrakerin" data-id="{{ $data->id }}">
+                                <button class="btn-icon deletePrakerin" data-id="{{ $prakerin->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
@@ -55,10 +55,22 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="4">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataPrakerin->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataPrakerin->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataPrakerin->firstItem() }}-{{ $dataPrakerin->lastItem() }} of {{ $dataPrakerin->total() }}
+                                    </span>
+                    
+                                    @if ($dataPrakerin->hasMorePages())
+                                        <a href="{{ $dataPrakerin->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

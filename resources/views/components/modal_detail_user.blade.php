@@ -28,7 +28,7 @@
                         <div class="modal-view-item">
                             <h5 class="modal-view-label">NIS</h5>
                             <div class="modal-view-value">
-                                <h5>{{ $user['detail']['nisn'] ?? '-' }}</h5>
+                                <h5>{{ $user['detail']['nis'] ?? '-' }}</h5>
                             </div>
                         </div>
                         <div class="modal-view-item">

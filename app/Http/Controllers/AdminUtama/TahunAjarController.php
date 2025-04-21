@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class TahunAjarController extends Controller
 {
-    // Method untuk menampilkan halaman tahun ajaran
     public function index()
     {
-        $tahunAjar = TahunAjar::orderBy('periode_mulai', 'desc')->get();
-        return view('admin_utama.tahun_ajar', compact('tahunAjar'));
+        $dataTahunAjar = TahunAjar::orderBy('periode_mulai', 'desc')->paginate(10);
+        return view('admin_utama.tahun_ajar', compact('dataTahunAjar'));
     }
 
-    // Method untuk menyimpan data baru
     public function store(Request $request)
     {
         Log::info('Store method called with data: ', $request->all());
@@ -28,7 +26,6 @@ class TahunAjarController extends Controller
             'status' => 'required|in:Aktif,Nonaktif'
         ]);
 
-        // Nonaktifkan semua tahun ajaran sebelumnya jika yang baru aktif
         if ($request->status == 'Aktif') {
             TahunAjar::query()->update(['status' => 'Nonaktif']);
         }
@@ -38,14 +35,12 @@ class TahunAjarController extends Controller
         return response()->json(['success' => true, 'message' => 'Tahun ajaran berhasil ditambahkan']);
     }
 
-    // Method untuk menampilkan form edit (digunakan untuk AJAX)
     public function edit($id)
     {
         $tahunAjar = TahunAjar::findOrFail($id);
         return response()->json($tahunAjar);
     }
 
-    // Method untuk update data
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -57,7 +52,6 @@ class TahunAjarController extends Controller
 
         $tahunAjar = TahunAjar::findOrFail($id);
 
-        // Nonaktifkan tahun ajaran lain jika statusnya diaktifkan
         if ($request->status == 'Aktif') {
             TahunAjar::where('id', '!=', $id)->update(['status' => 'Nonaktif']);
         }
@@ -67,7 +61,6 @@ class TahunAjarController extends Controller
         return response()->json(['success' => true, 'message' => 'Tahun ajaran berhasil diperbarui']);
     }
 
-    // Method untuk menghapus data
     public function destroy($id)
     {
         $tahunAjar = TahunAjar::findOrFail($id);
@@ -81,12 +74,10 @@ class TahunAjarController extends Controller
         return response()->json(['success' => true, 'message' => 'Tahun ajaran berhasil dihapus']);
     }
 
-    // Method untuk toggle status
     public function toggleStatus($id)
     {
         $tahunAjar = TahunAjar::findOrFail($id);
 
-        // Jika ingin mengaktifkan, nonaktifkan semua tahun ajaran lainnya
         if ($tahunAjar->status === 'Nonaktif') {
             TahunAjar::where('id', '!=', $id)->update(['status' => 'Nonaktif']);
             $tahunAjar->status = 'Aktif';

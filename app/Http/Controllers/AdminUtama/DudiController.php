@@ -8,14 +8,12 @@ use App\Models\Dudi;
 
 class DudiController extends Controller
 {
-    // Method untuk menampilkan halaman kelola dudi
     public function index()
     {
-        $dudi = Dudi::orderBy('nama_dudi', 'asc')->get();
-        return view('admin_utama.lokasi', compact('dudi'));
+        $dataDudi = Dudi::orderBy('nama_dudi', 'asc')->paginate(10);
+        return view('admin_utama.lokasi', compact('dataDudi'));
     }
 
-    // Method untuk menyimpan data baru
     public function store(Request $request)
     {
         $request->validate([
@@ -31,14 +29,12 @@ class DudiController extends Controller
         return response()->json(['success' => true, 'message' => 'Lokasi berhasil ditambahkan']);
     }
 
-    // Method untuk menampilkan form edit (digunakan untuk AJAX)
     public function edit($id)
     {
         $dudi = Dudi::findOrFail($id);
         return response()->json($dudi);
     }
 
-    // Method untuk update data
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -56,7 +52,6 @@ class DudiController extends Controller
         return response()->json(['success' => true, 'message' => 'Lokasi berhasil diperbarui']);
     }
 
-    // Method untuk menghapus data
     public function destroy($id)
     {
         $dudi = Dudi::findOrFail($id);

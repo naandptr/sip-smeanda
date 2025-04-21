@@ -8,7 +8,6 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Data Jurusan</h1>
     </div>
@@ -31,19 +30,17 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach($jurusan as $index => $data)
+                        @foreach($dataJurusan as $index => $jurusan)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $data->kode_jurusan }}</td>
-                            <td>{{ $data->nama_jurusan }}</td>
-                            <td>{{ $data->status }}</td>
+                            <td>{{ $jurusan->kode_jurusan }}</td>
+                            <td>{{ $jurusan->nama_jurusan }}</td>
+                            <td>{{ $jurusan->status }}</td>
                             <td class="data-aksi">
-                                <!-- Tombol Edit -->
-                                <button class="btn-icon editJurusan" data-id="{{ $data->id }}">
+                                <button class="btn-icon editJurusan" data-id="{{ $jurusan->id }}">
                                     <img src="{{ asset('img/edit-icon.png') }}" alt="Edit">
                                 </button>
-                                <!-- Tombol Hapus -->
-                                <button class="btn-icon deleteJurusan" data-id="{{ $data->id }}">
+                                <button class="btn-icon deleteJurusan" data-id="{{ $jurusan->id }}">
                                     <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
                                 </button>
                             </td>
@@ -53,10 +50,22 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="5">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataJurusan->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataJurusan->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataJurusan->firstItem() }}-{{ $dataJurusan->lastItem() }} of {{ $dataJurusan->total() }}
+                                    </span>
+                    
+                                    @if ($dataJurusan->hasMorePages())
+                                        <a href="{{ $dataJurusan->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

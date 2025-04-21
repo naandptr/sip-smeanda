@@ -12,11 +12,11 @@ class KelasController extends Controller
 {
     public function index()
     {
-        $kelas = Kelas::with(['jurusan', 'tahunAjar'])->get();
+        $dataKelas = Kelas::with(['jurusan', 'tahunAjar'])->paginate(10);
         $jurusan = Jurusan::where('status', 'aktif')->get();
         $tahunAjar = TahunAjar::where('status', 'aktif')->orderBy('periode_mulai', 'desc')->get();
     
-        return view('admin_utama.kelas', compact('kelas', 'jurusan', 'tahunAjar'));
+        return view('admin_utama.kelas', compact('dataKelas', 'jurusan', 'tahunAjar'));
     }
 
     public function store(Request $request)

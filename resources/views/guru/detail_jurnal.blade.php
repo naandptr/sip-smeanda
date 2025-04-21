@@ -29,7 +29,7 @@
                     </tr>
                 </thead>
                 <tbody class="data-body">
-                    @foreach ($jurnalList as $jurnal)
+                    @foreach ($dataJurnal as $jurnal)
                     <tr>
                         <td>{{ $siswa->nis }}</td>
                         <td>{{ $siswa->nama }}</td>
@@ -74,14 +74,26 @@
                 <tfoot>
                     <tr class="data-footer">
                         <td colspan="6">
-                            <div class="pagination">
-                                <span class="prev">Previous</span>
-                                <span class="page-info">1-3 of 3</span>
-                                <span class="next">Next</span>
+                            <div class="pagination custom-pagination">
+                                @if ($dataJurnal->onFirstPage())
+                                    <span class="prev disabled">Previous</span>
+                                @else
+                                    <a href="{{ $dataJurnal->previousPageUrl() }}" class="prev">Previous</a>
+                                @endif
+                
+                                <span class="page-info">
+                                    {{ $dataJurnal->firstItem() }}-{{ $dataJurnal->lastItem() }} of {{ $dataJurnal->total() }}
+                                </span>
+                
+                                @if ($dataJurnal->hasMorePages())
+                                    <a href="{{ $dataJurnal->nextPageUrl() }}" class="next">Next</a>
+                                @else
+                                    <span class="next disabled">Next</span>
+                                @endif
                             </div>
                         </td>
                     </tr>
-                </tfoot>                
+                </tfoot>                    
             </table>
         </div>
     </div>

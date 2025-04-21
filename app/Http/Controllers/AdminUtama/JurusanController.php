@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class JurusanController extends Controller
 {
-    // Method untuk menampilkan halaman kelola jurusan
     public function index()
     {
-        $jurusan = Jurusan::orderBy('nama_jurusan', 'asc')->get();
-        return view('admin_utama.jurusan', compact('jurusan'));
+        $dataJurusan = Jurusan::orderBy('nama_jurusan', 'asc')->paginate(10);
+        return view('admin_utama.jurusan', compact('dataJurusan'));
     }
 
-    // Method untuk menyimpan data baru
     public function store(Request $request)
     {
         $request->validate([
@@ -31,14 +29,12 @@ class JurusanController extends Controller
         return response()->json(['success' => true, 'message' => 'Jurusan berhasil ditambahkan']);
     }
 
-    // Method untuk menampilkan form edit (digunakan untuk AJAX)
     public function edit($id)
     {
         $jurusan = Jurusan::findOrFail($id);
         return response()->json($jurusan);
     }
 
-    // Method untuk update data
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -54,7 +50,6 @@ class JurusanController extends Controller
         return response()->json(['success' => true, 'message' => 'Jurusan berhasil diperbarui']);
     }
 
-    // Method untuk menghapus data
     public function destroy($id)
     {
 

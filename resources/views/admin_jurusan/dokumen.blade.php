@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody class="data-body">
-                        @foreach($daftarSiswa as $index => $siswa)
+                        @foreach($dataSiswa as $index => $siswa)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $siswa->nama }}</td>
@@ -84,14 +84,26 @@
                     <tfoot>
                         <tr class="data-footer">
                             <td colspan="7">
-                                <div class="pagination">
-                                    <span class="prev">Previous</span>
-                                    <span class="page-info">1-3 of 3</span>
-                                    <span class="next">Next</span>
+                                <div class="pagination custom-pagination">
+                                    @if ($dataSiswa->onFirstPage())
+                                        <span class="prev disabled">Previous</span>
+                                    @else
+                                        <a href="{{ $dataSiswa->previousPageUrl() }}" class="prev">Previous</a>
+                                    @endif
+                    
+                                    <span class="page-info">
+                                        {{ $dataSiswa->firstItem() }}-{{ $dataSiswa->lastItem() }} of {{ $dataSiswa->total() }}
+                                    </span>
+                    
+                                    @if ($dataSiswa->hasMorePages())
+                                        <a href="{{ $dataSiswa->nextPageUrl() }}" class="next">Next</a>
+                                    @else
+                                        <span class="next disabled">Next</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-                    </tfoot>                
+                    </tfoot>                 
                 </table>
             </div>
         </div>

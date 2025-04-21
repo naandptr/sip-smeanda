@@ -14,14 +14,24 @@ class AbsenSiswaController extends Controller
     {
         $pembimbingId = Auth::user()->pembimbing->id;
 
-        $siswaBimbingan = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])->get()->filter(function ($siswa) use ($pembimbingId) {
+        $dataSiswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])->get()->filter(function ($siswa) use ($pembimbingId) {
             $penetapanTerbaru = $siswa->penetapanPrakerinTerbaru;
             return $penetapanTerbaru &&
                    $penetapanTerbaru->dudiJurusan &&
                    $penetapanTerbaru->dudiJurusan->pembimbing_id == $pembimbingId;
-        });
+        })->values();
 
-        return view('guru.absen', compact('siswaBimbingan'));
+        $currentPage = request()->get('page', 1);
+        $perPage = 10;
+        $paginatedSiswa = new \Illuminate\Pagination\LengthAwarePaginator(
+            $dataSiswa->forPage($currentPage, $perPage),
+            $dataSiswa->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('guru.absen', ['dataSiswa' => $paginatedSiswa]);
     }
 
     public function detail($siswa_id)
@@ -38,8 +48,10 @@ class AbsenSiswaController extends Controller
 
         $penetapanId = $siswa->penetapanPrakerinTerbaru->id ?? null;
 
-        $absenList = Absen::where('penetapan_prakerin_id', $penetapanId)->get();
+        $dataAbsen = Absen::where('penetapan_prakerin_id', $penetapanId)
+                  ->orderBy('tanggal', 'desc')
+                  ->paginate(10);
 
-        return view('guru.detail_absen', compact('siswa', 'absenList'));
+        return view('guru.detail_absen', compact('siswa', 'dataAbsen'));
     }
 }

@@ -1,4 +1,4 @@
-@props(['penetapanPrakerin', 'modalId'])
+@props(['prakerin', 'modalId'])
 <div class="modal fade" id="{{ $modalId }}" tabindex="-1" role="dialog" aria-labelledby="modalDetailPrakerin" aria-hidden="true">
     <div class="modal-dialog custom-modal" role="document">
         <div class="modal-content">
@@ -12,49 +12,49 @@
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Nama Siswa</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->siswa->nama ?? '-' }}</h5>
+                            <h5>{{ $prakerin->siswa->nama ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Kelas Siswa</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->siswa->kelas->nama_kelas ?? '-' }}</h5>
+                            <h5>{{ $prakerin->siswa->kelas->nama_kelas ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Nama DUDI</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->dudiJurusan->dudi->nama_dudi ?? '-' }}</h5>
+                            <h5>{{ $prakerin->dudiJurusan->dudi->nama_dudi ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Pembimbing</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->dudiJurusan->pembimbing->nama ?? '-' }}</h5>
+                            <h5>{{ $prakerin->dudiJurusan->pembimbing->nama ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Tahun Ajaran</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->tahunAjar->tahun_ajaran ?? '-' }}</h5>
+                            <h5>{{ $prakerin->tahunAjar->tahun_ajaran ?? '-' }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Tanggal Mulai</h5>
                         <div class="modal-view-value">
-                            <h5>{{ \Carbon\Carbon::parse($penetapanPrakerin->tanggal_mulai)->format('d/m/Y') }}</h5>
+                            <h5>{{ \Carbon\Carbon::parse($prakerin->tanggal_mulai)->format('d/m/Y') }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Tanggal Selesai</h5>
                         <div class="modal-view-value">
-                            <h5>{{ \Carbon\Carbon::parse($penetapanPrakerin->tanggal_selesai)->format('d/m/Y') }}</h5>
+                            <h5>{{ \Carbon\Carbon::parse($prakerin->tanggal_selesai)->format('d/m/Y') }}</h5>
                         </div>
                     </div>
                     <div class="modal-view-item">
                         <h5 class="modal-view-label">Status</h5>
                         <div class="modal-view-value">
-                            <h5>{{ $penetapanPrakerin->status ?? '-' }}</h5>
+                            <h5>{{ $prakerin->status ?? '-' }}</h5>
                         </div>
                     </div>
                 </div>

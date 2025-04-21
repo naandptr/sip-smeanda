@@ -14,179 +14,235 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    // public function index()
+    // {
+    //     $users = User::with([
+    //         'siswa.kelas',         
+    //         'pembimbing', 
+    //         'adminJurusan.jurusan' 
+    //     ])
+    //     ->whereNotIn('role', ['Admin Utama']) 
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
+
+    //     $formattedUsers = $users->map(function ($user) {
+    //         $userData = [
+    //             'id' => $user->id,
+    //             'username' => $user->username,
+    //             'role' => $user->role,
+    //             'email' => $user->email,
+    //             'status' => $user->status
+    //         ];
+
+    //         switch ($user->role) {
+    //             case 'Siswa':
+    //                 if ($user->siswa) {
+    //                     $userData['detail'] = [
+    //                         'nama' => $user->siswa->nama,
+    //                         'nis' => $user->siswa->nis,
+    //                         'nama_kelas' => $user->siswa->kelas->nama_kelas ?? '-'
+    //                     ];
+    //                 }
+    //                 break;
+
+    //             case 'Guru':
+    //                 if ($user->pembimbing) {
+    //                     $userData['detail'] = [
+    //                         'nama' => $user->pembimbing->nama,
+    //                         'nip' => $user->pembimbing->nip,
+    //                         'telp' => $user->pembimbing->telp
+    //                     ];
+    //                 }
+    //                 break;
+
+    //             case 'Admin Jurusan':
+    //                 if ($user->adminJurusan) {
+    //                     $userData['detail'] = [
+    //                         'nama' => $user->adminJurusan->nama,
+    //                         'nama_jurusan' => $user->adminJurusan->jurusan->nama_jurusan ?? '-'
+    //                     ];
+    //                 }
+    //                 break;
+    //         }
+
+    //         return $userData;
+    //     });
+
+    //     return view('admin_utama.user', [
+    //         'users' => $formattedUsers,
+    //         'jurusans' => Jurusan::all(), 
+    //         'kelas' => Kelas::all() 
+    //     ]);
+    // }
+
     public function index()
-{
-    // Ambil semua user dengan relasi yang sesuai
-    $users = User::with([
-        'siswa.kelas',         // Menyertakan data kelas di dalam siswa
-        'pembimbing', 
-        'adminJurusan.jurusan' // Menyertakan data jurusan di dalam admin jurusan
-    ])
-    ->whereNotIn('role', ['Admin Utama']) // Mengecualikan Admin Utama
+    {
+        $users = User::with([
+            'siswa.kelas',
+            'pembimbing',
+            'adminJurusan.jurusan'
+        ])
+        ->whereNotIn('role', ['Admin Utama'])
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10); 
 
-    // Format data untuk ditampilkan di view
-    $formattedUsers = $users->map(function ($user) {
-        $userData = [
-            'id' => $user->id,
-            'username' => $user->username,
-            'role' => $user->role,
-            'email' => $user->email,
-            'status' => $user->status
-        ];
+        $formatted = $users->getCollection()->map(function ($user) {
+            $userData = [
+                'id' => $user->id,
+                'username' => $user->username,
+                'role' => $user->role,
+                'email' => $user->email,
+                'status' => $user->status
+            ];
 
-        // Tambahkan data detail berdasarkan role
-        switch ($user->role) {
-            case 'Siswa':
-                if ($user->siswa) {
-                    $userData['detail'] = [
-                        'nama' => $user->siswa->nama,
-                        'nis' => $user->siswa->nis,
-                        'nama_kelas' => $user->siswa->kelas->nama_kelas ?? '-'
-                    ];
-                }
-                break;
+            switch ($user->role) {
+                case 'Siswa':
+                    if ($user->siswa) {
+                        $userData['detail'] = [
+                            'nama' => $user->siswa->nama,
+                            'nis' => $user->siswa->nis,
+                            'nama_kelas' => $user->siswa->kelas->nama_kelas ?? '-'
+                        ];
+                    }
+                    break;
 
-            case 'Guru':
-                if ($user->pembimbing) {
-                    $userData['detail'] = [
-                        'nama' => $user->pembimbing->nama,
-                        'nip' => $user->pembimbing->nip,
-                        'telp' => $user->pembimbing->telp
-                    ];
-                }
-                break;
+                case 'Guru':
+                    if ($user->pembimbing) {
+                        $userData['detail'] = [
+                            'nama' => $user->pembimbing->nama,
+                            'nip' => $user->pembimbing->nip,
+                            'telp' => $user->pembimbing->telp
+                        ];
+                    }
+                    break;
 
-            case 'Admin Jurusan':
-                if ($user->adminJurusan) {
-                    $userData['detail'] = [
-                        'nama' => $user->adminJurusan->nama,
-                        'nama_jurusan' => $user->adminJurusan->jurusan->nama_jurusan ?? '-'
-                    ];
-                }
-                break;
-        }
+                case 'Admin Jurusan':
+                    if ($user->adminJurusan) {
+                        $userData['detail'] = [
+                            'nama' => $user->adminJurusan->nama,
+                            'nama_jurusan' => $user->adminJurusan->jurusan->nama_jurusan ?? '-'
+                        ];
+                    }
+                    break;
+            }
 
-        return $userData;
-    });
+            return $userData;
+        });
 
-    return view('admin_utama.user', [
-        'users' => $formattedUsers,
-        'jurusans' => Jurusan::all(), // Untuk dropdown form
-        'kelas' => Kelas::all() // Untuk dropdown form
-    ]);
-}
+        $users->setCollection($formatted);
 
-public function store(Request $request)
-{
-    // Mulai database transaction
-    DB::beginTransaction();
-
-    try {
-        $request->validate([
-            'roleUser' => 'required|in:Siswa,Guru,Admin Jurusan',
-            'namaUser' => 'required|unique:tbl_users,username',
+        return view('admin_utama.user', [
+            'users' => $users,
+            'jurusans' => Jurusan::all(),
+            'kelas' => Kelas::all()
         ]);
-
-        $user = User::create([
-            'username' => $request->namaUser,
-            'password' => bcrypt('123456'),
-            'role' => $request->roleUser,
-            'status' => User::STATUS_PENDING,
-            'is_default_password' => true,
-        ]);
-
-        // Simpan data tambahan berdasarkan role
-        if ($request->roleUser == 'Siswa') {
-            $request->validate([
-                'namaSiswa' => 'required',
-                'nisSiswa' => 'required|unique:tbl_siswa,nis',
-                'kelasSiswa' => 'required|exists:tbl_kelas,id',
-            ]);
-
-            $siswa = Siswa::create([
-                'user_id' => $user->id,
-                'nama' => $request->namaSiswa,
-                'nis' => $request->nisSiswa,
-                'kelas_id' => $request->kelasSiswa,
-            ]);
-
-            if (!$siswa) {
-                throw new \Exception('Gagal menyimpan data siswa');
-            }
-        } 
-        elseif ($request->roleUser == 'Guru') {
-            $request->validate([
-                'namaGuru' => 'required',
-                'nipGuru' => 'required|unique:tbl_pembimbing,nip',
-                'telpGuru' => 'required',
-            ]);
-
-            $pembimbing = Pembimbing::create([
-                'user_id' => $user->id,
-                'nama' => $request->namaGuru,
-                'nip' => $request->nipGuru,
-                'telp' => $request->telpGuru,
-            ]);
-
-            if (!$pembimbing) {
-                throw new \Exception('Gagal menyimpan data pembimbing');
-            }
-        } 
-        elseif ($request->roleUser == 'Admin Jurusan') {
-            $request->validate([
-                'namaAdm' => 'required',
-                'jurusanAdm' => 'required|exists:tbl_jurusan,id',
-            ]);
-
-            $adminJurusan = AdminJurusan::create([
-                'user_id' => $user->id,
-                'nama' => $request->namaAdm,
-                'jurusan_id' => $request->jurusanAdm,
-            ]);
-
-            if (!$adminJurusan) {
-                throw new \Exception('Gagal menyimpan data admin jurusan');
-            }
-        }
-
-        // Commit transaction jika semua berhasil
-        DB::commit();
-
-        return redirect()->back()->with('success', 'User berhasil ditambahkan!');
-
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        DB::rollBack();
-        
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validasi gagal',
-                'errors' => $e->errors()
-            ], 422);
-        }
-        
-        return redirect()->back()
-            ->withErrors($e->errors())
-            ->withInput();
-            
-    } catch (\Exception $e) {
-        DB::rollBack();
-        
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan sistem',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-        
-        return redirect()->back()
-            ->with('error', 'Gagal menyimpan data: ' . $e->getMessage())
-            ->withInput();
     }
 
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $request->validate([
+                'roleUser' => 'required|in:Siswa,Guru,Admin Jurusan',
+                'namaUser' => 'required|unique:tbl_users,username',
+            ]);
+
+            $user = User::create([
+                'username' => $request->namaUser,
+                'password' => bcrypt('123456'),
+                'role' => $request->roleUser,
+                'status' => User::STATUS_PENDING,
+                'is_default_password' => true,
+            ]);
+
+            if ($request->roleUser == 'Siswa') {
+                $request->validate([
+                    'namaSiswa' => 'required',
+                    'nisSiswa' => 'required|unique:tbl_siswa,nis',
+                    'kelasSiswa' => 'required|exists:tbl_kelas,id',
+                ]);
+
+                $siswa = Siswa::create([
+                    'user_id' => $user->id,
+                    'nama' => $request->namaSiswa,
+                    'nis' => $request->nisSiswa,
+                    'kelas_id' => $request->kelasSiswa,
+                ]);
+
+                if (!$siswa) {
+                    throw new \Exception('Gagal menyimpan data siswa');
+                }
+            } 
+            elseif ($request->roleUser == 'Guru') {
+                $request->validate([
+                    'namaGuru' => 'required',
+                    'nipGuru' => 'required|unique:tbl_pembimbing,nip',
+                    'telpGuru' => 'required',
+                ]);
+
+                $pembimbing = Pembimbing::create([
+                    'user_id' => $user->id,
+                    'nama' => $request->namaGuru,
+                    'nip' => $request->nipGuru,
+                    'telp' => $request->telpGuru,
+                ]);
+
+                if (!$pembimbing) {
+                    throw new \Exception('Gagal menyimpan data pembimbing');
+                }
+            } 
+            elseif ($request->roleUser == 'Admin Jurusan') {
+                $request->validate([
+                    'namaAdm' => 'required',
+                    'jurusanAdm' => 'required|exists:tbl_jurusan,id',
+                ]);
+
+                $adminJurusan = AdminJurusan::create([
+                    'user_id' => $user->id,
+                    'nama' => $request->namaAdm,
+                    'jurusan_id' => $request->jurusanAdm,
+                ]);
+
+                if (!$adminJurusan) {
+                    throw new \Exception('Gagal menyimpan data admin jurusan');
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'User berhasil ditambahkan!');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validasi gagal',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+            
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan sistem',
+                    'error' => $e->getMessage()
+                ], 500);
+            }
+            
+            return redirect()->back()
+                ->with('error', 'Gagal menyimpan data: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     public function edit($id)
@@ -250,7 +306,6 @@ public function store(Request $request)
     {
         $user = User::findOrFail($id);
 
-        // Hapus data tambahan berdasarkan role
         if ($user->role == 'Siswa' && $user->siswa) {
             $user->siswa->delete();
         } elseif ($user->role == 'Guru' && $user->pembimbing) {
