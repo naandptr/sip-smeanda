@@ -9,22 +9,22 @@ $(document).ready(function() {
             let fileExtension = fileName.slice(fileName.lastIndexOf('.')).toLowerCase();
 
             if ((!fileType || fileType !== 'application/pdf') && !validExtensions.includes(fileExtension)) {
-                alert('Hanya file PDF yang diperbolehkan!');
+                alert('Hanya berkas PDF yang diperbolehkan!');
                 $(input).val('');
-                $(label).text('No file chosen');
+                $(label).text('Berkas Kosong');
                 return;
             }
 
             if (fileSize > 2 * 1024 * 1024) {
-                alert('Ukuran file maksimal 2MB!');
+                alert('Ukuran berkas maksimal 2MB!');
                 $(input).val('');
-                $(label).text('No file chosen');
+                $(label).text('Berkas Kosong');
                 return;
             }
 
             $(label).text(fileName);
         } else {
-            $(label).text('No file chosen');
+            $(label).text('Berkas Kosong');
         }
     }
 
@@ -52,19 +52,19 @@ $(document).ready(function() {
         if (!file) {
             Swal.fire({
                 imageUrl: "/img/error-icon.png",
-                title: "File belum dipilih!",
-                text: "Silakan pilih file terlebih dahulu.",
+                title: "Berkas belum dipilih!",
+                text: "Silakan pilih berkas terlebih dahulu.",
             });
             return;
         }
     
         Swal.fire({
             imageUrl: "/img/confirm-icon.png",
-            title: "Apakah kamu yakin ingin submit file ini?",
+            title: "Apakah kamu yakin ingin mengunggah berkas ini?",
             text: "Pastikan data sudah benar sebelum melanjutkan",
             showCancelButton: true,
-            cancelButtonText: "Cancel",
-            confirmButtonText: "Submit",
+            cancelButtonText: "Batal",
+            confirmButtonText: "Kirim",
             reverseButtons: true 
         }).then((result) => {
             if (result.isConfirmed) {
@@ -84,7 +84,7 @@ $(document).ready(function() {
                         Swal.fire({
                             icon: "success",
                             title: "Berhasil!",
-                            text: response.message || "File berhasil diunggah.",
+                            text: response.message || "Berkas berhasil diunggah.",
                         });
                     
                         const labelId = "#" + jenis + "Name"; 
@@ -95,7 +95,7 @@ $(document).ready(function() {
                         Swal.fire({
                             icon: "error",
                             title: "Gagal!",
-                            text: xhr.responseJSON?.message || "Terjadi kesalahan saat upload.",
+                            text: xhr.responseJSON?.message || "Terjadi kesalahan saat unggah.",
                         });
                     }
                 });

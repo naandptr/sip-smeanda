@@ -19,17 +19,17 @@
             @csrf
             <!-- Input File -->
             <div class="document-input">
-                <h4>File</h4>
+                <h4>Berkas</h4>
                 <div class="document-upload">
                     <input type="file" name="dokumen" id="cvInput" hidden>
-                    <label for="cvInput" class="file-btn">Pilih file</label>
+                    <label for="cvInput" class="file-btn">Pilih</label>
                     <p class="file-name" id="cvName">
                         @if(isset($dokumen['CV']))
                             <a href="{{ route('dokumen.download', $dokumen['CV']->id) }}">
                                 {{ basename($dokumen['CV']->file) }}
                             </a>
                         @else
-                            No file chosen
+                            Berkas Kosong
                         @endif
                     </p>
                 </div>             
@@ -37,7 +37,7 @@
 
             <!-- Tombol Submit -->
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="cvSubmit">Submit</button>
+                <button type="submit" class="btn-submit" id="cvSubmit">Kirim</button>
             </div>
         </form>
     </div>
@@ -50,17 +50,17 @@
             @csrf
             <!-- Input File -->
             <div class="document-input">
-                <h4>File</h4>
+                <h4>Berkas</h4>
                 <div class="document-upload">
                     <input type="file" name="dokumen" id="portofolioInput" hidden>
-                    <label for="portofolioInput" class="file-btn">Pilih file</label>
+                    <label for="portofolioInput" class="file-btn">Pilih</label>
                     <p class="file-name" id="portofolioName">
                         @if(isset($dokumen['Portofolio']))
                             <a href="{{ route('dokumen.download', $dokumen['Portofolio']->id) }}">
                                 {{ basename($dokumen['Portofolio']->file) }}
                             </a>
                         @else
-                            No file chosen
+                            Berkas Kosong
                         @endif
                     </p>
                 </div>
@@ -68,7 +68,7 @@
 
             <!-- Tombol Submit -->
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="portoSubmit">Submit</button>
+                <button type="submit" class="btn-submit" id="portoSubmit">Kirim</button>
             </div>
         </form>
     </div>
@@ -81,17 +81,17 @@
             @csrf
             <!-- Input File -->
             <div class="document-input">
-                <h4>File</h4>
+                <h4>Berkas</h4>
                 <div class="document-upload">
                     <input type="file" name="dokumen" id="laporanInput" hidden>
-                    <label for="laporanInput" class="file-btn">Pilih file</label>
+                    <label for="laporanInput" class="file-btn">Pilih</label>
                     <p class="file-name" id="laporanName">
                         @if(isset($dokumen['Laporan']))
                             <a href="{{ route('dokumen.download', $dokumen['Laporan']->id) }}">
                                 {{ basename($dokumen['Laporan']->file) }}
                             </a>
                         @else
-                            No file chosen
+                            Berkas Kosong
                         @endif
                     </p>
                 </div>
@@ -99,7 +99,7 @@
 
             <!-- Tombol Submit -->
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="laporanSubmit">Submit</button>
+                <button type="submit" class="btn-submit" id="laporanSubmit">Kirim</button>
             </div>
         </form>
     </div>
@@ -112,17 +112,17 @@
             @csrf
             <!-- Input File -->
             <div class="document-input">
-                <h4>File</h4>
+                <h4>Berkas</h4>
                 <div class="document-upload">
                     <input type="file" name="dokumen" id="sertifikatInput" hidden>
-                    <label for="sertifikatInput" class="file-btn">Pilih file</label>
+                    <label for="sertifikatInput" class="file-btn">Pilih</label>
                     <p class="file-name" id="sertifikatName">
                         @if(isset($dokumen['Sertifikat']))
                             <a href="{{ route('dokumen.download', $dokumen['Sertifikat']->id) }}">
                                 {{ basename($dokumen['Sertifikat']->file) }}
                             </a>
                         @else
-                            No file chosen
+                            Berkas Kosong
                         @endif
                     </p>
                 </div>
@@ -130,7 +130,7 @@
 
             <!-- Tombol Submit -->
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="sertifikatSubmit">Submit</button>
+                <button type="submit" class="btn-submit" id="sertifikatSubmit">Kirim</button>
             </div>
         </form>
     </div>

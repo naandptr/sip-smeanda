@@ -43,7 +43,7 @@ class DokumenController extends Controller
             if (!$stored) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Gagal menyimpan file.',
+                    'message' => 'Gagal menyimpan berkas.',
                 ], 500);
             }
 
@@ -63,7 +63,7 @@ class DokumenController extends Controller
 
         return response()->json([
             'success' => false,
-            'message' => 'File tidak ditemukan dalam permintaan.',
+            'message' => 'Berkas tidak ditemukan dalam permintaan.',
         ], 400);
     }
 

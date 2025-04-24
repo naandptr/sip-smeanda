@@ -98,7 +98,7 @@
     @elseif ($role === User::ROLE_ADMIN_UTAMA)
         <div class="card-container">
             <div class="card-item">
-                <h4>User</h4>
+                <h4>Pengguna</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
                     <h2>{{ $totalUsers }} User</h2>
