@@ -17,10 +17,15 @@ class TahunAjarController extends Controller
 
     public function store(Request $request)
     {
-        Log::info('Store method called with data: ', $request->all());
+        if (TahunAjar::where('tahun_ajaran', $request->tahun_ajaran)->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tahun ajaran sudah ada sebelumnya'
+            ], 400);
+        }
 
         $request->validate([
-            'tahun_ajaran' => 'required|string|max:255',
+            'tahun_ajaran' => 'required|string|max:255|unique:tbl_tahun_ajar,tahun_ajaran',
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after:periode_mulai',
             'status' => 'required|in:Aktif,Nonaktif'
@@ -43,6 +48,17 @@ class TahunAjarController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (
+            TahunAjar::where('tahun_ajaran', $request->tahun_ajaran)
+                ->where('id', '!=', $id)
+                ->exists()
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tahun ajaran sudah ada sebelumnya'
+            ], 400);
+        }
+
         $request->validate([
             'tahun_ajaran' => 'required|string|max:255',
             'periode_mulai' => 'required|date',

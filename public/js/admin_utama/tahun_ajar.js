@@ -1,32 +1,37 @@
 $(document).ready(function() {
-    $(".toggle-switch").click(function() {
-        const tahunId = $(this).data('id');
+    $(".toggle-switch").click(function () {
+        const tahunId = $(this).data("id");
         const toggleBtn = $(this);
+        const isActive = toggleBtn.hasClass("active");
     
         $.ajax({
             url: `/kelola-tahun-ajar/${tahunId}/toggle-status`,
-            method: 'PATCH',
+            method: "PATCH",
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             },
-            success: function(response) {
+            data: {
+                force_nonaktif: isActive ? true : false
+            },
+            success: function (response) {
                 if (response.success) {
                     $(".toggle-switch").removeClass("active");
-    
                     $(".status-kegiatan").each(function () {
                         $(this).text("Nonaktif").removeClass("aktif").addClass("nonaktif");
                     });
     
-                    toggleBtn.addClass("active");
-                    const statusElement = toggleBtn.closest("tr").find(".status-kegiatan");
-                    statusElement.text("Aktif").removeClass("nonaktif").addClass("aktif");
+                    if (!isActive) {
+                        toggleBtn.addClass("active");
+                        const statusElement = toggleBtn.closest("tr").find(".status-kegiatan");
+                        statusElement.text("Aktif").removeClass("nonaktif").addClass("aktif");
+                    }
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 console.log(xhr.responseText);
             }
         });
-    });
+    });    
 
     $("#tambahTahunAjar").click(function () {
         $("#modalTahunAjar form")[0].reset(); 
