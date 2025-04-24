@@ -60,7 +60,7 @@ class TahunAjarController extends Controller
         }
 
         $request->validate([
-            'tahun_ajaran' => 'required|string|max:255',
+            'tahun_ajaran' => 'required|string|max:255|unique:tbl_tahun_ajar,tahun_ajaran,' . $id,
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after:periode_mulai',
             'status' => 'required|in:Aktif,Nonaktif'

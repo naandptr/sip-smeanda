@@ -16,8 +16,15 @@ class DudiController extends Controller
 
     public function store(Request $request)
     {
+        if (Dudi::where('nama_dudi', $request->nama_dudi)->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lokasi sudah ada sebelumnya'
+            ], 400);
+        }
+
         $request->validate([
-            'nama_dudi' => 'required|string|max:255',
+            'nama_dudi' => 'required|string|max:255|unique:tbl_dudi,nama_dudi',
             'alamat' => 'required|string|max:255',
             'bidang_usaha' => 'required|string|max:255',
             'telp' => 'required|string|max:255',
@@ -37,8 +44,19 @@ class DudiController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (
+            Dudi::where('nama_dudi', $request->nama_dudi)
+                ->where('id', '!=', $id)
+                ->exists()
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lokasi sudah ada sebelumnya'
+            ], 400);
+        }
+
         $request->validate([
-            'nama_dudi' => 'required|string|max:255',
+            'nama_dudi' => 'required|string|max:255|unique:tbl_dudi,nama_dudi,' . $id,
             'alamat' => 'required|string|max:255',
             'bidang_usaha' => 'required|string|max:255',
             'telp' => 'required|string|max:255',
