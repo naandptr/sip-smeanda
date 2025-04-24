@@ -21,8 +21,19 @@ class KelasController extends Controller
 
     public function store(Request $request)
     {
+        $cekKelas = Kelas::where('nama_kelas', $request->nama_kelas)
+                    ->where('tahun_ajar_id', $request->tahun_ajar_id)
+                    ->first();
+
+        if ($cekKelas) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama kelas sudah digunakan pada tahun ajaran yang sama.'
+            ], 422);
+        }
+
         $request->validate([
-            'nama_kelas' => 'required',
+            'nama_kelas' => 'required|string|max:255|',
             'jurusan_id' => 'required',
             'tahun_ajar_id' => 'required',
         ]);
@@ -44,8 +55,20 @@ class KelasController extends Controller
 
     public function update(Request $request, $id)
     {
+        $cekKelas = Kelas::where('id', '!=', $id)
+                    ->where('nama_kelas', $request->nama_kelas)
+                    ->where('tahun_ajar_id', $request->tahun_ajar_id)
+                    ->first();
+
+        if ($cekKelas) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama kelas sudah digunakan pada tahun ajaran yang sama.'
+            ], 422);
+        }
+        
         $request->validate([
-            'nama_kelas' => 'required',
+            'nama_kelas' => 'required|string|max:255|',
             'jurusan_id' => 'required',
             'tahun_ajar_id' => 'required',
         ]);
