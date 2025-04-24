@@ -4,17 +4,17 @@
 
 @extends('layouts.app')
 
-@section('title', 'Absensi Harian')
+@section('title', 'Presensi Harian')
 
 @section('content')
 <div class="absen data-container">
     <div class="header">
-        <h1>Absensi Harian</h1>
+        <h1>Presensi Harian</h1>
     </div>
 
     <div class="absen-section data-section">
         <div class="absen-action data-action">
-            <button class="btn-open" id="tambahAbsen" data-bs-toggle="modal" data-bs-target="#modalAbsen">Buat Absen</button>
+            <button class="btn-open" id="tambahAbsen" data-bs-toggle="modal" data-bs-target="#modalAbsen">+ Presensi</button>
             <x-modal_absen></x-modal_absen>
         </div>
 
@@ -25,7 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>TANGGAL</th>
-                            <th>JENIS ABSEN</th>
+                            <th>JENIS PRESENSI</th>
                             <th>STATUS</th>
                             <th>KETERANGAN</th>
                             <th>FOTO</th>
@@ -55,25 +55,24 @@
                             <td colspan="6">
                                 <div class="pagination custom-pagination">
                                     @if ($dataAbsen->onFirstPage())
-                                        <span class="prev disabled">Previous</span>
+                                        <span class="prev disabled">Sebelumnya</span>
                                     @else
-                                        <a href="{{ $dataAbsen->previousPageUrl() }}" class="prev">Previous</a>
+                                        <a href="{{ $dataAbsen->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                     @endif
                     
                                     <span class="page-info">
-                                        {{ $dataAbsen->firstItem() }}-{{ $dataAbsen->lastItem() }} of {{ $dataAbsen->total() }}
+                                        {{ $dataAbsen->firstItem() }}-{{ $dataAbsen->lastItem() }} dari {{ $dataAbsen->total() }}
                                     </span>
                     
                                     @if ($dataAbsen->hasMorePages())
-                                        <a href="{{ $dataAbsen->nextPageUrl() }}" class="next">Next</a>
+                                        <a href="{{ $dataAbsen->nextPageUrl() }}" class="next">Selanjutnya</a>
                                     @else
-                                        <span class="next disabled">Next</span>
+                                        <span class="next disabled">Selanjutnya</span>
                                     @endif
                                 </div>
                             </td>
                         </tr>
                     </tfoot>
-                                   
                 </table>
             </div>
         </div>

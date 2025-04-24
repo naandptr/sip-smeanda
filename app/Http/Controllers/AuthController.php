@@ -145,7 +145,7 @@ class AuthController extends Controller
 
         Auth::logout();
 
-        return redirect()->route('login')->with('message', 'Password berhasil diubah. Silakan login.');
+        return redirect()->route('login')->with('message', 'Kata Sandi berhasil diubah. Silakan masuk.');
     }
 
     public function showLupaPasswordForm()
@@ -175,7 +175,7 @@ class AuthController extends Controller
 
         if ($request->input('new-pw') !== $request->input('confirm-pw')) {
             return response()->json([
-                'message' => 'Konfirmasi password tidak cocok dengan password baru.'
+                'message' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi baru.'
             ], 400);
         }
 
@@ -184,7 +184,7 @@ class AuthController extends Controller
 
         if (!Hash::check($request->input('old-pw'), $user->password)) {
             return response()->json([
-                'message' => 'Password lama tidak sesuai.'
+                'message' => 'Kata sandi lama tidak sesuai.'
             ], 400);
         }
 
@@ -193,7 +193,7 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'Password berhasil diperbarui.',
+            'message' => 'Kata sandi berhasil diperbarui.',
             'redirect_to' => route('akun.show')
         ]);
     }

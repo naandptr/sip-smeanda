@@ -30,12 +30,12 @@
                 @csrf
                 <div class="auth-group">
                     <div class="auth-field">
-                        <label for="username">Username</label>
+                        <label for="username">Nama Pengguna</label>
                         <input type="text" id="username" name="username" required>
                     </div>
         
                     <div class="auth-field">
-                        <label for="password">Password</label>
+                        <label for="password">Kata Sandi</label>
                         <div class="pass-wrapper">
                             <input type="password" name="password" id="password" required>
                             <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="password" alt="Toggle Password">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit" id="submitLogin">Login</button>
+                    <button type="submit" class="btn-submit" id="submitLogin">Masuk</button>
                     <a href="{{ route('lupa-password') }}" class="btn-lupa-pass">Lupa Kata Sandi?</a>
                 </div>
             </form>

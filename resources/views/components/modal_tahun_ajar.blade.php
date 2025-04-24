@@ -36,8 +36,8 @@
                 </div>
                 <div class="modal-form-footer">
                     <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn-submit" id="submitTahunAjar">Simpan</button>
-                    <button type="submit" class="btn-submit" id="updateTahunAjar">Simpan</button>
+                    <button type="submit" class="btn-submit" id="submitTahunAjar">Kirim</button>
+                    <button type="submit" class="btn-submit" id="updateTahunAjar">Kirim</button>
                 </div>
             </form>
         </div>

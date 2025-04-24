@@ -15,8 +15,8 @@
                         <label for="jenisAbsen">Jenis<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="jenisAbsen" name="jenisAbsen" required>
-                                <option value="Absen Datang">Absen Datang</option>
-                                <option value="Absen Pulang">Absen Pulang</option>
+                                <option value="Absen Datang">Presensi Datang</option>
+                                <option value="Absen Pulang">Presensi Pulang</option>
                             </select>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         
                     </div>
                     <div class="modal-form-group">
-                        <label for="fileAbsen">Upload Foto<span class="required-label">*</span></h5></label>
+                        <label for="fileAbsen">Unggah Foto<span class="required-label">*</span></h5></label>
                         <div class="modal-form-value">
                             <input type="file" class="filepond" name="fileAbsen" id="fileAbsen" required>
                         </div>
@@ -46,8 +46,8 @@
                 </div>
 
                 <div class="modal-form-footer">
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit" id="submitAbsen">Simpan</button>
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-submit" id="submitAbsen">Kirim</button>
                 </div>
             </form>
         </div>

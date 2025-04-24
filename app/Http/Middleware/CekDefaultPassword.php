@@ -15,7 +15,7 @@ class CekDefaultPassword
 
         if ($user && $user->is_default_password) {
             if (!$request->is('ganti-password-awal')) {
-                return redirect()->route('ganti-password-awal')->with('warning', 'Silakan ganti password default Anda terlebih dahulu.');
+                return redirect()->route('ganti-password-awal')->with('warning', 'Silakan ganti kata sandi default Anda terlebih dahulu.');
             }
         }
 

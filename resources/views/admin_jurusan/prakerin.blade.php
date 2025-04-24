@@ -15,7 +15,7 @@
 
     <div class="data-section">
         <div class="data-action">
-            <button class="btn-open" id="tambahPrakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">Tambah Penetapan</button>
+            <button class="btn-open" id="tambahPrakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">+ Penetapan</button>
             <x-modal_prakerin :siswa="$siswa" :dudiJurusan="$dudiJurusan" :tahunAjar="$tahunAjar" />
         </div>
         <div class="data-content">
@@ -57,19 +57,19 @@
                             <td colspan="4">
                                 <div class="pagination custom-pagination">
                                     @if ($dataPrakerin->onFirstPage())
-                                        <span class="prev disabled">Previous</span>
+                                        <span class="prev disabled">Sebelumnya</span>
                                     @else
-                                        <a href="{{ $dataPrakerin->previousPageUrl() }}" class="prev">Previous</a>
+                                        <a href="{{ $dataPrakerin->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                     @endif
                     
                                     <span class="page-info">
-                                        {{ $dataPrakerin->firstItem() }}-{{ $dataPrakerin->lastItem() }} of {{ $dataPrakerin->total() }}
+                                        {{ $dataPrakerin->firstItem() }}-{{ $dataPrakerin->lastItem() }} dari {{ $dataPrakerin->total() }}
                                     </span>
                     
                                     @if ($dataPrakerin->hasMorePages())
-                                        <a href="{{ $dataPrakerin->nextPageUrl() }}" class="next">Next</a>
+                                        <a href="{{ $dataPrakerin->nextPageUrl() }}" class="next">Selanjutnya</a>
                                     @else
-                                        <span class="next disabled">Next</span>
+                                        <span class="next disabled">Selanjutnya</span>
                                     @endif
                                 </div>
                             </td>

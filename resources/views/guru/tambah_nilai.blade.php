@@ -147,8 +147,8 @@
                     </div>
                 </div>
                 <div class="nilai-form-footer">
-                    <button type="button" class="btn-cancel">Cancel</button>
-                    <button type="submit" class="btn-submit" id="submitNilai">Simpan</button>
+                    <button type="button" class="btn-cancel">Batal</button>
+                    <button type="submit" class="btn-submit" id="submitNilai">Kirim</button>
                 </div>
             </div>
         </form>

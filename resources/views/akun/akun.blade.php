@@ -57,7 +57,7 @@
 
     <div class="pw-btn">
         <a href="{{ route('akun.show.ganti_password') }}">
-            <button class="btn-open">Ganti Password</button>
+            <button class="btn-open">Ganti Kata Sandi</button>
         </a>
     </div>
 </div>

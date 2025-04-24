@@ -18,7 +18,7 @@
 
             <a href="{{ url('/dashboard') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <img src="{{ asset('img/dashboard-icon.png') }}" alt="dashboard" height="20" />
-                <h4 class="ms-2 mb-0 fs-6 menu-text">Dashboard</h4>
+                <h4 class="ms-2 mb-0 fs-6 menu-text">Beranda</h4>
             </a>
             
 
@@ -33,7 +33,7 @@
                 </a>
                 <a href="{{ route('siswa.absen') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.absen') ? 'active' : '' }}">
                     <img src="{{ asset('img/absen-icon.png') }}" alt="absen harian" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Absen Harian</h4>
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Presensi Harian</h4>
                 </a>
                 <a href="{{ route('siswa.jurnal') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.jurnal') ? 'active' : '' }}">
                     <img src="{{ asset('img/jurnal-icon.png') }}" alt="jurnal kegiatan" height="20" />
@@ -51,7 +51,7 @@
                 </a>
                 <a href="{{ route('guru.absen') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['guru.absen', 'absen-detail.guru']) ? 'active' : '' }}">
                     <img src="{{ asset('img/absen-icon.png') }}" alt="absen harian" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Absen Harian</h4>
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Presensi Harian</h4>
                 </a>
                 <a href="{{ route('guru.jurnal') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['guru.jurnal', 'jurnal.detail']) ? 'active' : '' }}">
                     <img src="{{ asset('img/jurnal-icon.png') }}" alt="jurnal kegiatan" height="20" />
@@ -91,7 +91,7 @@
             @elseif ($role === User::ROLE_ADMIN_UTAMA)
                 <a href="{{ route('admin.user') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('admin.user') ? 'active' : '' }}">
                     <img src="{{ asset('img/siswa-icon.png') }}" alt="kelola user" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola User</h4>
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Kelola Pengguna</h4>
                 </a>
                 <a href="{{ route('admin.lokasi') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('admin.lokasi') ? 'active' : '' }}">
                     <img src="{{ asset('img/location-icon.png') }}" alt="data lokasi" height="20" />

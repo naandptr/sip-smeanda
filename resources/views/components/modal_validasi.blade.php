@@ -11,8 +11,8 @@
                         <textarea name="catatan" id="catatan" cols="30" rows="10" placeholder="Masukkan catatan..."></textarea>
                     </div>
                     <div class="modal-form-footer">
-                        <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn-submit" id="submitValidasi">Simpan</button>
+                        <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn-submit" id="submitValidasi">Kirim</button>
                     </div>
                 </div>
             </form>

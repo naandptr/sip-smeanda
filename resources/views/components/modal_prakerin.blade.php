@@ -49,9 +49,9 @@
 
                 </div>
                 <div class="modal-form-footer">
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit" id="submitPrakerin">Simpan</button>
-                    <button type="submit" class="btn-submit" id="updatePrakerin">Simpan</button>
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-submit" id="submitPrakerin">Kirim</button>
+                    <button type="submit" class="btn-submit" id="updatePrakerin">Kirim</button>
                 </div>
             </form>
         </div>

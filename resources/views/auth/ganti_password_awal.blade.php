@@ -19,7 +19,7 @@
                 @csrf         
                 <div class="auth-group">        
                     <div class="auth-field">
-                        <label for="newPw">Create Password</label>
+                        <label for="newPw">Buat Kata Sandi</label>
                         <div class="pass-wrapper">
                             <input type="password" name="new-pw" id="newPw" required>
                             <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="newPw" alt="Toggle Password">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="auth-group">        
                     <div class="auth-field">
-                        <label for="confirmPw">Re-enter Password</label>
+                        <label for="confirmPw">Konfirmasi Kata Sandi</label>
                         <div class="pass-wrapper">
                             <input type="password" name="confirm-pw" id="confirmPw" required>
                             <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPw" alt="Toggle Password">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit">Set Password</button>
+                    <button type="submit" class="btn-submit">Atur Kata Sandi</button>
                 </div>
             </form>
         </div>

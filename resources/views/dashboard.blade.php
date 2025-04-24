@@ -49,7 +49,7 @@
                 <li>Lampirkan CV dan portofolio di halaman dokumen</li>
                 <li>Datang tepat waktu dan mengikuti aturan DUDI</li>
                 <li>Mengerjakan tugas yang diberikan dengan penuh tanggung jawab</li>
-                <li>Jangan lupa mengisi absen datang dan pulang setiap hari</li>
+                <li>Jangan lupa mengisi presensi datang dan pulang setiap hari</li>
                 <li>Mencatat kegiatan dalam jurnal prakerin setiap harinya</li>
                 <li>Lampirkan laporan dan sertifikat prakerin di halaman dokumen setelah masa prakerin berakhir</li>
             </ol>

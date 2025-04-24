@@ -64,9 +64,9 @@ $(document).ready(function () {
         labelIdle: `
             <div style="text-align: center;">
                 <img src="/img/add-icon.png" alt="Upload Icon">
-                <h1>Drop your files here</h1>
-                <span style="color: blue; cursor: pointer;">Browse file </span>
-                <p>from your computer</p>
+                <h1>Seret berkas Anda di sini</h1>
+                <span style="color: blue; cursor: pointer;">Pilih berkas </span>
+                <p>dari perangkat Anda</p>
             </div>
         `
     });
@@ -90,7 +90,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: "error",
                 title: "Format tidak didukung",
-                text: "Hanya boleh upload gambar (PNG, JPG, JPEG) dan PDF!",
+                text: "Hanya boleh unggah gambar (PNG, JPG, JPEG) dan PDF!",
             });
         }
     });
@@ -99,7 +99,7 @@ $(document).ready(function () {
         if (error.body && error.body.includes("Max size")) {
             Swal.fire({
                 icon: "error",
-                title: "Ukuran file terlalu besar",
+                title: "Ukuran berkas terlalu besar",
                 text: "Ukuran maksimum adalah 2MB.",
             });
         }
@@ -115,7 +115,7 @@ $(document).ready(function () {
             Swal.fire({
                 imageUrl: "/img/error-icon.png",
                 title: "Validasi Gagal",
-                text: "Silakan pilih jenis absen!",
+                text: "Silakan pilih jenis presensi!",
             });
             return;
         }
@@ -125,7 +125,7 @@ $(document).ready(function () {
                 Swal.fire({
                     imageUrl: "/img/error-icon.png",
                     title: "Validasi Gagal",
-                    text: "Silakan pilih status kehadiran!",
+                    text: "Silakan pilih status presensi!",
                 });
                 return;
             }
@@ -133,7 +133,7 @@ $(document).ready(function () {
                 Swal.fire({
                     imageUrl: "/img/error-icon.png",
                     title: "Validasi Gagal",
-                    text: "Silakan upload foto absen!",
+                    text: "Silakan unggah foto presensi!",
                 });
                 return;
             }
@@ -143,7 +143,7 @@ $(document).ready(function () {
             Swal.fire({
                 imageUrl: "/img/error-icon.png",
                 title: "Validasi Gagal",
-                text: "Silakan upload foto absen!",
+                text: "Silakan unggah foto presensi!",
             });
             return;
         }

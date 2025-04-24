@@ -23,8 +23,8 @@
                     </div>
                 </div>
                 <div class="modal-form-footer">
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-submit" id="submitDetailNilai" data-url="{{ route('nilai.detail.simpan') }}">Simpan</button>
+                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-submit" id="submitDetailNilai" data-url="{{ route('nilai.detail.simpan') }}">Kirim</button>
                 </div>
             </form>
         </div>

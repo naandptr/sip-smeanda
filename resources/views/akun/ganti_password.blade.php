@@ -19,28 +19,28 @@
             @csrf
             <div class="pass-group">
                 <div class="pass-item">
-                    <label for="oldPw">Password lama</label>
+                    <label for="oldPw">Kata Sandi lama</label>
                     <div class="pass-wrapper">
                         <input type="password" name="old-pw" id="oldPw" required>
                         <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="oldPw" alt="Toggle Password">
                     </div>
                 </div>
                 <div class="pass-item">
-                    <label for="newPw">Password baru</label>
+                    <label for="newPw">Kata Sandi baru</label>
                     <div class="pass-wrapper">
                         <input type="password" name="new-pw" id="newPw" required>
                         <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="newPw" alt="Toggle Password">
                     </div>
                 </div>
                 <div class="pass-item">
-                    <label for="confirmPw">Konfirmasi password baru</label>
+                    <label for="confirmPw">Konfirmasi Kata Sandi baru</label>
                     <div class="pass-wrapper">
                         <input type="password" name="confirm-pw" id="confirmPw" required>
                         <img src="{{ asset('img/hidden-icon.png') }}" class="toggle-password" data-target="confirmPw" alt="Toggle Password">
                     </div>
                 </div>            
                 <div class="pass-button">
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="submit" class="btn-submit">Kirim</button>
                 </div>
             </div>
         </form>

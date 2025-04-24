@@ -28,7 +28,7 @@ $(document).ready(function() {
                     }
                     
                     Swal.fire({
-                        title: 'Gagal Login',
+                        title: 'Gagal Masuk',
                         html: errorMessage,
                         icon: 'error',
                         confirmButtonText: 'OK'
@@ -36,7 +36,7 @@ $(document).ready(function() {
                 } else {
                     Swal.fire({
                         title: 'Error',
-                        text: 'Terjadi kesalahan saat memproses login',
+                        text: 'Terjadi kesalahan saat memproses masuk',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
