@@ -17,15 +17,31 @@ class JurusanController extends Controller
 
     public function store(Request $request)
     {
+        $existsKode = Jurusan::where('kode_jurusan', $request->kode_jurusan)->exists();
+        $existsNama = Jurusan::where('nama_jurusan', $request->nama_jurusan)->exists();
+
+        if ($existsKode) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kode jurusan sudah digunakan'
+            ], 400);
+        }
+
+        if ($existsNama) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama jurusan sudah digunakan'
+            ], 400);
+        }
+
         $request->validate([
-            'nama_jurusan' => 'required|string|max:255',
-            'kode_jurusan' => 'required|string|max:255',
+            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan',
+            'kode_jurusan' => 'required|string|max:255|unique:tbl_jurusan,kode_jurusan',
             'status' => 'required|in:Aktif,Nonaktif'
         ]);
 
         Jurusan::create($request->all());
 
-               
         return response()->json(['success' => true, 'message' => 'Jurusan berhasil ditambahkan']);
     }
 
@@ -37,9 +53,31 @@ class JurusanController extends Controller
 
     public function update(Request $request, $id)
     {
+        $existsKode = Jurusan::where('kode_jurusan', $request->kode_jurusan)
+        ->where('id', '!=', $id)
+        ->exists();
+
+        $existsNama = Jurusan::where('nama_jurusan', $request->nama_jurusan)
+            ->where('id', '!=', $id)
+            ->exists();
+
+        if ($existsKode) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kode jurusan sudah digunakan'
+            ], 400);
+        }
+
+        if ($existsNama) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama jurusan sudah digunakan'
+            ], 400);
+        }
+        
         $request->validate([
-            'nama_jurusan' => 'required|string|max:255',
-            'kode_jurusan' => 'required|string|max:255',
+            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan,' . $id,
+            'kode_jurusan' => 'required|string|max:255|unique:tbl_jurusan,kode_jurusan,' . $id,
             'status' => 'required|in:Aktif,Nonaktif'
         ]);
 
@@ -52,9 +90,7 @@ class JurusanController extends Controller
 
     public function destroy($id)
     {
-
         $jurusan = Jurusan::findOrFail($id);
-        
 
         if ($jurusan->status == 'Aktif') {
             return response()->json(['success' => false, 'message' => 'Tidak dapat menghapus jurusan yang aktif'], 400);
