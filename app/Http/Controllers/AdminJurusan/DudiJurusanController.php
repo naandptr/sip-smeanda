@@ -42,6 +42,10 @@ class DudiJurusanController extends Controller
             'dudi_id' => 'required',
             'tahun_ajar_id' => 'required',
             'pembimbing_id' => 'required'
+        ],[
+            'dudi_id.required' => 'Lokasi DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
+            'pembimbing_id.required' => 'Pembimbing DUDI harus dipilih',
         ]);
 
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
@@ -92,6 +96,10 @@ class DudiJurusanController extends Controller
             'dudi_id' => 'required',
             'tahun_ajar_id' => 'required',
             'pembimbing_id' => 'required'
+        ],[
+            'dudi_id.required' => 'Lokasi DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
+            'pembimbing_id.required' => 'Pembimbing DUDI harus dipilih',
         ]);
 
         $dudiJurusan = DudiJurusan::findOrFail($id);

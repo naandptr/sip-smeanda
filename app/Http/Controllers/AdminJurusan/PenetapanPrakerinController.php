@@ -55,6 +55,12 @@ class PenetapanPrakerinController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'tahun_ajar_id' => 'required',
+        ],[
+            'siswa_id.required' => 'Siswa harus dipilih',
+            'dudi_jurusan_id.required' => 'Lokasi DUDI harus dipilih',
+            'tanggal_mulai.required' => 'Tanggal mulai prakerin harus dipilih',
+            'tanggal_selesai.required' => 'Tanggal selesai prakerin harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
         ]);
 
         $siswaId = $request->siswa_id;
@@ -118,6 +124,12 @@ class PenetapanPrakerinController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'tahun_ajar_id' => 'required',
+        ],[
+            'siswa_id.required' => 'Siswa harus dipilih',
+            'dudi_jurusan_id.required' => 'Lokasi DUDI harus dipilih',
+            'tanggal_mulai.required' => 'Tanggal mulai prakerin harus dipilih',
+            'tanggal_selesai.required' => 'Tanggal selesai prakerin harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
         ]);
 
         $penetapan = PenetapanPrakerin::findOrFail($id);
