@@ -76,6 +76,8 @@ class JurnalSiswaController extends Controller
 
         $request->validate([
             'catatan' => 'required|string',
+        ],[
+            'catatan.required' => 'Catatan pembimbing harus diisi',
         ]);
 
         $existing = Validasi::where('jurnal_id', $id)
