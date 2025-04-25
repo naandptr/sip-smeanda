@@ -59,9 +59,7 @@ $(document).ready(function () {
                   const cleaned = cleanHtmlStyle(html);
                   document.execCommand('insertHTML', false, cleaned);
                 }
-            }  
-              
-              
+            }        
         });
     }
 
@@ -102,9 +100,19 @@ $(document).ready(function () {
 
     $("#formJurnal").submit(function (e) {
         e.preventDefault();
+        let deskripsi = $("#summernote").val();
 
         const formData = new FormData(this);
         formData.set("content", $("#summernote").summernote("code"));
+
+        if (!deskripsi) {
+            Swal.fire({
+                icon: "error",
+                title: "Gagal!",
+                text: "Deskripsi kegiatan harus diisi",
+            });
+            return;
+        }
 
         $.ajax({
             url: "/jurnal-prakerin",
@@ -114,7 +122,7 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 Swal.fire({
-                    imageUrl: "/img/success-icon.png",
+                    icon: "success",
                     title: "Sukses!",
                     text: response.message,
                     confirmButtonText: "OK"
@@ -129,8 +137,8 @@ $(document).ready(function () {
                 }
 
                 Swal.fire({
-                    imageUrl: "/img/error-icon.png",
-                    title: "Gagal Menyimpan Jurnal",
+                    icon: "error",
+                    title: "Gagal!",
                     text: message
                 });
             }
@@ -155,11 +163,20 @@ $(document).ready(function () {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                     },
                     success: function () {
-                        Swal.fire("Terhapus!", "Jurnal berhasil dihapus.", "success")
+                        Swal.fire("Berhasil!", "Jurnal berhasil dihapus", "success")
                             .then(() => location.reload());
                     },
-                    error: function () {
-                        Swal.fire("Gagal", "Terjadi kesalahan.", "error");
+                    error: function (xhr) {
+                        let message = "Terjadi kesalahan, coba lagi!";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        }
+        
+                        Swal.fire({
+                            icon: "error",
+                            title: "Gagal!",
+                            text: message
+                        });
                     }
                 });
             }

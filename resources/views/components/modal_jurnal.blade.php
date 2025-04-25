@@ -16,7 +16,7 @@
                     <div class="modal-form-group">
                         <label for="summernote">Deskripsi<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <textarea id="summernote" name="content" required></textarea>
+                            <textarea id="summernote" name="content"></textarea>
                         </div>
                     </div>
                 </div>

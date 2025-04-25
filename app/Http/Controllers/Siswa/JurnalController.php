@@ -35,6 +35,8 @@ class JurnalController extends Controller
     {
         $request->validate([
             'content' => 'required|string',
+        ],[
+            'content.required' => 'Deskripsi kegiatan harus diisi',
         ]);
 
         $siswaId = Auth::user()->siswa->id;
@@ -75,6 +77,12 @@ class JurnalController extends Controller
 
         if ($jurnal->penetapanPrakerin->siswa_id !== Auth::user()->siswa->id) {
             return response()->json(['message' => 'Tidak diizinkan'], 403);
+        }
+
+        $validasi = $jurnal->validasi;
+
+        if ($validasi && $validasi->status_validasi === 'Selesai') {
+            return response()->json(['message' => 'Jurnal sudah divalidasi dan tidak dapat dihapus'], 400);
         }
 
         $jurnal->validasi()->delete();

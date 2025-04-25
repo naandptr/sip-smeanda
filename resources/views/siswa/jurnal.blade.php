@@ -61,9 +61,17 @@
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                                 </button>
                                 <x-modal_detail_jurnal :jurnal="$jurnal" :modalId="'modalDetailJurnal-' . $jurnal->id" />
-                                <button class="btn-icon deleteJurnal" data-id="{{ $jurnal->id }}">
-                                    <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
-                                </button>
+                                @php
+                                    $sudahValidasi = \App\Models\Validasi::where('jurnal_id', $jurnal->id)
+                                        ->where('status_validasi', 'Selesai')
+                                        ->exists();
+                                @endphp
+    
+                                @if (!$sudahValidasi)
+                                    <button class="btn-icon deleteJurnal" data-id="{{ $jurnal->id }}">
+                                        <img src="{{ asset('img/hapus-icon.png') }}" alt="Hapus">
+                                    </button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
