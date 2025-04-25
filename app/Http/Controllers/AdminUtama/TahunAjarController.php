@@ -29,6 +29,11 @@ class TahunAjarController extends Controller
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after:periode_mulai',
             'status' => 'required|in:Aktif,Nonaktif'
+        ],[
+            'tahun_ajaran.required' => 'Tahun ajaran harus diisi',
+            'periode_mulai.required' => 'Periode mulai harus diisi',
+            'periode_selesai.required' => 'Periode selesai harus diisi',
+            'status.required' => 'Status tahun ajaran harus dipilih',
         ]);
 
         if ($request->status == 'Aktif') {
@@ -64,6 +69,11 @@ class TahunAjarController extends Controller
             'periode_mulai' => 'required|date',
             'periode_selesai' => 'required|date|after:periode_mulai',
             'status' => 'required|in:Aktif,Nonaktif'
+        ],[
+            'tahun_ajaran.required' => 'Tahun ajaran harus diisi',
+            'periode_mulai.required' => 'Periode mulai harus diisi',
+            'periode_selesai.required' => 'Periode selesai harus diisi',
+            'status.required' => 'Status tahun ajaran harus dipilih',
         ]);
 
         $tahunAjar = TahunAjar::findOrFail($id);

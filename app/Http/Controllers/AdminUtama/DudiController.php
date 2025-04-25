@@ -29,6 +29,12 @@ class DudiController extends Controller
             'bidang_usaha' => 'required|string|max:255',
             'telp' => 'required|string|max:255',
             'email' => 'required|string|max:255',
+        ],[
+            'nama_dudi.required' => 'Nama DUDI harus diisi',
+            'alamat.required' => 'Alamat DUDI harus diisi',
+            'bidang_usaha.required' => 'Bidang usaha harus diisi',
+            'telp.required' => 'Nomor telepon DUDI harus diisi',
+            'email.required' => 'Email DUDI harus diisi',
         ]);
 
         Dudi::create($request->all());
@@ -61,6 +67,12 @@ class DudiController extends Controller
             'bidang_usaha' => 'required|string|max:255',
             'telp' => 'required|string|max:255',
             'email' => 'required|string|max:255'
+        ],[
+            'nama_dudi.required' => 'Nama DUDI harus diisi',
+            'alamat.required' => 'Alamat DUDI harus diisi',
+            'bidang_usaha.required' => 'Bidang usaha harus diisi',
+            'telp.required' => 'Nomor telepon DUDI harus diisi',
+            'email.required' => 'Email DUDI harus diisi',
         ]);
 
         $dudi = Dudi::findOrFail($id);

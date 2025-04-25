@@ -36,6 +36,10 @@ class KelasController extends Controller
             'nama_kelas' => 'required|string|max:255|',
             'jurusan_id' => 'required',
             'tahun_ajar_id' => 'required',
+        ],[
+            'nama_kelas.required' => 'Nama kelas harus diisi',
+            'jurusan_id.required' => 'Jurusan harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
         ]);
 
         Kelas::create([
@@ -71,6 +75,10 @@ class KelasController extends Controller
             'nama_kelas' => 'required|string|max:255|',
             'jurusan_id' => 'required',
             'tahun_ajar_id' => 'required',
+        ],[
+            'nama_kelas.required' => 'Nama kelas harus diisi',
+            'jurusan_id.required' => 'Jurusan harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
         ]);
 
         $kelas = Kelas::findOrFail($id);

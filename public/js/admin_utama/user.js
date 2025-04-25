@@ -54,7 +54,7 @@ $(document).ready(function() {
             $("#updateUser").show().data("id", id);
             $("#modalUser").modal("show");
         }).fail(function(xhr) {
-            Swal.fire("Error!", xhr.responseJSON.message, "error");
+            Swal.fire("Gagal!", xhr.responseJSON.message, "error");
         });
     });
 
@@ -89,7 +89,7 @@ $(document).ready(function() {
             success: function(res) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Berhasil',
+                    title: 'Berhasil!',
                     text: res.message
                 }).then(() => {
                     location.reload();
@@ -102,11 +102,11 @@ $(document).ready(function() {
                     
                     Swal.fire({
                         icon: 'error',
-                        title: 'Validasi Gagal',
+                        title: 'Gagal!',
                         html: `<h5 style="text-align:center;">${errorList}</h5>`
                     });
                 } else {
-                    Swal.fire('Gagal', 'Terjadi kesalahan sistem.', 'error');
+                    Swal.fire('Gagal!', 'Terjadi kesalahan sistem.', 'error');
                 }
             }
         });
@@ -145,7 +145,7 @@ $(document).ready(function() {
             success: function(res) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Berhasil',
+                    title: 'Berhasil!',
                     text: res.message
                 }).then(() => {
                     location.reload();
@@ -158,11 +158,11 @@ $(document).ready(function() {
                     
                     Swal.fire({
                         icon: 'error',
-                        title: 'Validasi Gagal',
+                        title: 'Gagal!',
                         html: `<h5 style="text-align:center;">${errorList}</h5>`
                     });
                 } else {
-                    Swal.fire('Gagal', 'Terjadi kesalahan sistem.', 'error');
+                    Swal.fire('Gagal!', 'Terjadi kesalahan sistem.', 'error');
                 }
             }
         });
@@ -192,7 +192,7 @@ $(document).ready(function() {
                         });
                     },
                     error: function(xhr) {
-                        Swal.fire("Error!", xhr.responseJSON.message, "error");
+                        Swal.fire("Gagal!", xhr.responseJSON.message, "error");
                     }
                 });
             }

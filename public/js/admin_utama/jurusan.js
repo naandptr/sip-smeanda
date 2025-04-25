@@ -41,7 +41,7 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 
@@ -72,7 +72,7 @@ $(document).ready(function() {
             },
             error: function (xhr) {
                 console.log(xhr.responseText); // Debugging
-                Swal.fire("Error!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 
@@ -105,7 +105,7 @@ $(document).ready(function() {
                     },
                     error: function (xhr) {
                         console.log(xhr.responseText); 
-                        Swal.fire("Error!", xhr.responseJSON.message, "error");
+                        Swal.fire("Gagal!", xhr.responseJSON.message, "error");
                     }
                 });
             }
