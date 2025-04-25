@@ -19,7 +19,7 @@
                     <div class="modal-form-group">
                         <label for="namaUser">Username<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="namaUser" name="namaUser">
+                            <input type="text" id="namaUser" name="namaUser" required>
                         </div>
                     </div>
                     <div class="modal-form-group" id="passwordField">
@@ -36,13 +36,13 @@
                     <div class="modal-form-group">
                         <label for="namaSiswa">Nama Lengkap<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="namaSiswa" name="namaSiswa">
+                            <input type="text" id="namaSiswa" name="namaSiswa" required>
                         </div>
                     </div>
                     <div class="modal-form-group">
                         <label for="nisSiswa">NIS<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="nisSiswa" name="nisSiswa">
+                            <input type="text" id="nisSiswa" name="nisSiswa" required>
                         </div>
                     </div>
                     <div class="modal-form-group">
@@ -63,19 +63,19 @@
                     <div class="modal-form-group">
                         <label for="namaGuru">Nama Lengkap<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="namaGuru" name="namaGuru">
+                            <input type="text" id="namaGuru" name="namaGuru" required>
                         </div>
                     </div>
                     <div class="modal-form-group">
                         <label for="nipGuru">NIP<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="nipGuru" name="nipGuru">
+                            <input type="text" id="nipGuru" name="nipGuru" required>
                         </div>
                     </div>
                     <div class="modal-form-group">
                         <label for="telpGuru">Nomor Telepon<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="telpGuru" name="telpGuru">
+                            <input type="text" id="telpGuru" name="telpGuru" required>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     <div class="modal-form-group">
                         <label for="namaAdm">Nama Lengkap<span class="required-label">*</span></label>
                         <div class="modal-form-value">
-                            <input type="text" id="namaAdm" name="namaAdm">
+                            <input type="text" id="namaAdm" name="namaAdm" required>
                         </div>
                     </div>
                     <div class="modal-form-group">

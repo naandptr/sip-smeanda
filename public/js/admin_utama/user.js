@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    var token = $("meta[name='csrf-token']").attr("content");
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token
+        }
+    });
+
     $("#tambahUser").click(function() {
         $("#modalUser form")[0].reset();
         $('#passwordField').show();
@@ -75,19 +83,31 @@ $(document).ready(function() {
         }
         
         $.ajax({
+            type: "POST",
             url: "/kelola-user",
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            },
             data: formData,
-            success: function() {
-                Swal.fire("Berhasil!", "User berhasil ditambahkan", "success").then(() => {
+            success: function(res) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.message
+                }).then(() => {
                     location.reload();
                 });
             },
             error: function(xhr) {
-                Swal.fire("Error!", xhr.responseJSON.message, "error");
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorList = Object.values(errors).map(e => `<h5>${e}</h5>`).join("");
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validasi Gagal',
+                        html: `<h5 style="text-align:center;">${errorList}</h5>`
+                    });
+                } else {
+                    Swal.fire('Gagal', 'Terjadi kesalahan sistem.', 'error');
+                }
             }
         });
     });
@@ -97,14 +117,15 @@ $(document).ready(function() {
         const id = $(this).data("id");
         
         const formData = {
-            namaUser: $("#namaUser").val(),
+            roleUser:  $("#roleUser").val(), 
+            namaUser:  $("#namaUser").val(),
             _method: "PATCH"
         };
         
         const role = formData.roleUser;
         if (role === 'Siswa') {
             formData.namaSiswa = $("#namaSiswa").val();
-            formData.nisnSiswa = $("#nisnSiswa").val();
+            formData.nisSiswa = $("#nisSiswa").val();
             formData.kelasSiswa = $("#kelasSiswa").val();
         } 
         else if (role === 'Guru') {
@@ -118,19 +139,31 @@ $(document).ready(function() {
         }
         
         $.ajax({
+            method: "PATCH",
             url: `/kelola-user/${id}/update`,
-            method: "POST", 
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-            },
-            data: formData,
-            success: function() {
-                Swal.fire("Berhasil!", "Data user berhasil diperbarui", "success").then(() => {
+            data: formData, 
+            success: function(res) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.message
+                }).then(() => {
                     location.reload();
                 });
             },
             error: function(xhr) {
-                Swal.fire("Error!", xhr.responseJSON.message, "error");
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    let errorList = Object.values(errors).map(e => `<h5>${e.join(', ')}</h5>`).join("");
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validasi Gagal',
+                        html: `<h5 style="text-align:center;">${errorList}</h5>`
+                    });
+                } else {
+                    Swal.fire('Gagal', 'Terjadi kesalahan sistem.', 'error');
+                }
             }
         });
     });
@@ -140,7 +173,7 @@ $(document).ready(function() {
         
         Swal.fire({
             title: "Yakin?",
-            text: "User ini akan dihapus secara permanen",
+            text: "Pengguna ini akan dihapus secara permanen",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Ya, hapus",
@@ -154,7 +187,7 @@ $(document).ready(function() {
                         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                     },
                     success: function() {
-                        Swal.fire("Berhasil!", "User berhasil dihapus", "success").then(() => {
+                        Swal.fire("Berhasil!", "Pengguna berhasil dihapus", "success").then(() => {
                             location.reload();
                         });
                     },

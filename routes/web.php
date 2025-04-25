@@ -104,7 +104,6 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(functio
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
     Route::get('/jurnal-prakerin', [Siswa\JurnalController::class, 'index'])->name('siswa.jurnal');
     Route::post('/jurnal-prakerin', [Siswa\JurnalController::class, 'store'])->name('jurnal.store');
-    Route::post('/upload-image-jurnal', [Siswa\JurnalController::class, 'uploadImage'])->name('jurnal.upload-image');;
 
     Route::delete('/jurnal-prakerin/{id}/delete', [Siswa\JurnalController::class, 'destroy'])->name('jurnal.destroy');
 });
