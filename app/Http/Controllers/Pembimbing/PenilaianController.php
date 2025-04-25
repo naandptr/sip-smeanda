@@ -73,6 +73,25 @@ class PenilaianController extends Controller
 
     public function simpanDetailNilaiSementara(Request $request)
     {
+        $request->validate([
+            'tujuan_pembelajaran' => 'required|string',
+            'skor' => [
+                'bail',
+                'required',
+                'regex:/^\d+(\.\d{1,2})?$/',
+                'numeric',
+                'gte:0',
+            ],
+            'deskripsi' => 'required|string',
+        ], [
+            'tujuan_pembelajaran.required' => 'Tujuan pembelajaran tidak boleh kosong',
+            'skor.required' => 'Skor wajib diisi',
+            'skor.regex' => 'Skor hanya menggunakan titik (.) sebagai pemisah desimal',
+            'skor.numeric' => 'Skor harus berupa angka',
+            'skor.gte' => 'Skor tidak boleh kurang dari 0',
+            'deskripsi.required' => 'Deskripsi tidak boleh kosong',
+        ]);
+              
         $data = $request->only(['tujuan_pembelajaran', 'skor', 'deskripsi']);
 
         $detailNilai = session()->get('penilaian_detail', []);
@@ -106,7 +125,18 @@ class PenilaianController extends Controller
             'jumlahSakit' => 'required|integer|min:0',
             'jumlahIjin' => 'required|integer|min:0',
             'jumlahAlpa' => 'required|integer|min:0',
-        ]);
+            'catatan' => 'required|string',
+        ],[
+            'siswaBimbingan.required' => 'Siswa bimbingan harus dipilih',
+            'namaInstruktur.required' => 'Nama instruktur harus diisi',
+            'catatan.required' => 'Catatan harus diisi',
+            'jumlahSakit.required' => 'Jumlah sakit harus diisi',
+            'jumlahIjin.required' => 'Jumlah ijin harus diisi',
+            'jumlahAlpa.required' => 'Jumlah alpa harus diisi',
+            'jumlahSakit.integer' => 'Jumlah sakit harus berupa angka minimal 0',
+            'jumlahIjin.integer' => 'Jumlah ijin harus berupa angka minimal 0',
+            'jumlahAlpa.integer' => 'Jumlah alpa harus berupa angka minimal 0',
+        ]);        
 
         try {
             DB::beginTransaction();
@@ -142,6 +172,12 @@ class PenilaianController extends Controller
                 ]);
             }
 
+            if (empty($detailNilai)) {
+                return response()->json([
+                    'error' => 'Detail penilaian tidak boleh kosong. Harap tambahkan minimal satu tujuan pembelajaran.'
+                ], 422);
+            }
+            
             Ketidakhadiran::create([
                 'penilaian_id' => $penilaian->id,
                 'sakit' => $request->jumlahSakit,

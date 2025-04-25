@@ -14,68 +14,117 @@ $(document).ready(function () {
             });
     });
 
-    $('#formDetailNilai').submit(function(e) {
-        e.preventDefault(); 
+    $('#formDetailNilai').submit(function (e) {
+        e.preventDefault();
+    
+        $('.text-danger').text('');
+    
         let tp = document.getElementById('tpValue').value;
         let skor = document.getElementById('skorValue').value;
         let desc = document.getElementById('descValue').value;
         let url = document.querySelector('#submitDetailNilai').dataset.url;
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const iconUrl = document.querySelector('meta[name="hapus-icon-url"]').getAttribute('content');
-
+    
+        if (tp === '' || skor === '' || desc === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Semua data wajib diisi!',
+            });
+            return;
+        }
+    
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'X-CSRF-TOKEN': csrfToken
             },
+            
             credentials: 'same-origin',
             body: JSON.stringify({
                 tujuan_pembelajaran: tp,
                 skor: skor,
                 deskripsi: desc
             })
-        }).then(response => {
-            if (!response.ok) {  
-                throw new Error('Error: ' + response.statusText);  
-            }
-            return response.json(); 
-        }).then(data => {
-            if (data.success) {
-                const index = data.data.length - 1;
-                let tbody = document.querySelector('.data-body');
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td>${index + 1}</td> 
-                    <td>${tp}</td>
-                    <td>${skor}</td>
-                    <td>${desc}</td>
-                    <td>
-                        <button class="btn-icon deleteDetailNilai" data-index="${index}">
-                            <img src="${iconUrl}" alt="Hapus">
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(newRow);
-                updateRowNumbers(); 
-
-
-                let btnDelete = newRow.querySelector('.deleteDetailNilai');
-                if (btnDelete) {
-                    btnDelete.style.display = 'inline-block'; 
+        })
+            .then(async (response) => {
+                if (response.status === 422) {
+                    const errorData = await response.json();
+                    const errors = errorData.errors;
+    
+                    for (let field in errors) {
+                        const errorElement = document.getElementById(`error-${field}`);
+                        if (errorElement) {
+                            errorElement.textContent = errors[field][0];
+                        }
+                    }
+    
+                    throw errorData;
                 }
+    
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw errorData;
+                    });
+                }
+                return response.json();
 
-                document.getElementById('formDetailNilai').reset();
-                let modal = bootstrap.Modal.getInstance(document.getElementById('modalNilai'));
-                modal.hide();
-            }
-        }).catch(err => {
-            console.error("Request failed", err);  
-        });        
+            })
+            .then(data => {
+                if (data.success) {
+                    const index = data.data.length - 1;
+                    let tbody = document.querySelector('.data-body');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${index + 1}</td> 
+                        <td>${tp}</td>
+                        <td>${skor}</td>
+                        <td>${desc}</td>
+                        <td>
+                            <button class="btn-icon deleteDetailNilai" data-index="${index}">
+                                <img src="${iconUrl}" alt="Hapus">
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(newRow);
+                    updateRowNumbers();
+    
+                    let btnDelete = newRow.querySelector('.deleteDetailNilai');
+                    if (btnDelete) {
+                        btnDelete.style.display = 'inline-block';
+                    }
+    
+                    document.getElementById('formDetailNilai').reset();
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('modalNilai'));
+                    modal.hide();
+                }
+            })
+
+            .catch(err => {
+
+                if (err.errors) {
+                    let pesan = Object.values(err.errors).flat().join('<br>');
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        html: pesan 
+                    });        
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: err.message || 'Gagal mengirim data.'
+                    });
+                }
+            });
     });
-
+    
     function updateRowNumbers() {
-        const rows = document.querySelectorAll('.data-body tr');
+        const rows = document.querySelectorAll('.data-nilai tr');
         rows.forEach((row, index) => {
             row.querySelector('td:first-child').textContent = index + 1;
     
@@ -125,11 +174,10 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'  
             },
             success: function(response) {
-                // Pastikan response success ada
                 if (response.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Berhasil',
+                        title: 'Berhasil!',
                         text: response.success,
                     }).then(function() {
                         window.location.href = response.redirect_to; 
@@ -137,18 +185,36 @@ $(document).ready(function () {
                 } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Oops...',
+                        title: 'Gagal!',
                         text: response.error,
                     });
                 }
             },
             error: function(xhr) {
-                var message = xhr.responseJSON.error || 'Terjadi kesalahan.';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: message,
-                });
+                if (xhr.status === 422) {
+                    let res = xhr.responseJSON;
+                    if (res.errors) {
+                        let messages = Object.values(res.errors).map(errArr => errArr[0]).join('<br>');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            html: messages,
+                        });
+                    }
+                    else if (res.error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: res.error,
+                        });
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat mengirim data.',
+                    });
+                }
             }
         });
     });

@@ -95,7 +95,7 @@
                                             <th>AKSI</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="data-body">
+                                    <tbody class="data-body data-nilai">
                                         @foreach($detailNilaiSementara as $index => $item)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
