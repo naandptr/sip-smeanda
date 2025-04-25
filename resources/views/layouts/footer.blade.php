@@ -48,8 +48,8 @@
         <script src="{{ asset('js/admin_jurusan/prakerin.js') }}"></script>
     @endif
     
-    @if($page_name === 'guru/detail_absen')
-        <script src="{{ asset('js/guru/detail_absen.js') }}"></script>
+    @if($page_name === 'guru/detail_presensi')
+        <script src="{{ asset('js/guru/detail_presensi.js') }}"></script>
     @endif
 
     @if($page_name === 'guru/detail_jurnal')
@@ -64,8 +64,8 @@
         <script src="{{ asset('js/guru/tambah_nilai.js') }}"></script>
     @endif
 
-    @if($page_name === 'siswa/absen')
-        <script src="{{ asset('js/siswa/absen.js') }}"></script>
+    @if($page_name === 'siswa/presensi')
+        <script src="{{ asset('js/siswa/presensi.js') }}"></script>
     @endif
 
     @if($page_name === 'siswa/jurnal')

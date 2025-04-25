@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('siswa_id')->constrained('tbl_siswa')->onDelete('cascade');
             $table->enum('jenis', ['CV', 'Portofolio', 'Laporan', 'Sertifikat']);
-            $table->string('file'); // Menyimpan path file yang diunggah
+            $table->string('file'); 
             $table->timestamps();
         });
     }

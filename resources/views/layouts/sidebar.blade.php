@@ -31,8 +31,8 @@
                     <img src="{{ asset('img/dokumen-icon.png') }}" alt="dokumen prakerin" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Dokumen</h4>
                 </a>
-                <a href="{{ route('siswa.absen') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.absen') ? 'active' : '' }}">
-                    <img src="{{ asset('img/absen-icon.png') }}" alt="absen harian" height="20" />
+                <a href="{{ route('siswa.presensi') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.presensi') ? 'active' : '' }}">
+                    <img src="{{ asset('img/absen-icon.png') }}" alt="presensi harian" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Presensi Harian</h4>
                 </a>
                 <a href="{{ route('siswa.jurnal') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('siswa.jurnal') ? 'active' : '' }}">
@@ -49,8 +49,8 @@
                     <img src="{{ asset('img/siswa-icon.png') }}" alt="siswa bimbingan" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Siswa Bimbingan</h4>
                 </a>
-                <a href="{{ route('guru.absen') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['guru.absen', 'absen-detail.guru']) ? 'active' : '' }}">
-                    <img src="{{ asset('img/absen-icon.png') }}" alt="absen harian" height="20" />
+                <a href="{{ route('guru.presensi') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['guru.presensi', 'presensi-detail.guru']) ? 'active' : '' }}">
+                    <img src="{{ asset('img/absen-icon.png') }}" alt="presensi harian" height="20" />
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Presensi Harian</h4>
                 </a>
                 <a href="{{ route('guru.jurnal') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['guru.jurnal', 'jurnal.detail']) ? 'active' : '' }}">

@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             
-            // Untuk user_id (tidak nullable)
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                   ->references('id')
                   ->on('tbl_users')
                   ->onDelete('cascade');
             
-            // Untuk jurusan_id (nullable)
             $table->unsignedBigInteger('jurusan_id')->nullable();
             $table->foreign('jurusan_id')
                   ->references('id')

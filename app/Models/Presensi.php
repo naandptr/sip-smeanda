@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Absen extends Model
+class Presensi extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_absen';
+    protected $table = 'tbl_presensi';
 
     protected $fillable = [
         'penetapan_prakerin_id', 
         'tanggal',
-        'jenis_absen',
+        'jenis_presensi',
         'status_kehadiran',
         'keterangan',
         'file',
-        'absen_datang_id' 
+        'presensi_datang_id' 
     ];
 
     public function penetapanPrakerin()
@@ -26,8 +26,8 @@ class Absen extends Model
         return $this->belongsTo(PenetapanPrakerin::class, 'penetapan_prakerin_id');
     }
 
-    public function absenDatang()
+    public function presensiDatang()
     {
-        return $this->belongsTo(Absen::class, 'absen_datang_id');
+        return $this->belongsTo(Presensi::class, 'presensi_datang_id');
     }
 }

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Pembimbing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
-use App\Models\Absen;
+use App\Models\Presensi;
 use Illuminate\Support\Facades\Auth;
 
-class AbsenSiswaController extends Controller
+class PresensiSiswaController extends Controller
 {
     public function index()
     {
@@ -31,7 +31,7 @@ class AbsenSiswaController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('guru.absen', ['dataSiswa' => $paginatedSiswa]);
+        return view('guru.presensi', ['dataSiswa' => $paginatedSiswa]);
     }
 
     public function detail($siswa_id)
@@ -48,10 +48,10 @@ class AbsenSiswaController extends Controller
 
         $penetapanId = $siswa->penetapanPrakerinTerbaru->id ?? null;
 
-        $dataAbsen = Absen::where('penetapan_prakerin_id', $penetapanId)
+        $dataPresensi = Presensi::where('penetapan_prakerin_id', $penetapanId)
                   ->orderBy('tanggal', 'desc')
                   ->paginate(10);
 
-        return view('guru.detail_absen', compact('siswa', 'dataAbsen'));
+        return view('guru.detail_presensi', compact('siswa', 'dataPresensi'));
     }
 }

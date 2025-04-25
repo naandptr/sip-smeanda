@@ -11,35 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_absen', function (Blueprint $table) {
+        Schema::create('tbl_presensi', function (Blueprint $table) {
             $table->id();
             
-            // Foreign key ke penetapan prakerin
             $table->foreignId('penetapan_prakerin_id')
                   ->constrained('tbl_penetapan_prakerin')
                   ->onDelete('cascade');
             
-            // Data absensi
             $table->timestamp('tanggal')->useCurrent();
-            $table->enum('jenis_absen', ['Absen Datang', 'Absen Pulang']);
+            $table->enum('jenis_presensi', ['Presensi Datang', 'Presensi Pulang']);
             $table->enum('status_kehadiran', ['Hadir', 'Izin', 'Sakit'])->nullable();
             $table->text('keterangan')->nullable();
-            $table->string('file'); // Path file bukti
+            $table->string('file'); 
             
-            // Self-referencing (absen pulang mengacu ke absen datang)
-            $table->unsignedBigInteger('absen_datang_id')->nullable();
+            $table->unsignedBigInteger('presensi_datang_id')->nullable();
             
             $table->timestamps();
             
-            // Unique constraint
-            $table->unique(['penetapan_prakerin_id', 'tanggal', 'jenis_absen']);
+            $table->unique(['penetapan_prakerin_id', 'tanggal', 'jenis_presensi']);
         });
 
-        // Tambahkan foreign key untuk self-referencing SETELAH tabel dibuat
-        Schema::table('tbl_absen', function (Blueprint $table) {
-            $table->foreign('absen_datang_id')
+        Schema::table('tbl_presensi', function (Blueprint $table) {
+            $table->foreign('presensi_datang_id')
                   ->references('id')
-                  ->on('tbl_absen')
+                  ->on('tbl_presensi')
                   ->onDelete('set null');
         });
     }
@@ -49,12 +44,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Hapus foreign key dulu untuk menghindari error
         Schema::table('tbl_absen', function (Blueprint $table) {
-            $table->dropForeign(['absen_datang_id']);
+            $table->dropForeign(['presensi_datang_id']);
             $table->dropForeign(['penetapan_prakerin_id']);
         });
         
-        Schema::dropIfExists('tbl_absen');
+        Schema::dropIfExists('tbl_presensi');
     }
 };

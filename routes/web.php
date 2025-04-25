@@ -74,8 +74,8 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_ADMIN_JURUSAN])->group
 Route::middleware(['auth', 'verified', 'role:'.User::ROLE_GURU])->group(function () {
     Route::get('/siswa-bimbingan', [Pembimbing\SiswaController::class, 'index'])->name('guru.siswa');
 
-    Route::get('/absen-siswa', [Pembimbing\AbsenSiswaController::class, 'index'])->name('guru.absen');
-    Route::get('/absen-siswa/detail/{id}', [Pembimbing\AbsenSiswaController::class, 'detail'])->name('absen-detail.guru');
+    Route::get('/presensi-siswa', [Pembimbing\PresensiSiswaController::class, 'index'])->name('guru.presensi');
+    Route::get('/presensi-siswa/detail/{id}', [Pembimbing\PresensiSiswaController::class, 'detail'])->name('presensi-detail.guru');
 
     Route::get('/jurnal-siswa', [Pembimbing\JurnalSiswaController::class, 'index'])->name('guru.jurnal');
     Route::get('/jurnal-siswa/{siswa}', [Pembimbing\JurnalSiswaController::class, 'detail'])->name('jurnal.detail');
@@ -98,8 +98,8 @@ Route::middleware(['auth', 'verified', 'role:'.User::ROLE_SISWA])->group(functio
     Route::post('/dokumen-prakerin/upload/{jenis}', [Siswa\DokumenController::class, 'upload'])->name('dokumen.upload');
     Route::get('/dokumen/download/{id}', [Siswa\DokumenController::class, 'download'])->name('dokumen.download');
 
-    Route::get('/absen-prakerin', [Siswa\AbsenController::class, 'index'])->name('siswa.absen');
-    Route::post('/absen-prakerin', [Siswa\AbsenController::class, 'store'])->name('absen.store');
+    Route::get('/presensi-prakerin', [Siswa\PresensiController::class, 'index'])->name('siswa.presensi');
+    Route::post('/presensi-prakerin', [Siswa\PresensiController::class, 'store'])->name('presensi.store');
 
     Route::view('/jurnal-prakerin', 'siswa.jurnal')->name('siswa.jurnal');
     Route::get('/jurnal-prakerin', [Siswa\JurnalController::class, 'index'])->name('siswa.jurnal');

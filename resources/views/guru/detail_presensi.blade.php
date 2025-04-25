@@ -1,11 +1,15 @@
+@php 
+    $page_name = 'guru/detail_presensi'; 
+@endphp
+
 @extends('layouts.app')
 
-@section('title', 'Absen Harian Siswa')
+@section('title', 'Presensi Harian Siswa')
 
 @section('content')
 <div class="data-container">
     <div class="header">
-        <h1>Absen Harian Siswa</h1>
+        <h1>Presensi Harian Siswa</h1>
     </div>
 
     <div class="data-section">
@@ -16,39 +20,50 @@
                         <th>NIS</th>
                         <th>SISWA</th>
                         <th>KELAS</th>
+                        <th>TANGGAL</th>
+                        <th>JENIS PRESENSI</th>
+                        <th>STATUS</th>
+                        <th>KETERANGAN</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
                 <tbody class="data-body">
-                    @foreach ($dataSiswa as $siswa)
+                    @foreach ($dataPresensi as $presensi)
                     <tr>
                         <td>{{ $siswa->nis }}</td>
                         <td>{{ $siswa->nama }}</td>
                         <td>{{ $siswa->kelas->nama_kelas }}</td>
+                        <td>{{ \Carbon\Carbon::parse($presensi->tanggal)->format('d/m/Y') }}</td>
+                        <td>{{ $presensi->jenis_presensi }}</td>
+                        <td>{{ $presensi->status_kehadiran ?? '-' }}</td>
+                        <td>{{ $presensi->keterangan ?? '-' }}</td>
                         <td class="data-aksi">
-                            <a href="{{ route('absen-detail.guru', $siswa->id) }}">
-                                <button class="btn-aksi">Detail</button>
-                            </a>
+                            <button type="button" class="btn-icon show-detail-presensi"
+                                    data-bs-toggle="modal" data-bs-target="#modalDetailPresensi"
+                                    data-file-url="{{ Storage::url($presensi->file) }}">
+                                    <img src="{{ asset('img/show-icon.png') }}" alt="Detail">
+                                </button>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
+                <x-modal_detail_presensi />
                 <tfoot>
                     <tr class="data-footer">
-                        <td colspan="4">
+                        <td colspan="8">
                             <div class="pagination custom-pagination">
-                                @if ($dataSiswa->onFirstPage())
+                                @if ($dataPresensi->onFirstPage())
                                     <span class="prev disabled">Previous</span>
                                 @else
-                                    <a href="{{ $dataSiswa->previousPageUrl() }}" class="prev">Previous</a>
+                                    <a href="{{ $dataPresensi->previousPageUrl() }}" class="prev">Previous</a>
                                 @endif
                 
                                 <span class="page-info">
-                                    {{ $dataSiswa->firstItem() }}-{{ $dataSiswa->lastItem() }} of {{ $dataSiswa->total() }}
+                                    {{ $dataPresensi->firstItem() }}-{{ $dataPresensi->lastItem() }} of {{ $dataPresensi->total() }}
                                 </span>
                 
-                                @if ($dataSiswa->hasMorePages())
-                                    <a href="{{ $dataSiswa->nextPageUrl() }}" class="next">Next</a>
+                                @if ($dataPresensi->hasMorePages())
+                                    <a href="{{ $dataPresensi->nextPageUrl() }}" class="next">Next</a>
                                 @else
                                     <span class="next disabled">Next</span>
                                 @endif

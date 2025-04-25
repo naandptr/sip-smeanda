@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const buttons = document.querySelectorAll('.show-detail-absen');
+    const buttons = document.querySelectorAll('.show-detail-presensi');
     const image = document.getElementById('previewImage');
     const pdf = document.getElementById('previewPDF');
 
@@ -21,8 +21,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#modalAbsen").on("shown.bs.modal", function () {
-        console.log("Modal Absen Dibuka!");
+    $("#modalPresensi").on("shown.bs.modal", function () {
         let now = new Date();
         let yyyy = now.getFullYear();
         let mm = String(now.getMonth() + 1).padStart(2, '0');
@@ -32,30 +31,29 @@ $(document).ready(function () {
         let ss = String(now.getSeconds()).padStart(2, '0');
 
         let displayDate = `${dd}/${mm}/${yyyy}`;
-        $("#tglAbsenView").val(displayDate);
+        $("#tglPresensiView").val(displayDate);
 
 
         let localDateTime = `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
-        $("#tglAbsenFormatted").val(localDateTime);
+        $("#tglPresensiFormatted").val(localDateTime);
 
     });
 
-    $("#jenisAbsen").change(function () {
+    $("#jenisPresensi").change(function () {
         let jenis = $(this).val();
 
-        if (jenis === "Absen Datang") {
-            $("#statusAbsen").prop("disabled", false).prop("required", true);
-            $("#ketAbsen").prop("required", false);
-        } else if (jenis === "Absen Pulang") {
-            $("#statusAbsen").prop("disabled", true).val("-");
-            $("#ketAbsen").prop("required", false);
+        if (jenis === "Presensi Datang") {
+            $("#statusPresensi").prop("disabled", false).prop("required", true);
+            $("#ketPresensi").prop("required", false);
+        } else if (jenis === "Presensi Pulang") {
+            $("#statusPresensi").prop("disabled", true).val("-");
+            $("#ketPresensi").prop("required", false);
         }
     });
 
     FilePond.registerPlugin(FilePondPluginImagePreview);
 
-
-    let pond = FilePond.create(document.querySelector('#fileAbsen'), {
+    let pond = FilePond.create(document.querySelector('#filePresensi'), {
         storeAsFile: true,
         allowMultiple: false,
         maxFileSize: '2MB',
@@ -105,78 +103,77 @@ $(document).ready(function () {
         }
     });
 
-    $("#formAbsen").submit(function (e) {
+    $("#formPresensi").submit(function (e) {
         e.preventDefault();
-        let jenis = $("#jenisAbsen").val();
-        let status = $("#statusAbsen").val();
-        let fileAbsen = pond.getFiles().length > 0;
-
+    
+        let jenis = $("#jenisPresensi").val();
+        let status = $("#statusPresensi").val();
+        let filePresensi = pond.getFiles();
+    
         if (!jenis) {
             Swal.fire({
-                imageUrl: "/img/error-icon.png",
-                title: "Validasi Gagal",
-                text: "Silakan pilih jenis presensi!",
+                icon: "error",
+                title: "Gagal!",
+                text: "Jenis presensi harus dipilih",
             });
             return;
         }
-
-        if (jenis === "Absen Datang") {
-            if (!status) {
-                Swal.fire({
-                    imageUrl: "/img/error-icon.png",
-                    title: "Validasi Gagal",
-                    text: "Silakan pilih status presensi!",
-                });
-                return;
-            }
-            if (!fileAbsen) {
-                Swal.fire({
-                    imageUrl: "/img/error-icon.png",
-                    title: "Validasi Gagal",
-                    text: "Silakan unggah foto presensi!",
-                });
-                return;
-            }
-        }
-
-        if (jenis === "Absen Pulang" && !fileAbsen) {
+    
+        if (jenis === "Presensi Datang" && !status) {
             Swal.fire({
-                imageUrl: "/img/error-icon.png",
-                title: "Validasi Gagal",
-                text: "Silakan unggah foto presensi!",
+                icon: "error",
+                title: "Gagal!",
+                text: "Status presensi harus dipilih",
             });
             return;
         }
-
+    
+        if (filePresensi.length === 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Gagal!",
+                text: "Bukti presensi harus diunggah",
+            });
+            return;
+        }
+    
+        let formData = new FormData($("#formPresensi")[0]);
+        formData.append('filePresensi', filePresensi[0].file);
+    
         $.ajax({
-            url: $("#formAbsen").attr("action"),
+            url: $("#formPresensi").attr("action"),
             method: "POST",
-            data: new FormData($("#formAbsen")[0]),
+            data: formData,
             processData: false,
             contentType: false,
             success: function (res) {
                 Swal.fire({
                     icon: "success",
-                    title: "Berhasil",
-                    text: res.message || "Absen berhasil dikirim!",
+                    title: "Berhasil!",
+                    text: res.message || "Presensi berhasil dikirim!",
                 }).then(() => {
-                    location.reload(); 
+                    location.reload();
                 });
             },
             error: function (xhr) {
                 let msg = "Terjadi kesalahan. Silakan coba lagi.";
-                if (xhr.responseJSON && xhr.responseJSON.message) {
+    
+                if (xhr.status === 422 && xhr.responseJSON.errors) {
+                    let errors = xhr.responseJSON.errors;
+                    msg = Object.values(errors).flat().join('\n');
+                } else if (xhr.responseJSON && xhr.responseJSON.message) {
                     msg = xhr.responseJSON.message;
                 }
+    
                 Swal.fire({
                     icon: "error",
-                    title: "Gagal",
+                    title: "Gagal!",
                     text: msg,
                 });
             }
         });
-        
     });
+    
 
     $("#modalId").on("shown.bs.modal", function () {
         pond.destroy();
