@@ -9,6 +9,31 @@
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('guru.presensi') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($dataTahunAjaran as $tahun)
+                            <option value="{{ $tahun }}" {{ request('tahun_ajaran') == $tahun ? 'selected' : '' }}>
+                                {{ $tahun }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="belum_dimulai" {{ request('status') == 'belum_dimulai' ? 'selected' : '' }}>Belum Dimulai</option>
+                        <option value="berlangsung" {{ request('status') == 'berlangsung' ? 'selected' : '' }}>Berlangsung</option>
+                        <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-content">
             <table class="data-table">
                 <thead class="data-header">

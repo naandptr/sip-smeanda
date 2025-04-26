@@ -8,13 +8,25 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Jurnal Kegiatan Siswa</h1>
     </div>
 
     <div class="data-section">
-        <!-- Tabel Jurnal-->
+        <div class="data-filter">
+            <form method="GET" action="{{ route('jurnal.detail', ['siswa' => $siswa->id]) }}">
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="menunggu" {{ request('status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                        <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-content">
             <div class="table-wrapper"></div>
             <table class="data-table">
@@ -47,14 +59,11 @@
                             <div class="status-badge {{ $badgeClass }}">{{ $jurnal->validasi->status_validasi ?? '-' }}</div>
                         </td>
                         <td class="data-aksi">
-                            <!-- Tombol Lihat -->
                             <button type="button" class="btn-icon btn-open-jurnal" data-bs-toggle="modal" data-bs-target="#modalDetailJurnal{{ $jurnal->id }}">
                                 <img src="{{ asset('img/show-icon.png') }}" alt="Lihat">
                             </button>
                             <x-modal_detail_jurnal :jurnal="$jurnal" :modalId="'modalDetailJurnal'.$jurnal->id" />
 
-
-                            <!-- Tombol Validasi -->
                             @php
                                 $sudahValidasi = \App\Models\Validasi::where('jurnal_id', $jurnal->id)
                                     ->where('status_validasi', 'Selesai')
@@ -62,7 +71,7 @@
                             @endphp
 
                             @if (!$sudahValidasi)
-                                <button class="btn-validasi" data-bs-toggle="modal" data-bs-target="#modalValidasiJurnal{{ $jurnal->id }}">
+                                <button class="btn-aksi btn-validasi" data-bs-toggle="modal" data-bs-target="#modalValidasiJurnal{{ $jurnal->id }}">
                                     Validasi
                                 </button>
                             @endif

@@ -15,6 +15,12 @@ class SiswaController extends Controller
         $pembimbingId = Auth::user()->pembimbing->id;
 
         $tahunAjaran = $request->input('tahun_ajaran');
+
+        if (!$tahunAjaran) {
+            $tahunAjaranAktif = TahunAjar::where('status', 'Aktif')->first();
+            $tahunAjaran = $tahunAjaranAktif?->tahun_ajaran;
+        }
+
     	$status = $request->input('status');
 
         $dataTahunAjaran = TahunAjar::orderBy('tahun_ajaran', 'desc')->pluck('tahun_ajaran');
@@ -42,8 +48,6 @@ class SiswaController extends Controller
             });
         })
         ->paginate(10);
-        
-
         return view('guru.siswa', compact('dataSiswa', 'dataTahunAjaran'));
     }
 }

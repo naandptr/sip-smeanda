@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Siswa;
 use App\Models\Jurnal;
 use App\Models\Validasi;
+use App\Models\TahunAjar;
 use Illuminate\Support\Facades\Auth;
 
 class JurnalSiswaController extends Controller
@@ -14,13 +15,38 @@ class JurnalSiswaController extends Controller
     public function index()
     {
         $pembimbingId = Auth::user()->pembimbing->id;
+        $tahunAjaranAktif = TahunAjar::where('status', 'Aktif')->first();
+        $tahunAjaranFilter = request('tahun_ajaran');  
+        $statusFilter = request('status'); 
 
-        $dataSiswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan', 'kelas'])->get()->filter(function ($siswa) use ($pembimbingId) {
-            $penetapan = $siswa->penetapanPrakerinTerbaru;
-            return $penetapan && 
-                   $penetapan->dudiJurusan &&
-                   $penetapan->dudiJurusan->pembimbing_id == $pembimbingId;
-        })->map(function ($siswa) {
+        $dataTahunAjaran = TahunAjar::pluck('tahun_ajaran', 'id');
+
+        if (!$tahunAjaranFilter && $tahunAjaranAktif) {
+            $tahunAjaranFilter = $tahunAjaranAktif->tahun_ajaran;
+        }
+
+        $dataSiswaQuery = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan', 'kelas', 'penetapanPrakerinTerbaru.tahunAjar'])
+            ->whereHas('penetapanPrakerinTerbaru.dudiJurusan', function ($query) use ($pembimbingId) {
+                $query->where('pembimbing_id', $pembimbingId);
+            });
+
+        if ($tahunAjaranFilter) {
+            $tahunAjaranId = TahunAjar::where('tahun_ajaran', $tahunAjaranFilter)->first()->id;
+
+            $dataSiswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($tahunAjaranId) {
+                $query->where('tahun_ajar_id', $tahunAjaranId);
+            });
+        }
+
+        if ($statusFilter) {
+            $dataSiswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($statusFilter) {
+                $query->where('status', $statusFilter);
+            });
+        }
+
+        $dataSiswa = $dataSiswaQuery->get();
+
+        $dataSiswaProcessed = $dataSiswa->map(function ($siswa) {
             $penetapan = $siswa->penetapanPrakerinTerbaru;
 
             $jurnalTerkirim = $penetapan->jurnal()->count();
@@ -35,41 +61,57 @@ class JurnalSiswaController extends Controller
                 'jurnal_terkirim' => $jurnalTerkirim,
                 'jurnal_validasi' => $jurnalValid,
             ];
-        })->values();
+        });
 
         $currentPage = request()->get('page', 1);
         $perPage = 10;
         $paginatedSiswa = new \Illuminate\Pagination\LengthAwarePaginator(
-            $dataSiswa->forPage($currentPage, $perPage),
-            $dataSiswa->count(),
+            $dataSiswaProcessed->forPage($currentPage, $perPage),
+            $dataSiswaProcessed->count(),
             $perPage,
             $currentPage,
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('guru.jurnal', ['dataSiswa' => $paginatedSiswa]);
+        return view('guru.jurnal', [
+            'dataSiswa' => $paginatedSiswa,
+            'dataTahunAjaran' => $dataTahunAjaran,
+            'tahunAjaranAktif' => $tahunAjaranAktif->tahun_ajaran ?? null
+        ]);
     }
 
     public function detail($siswa_id)
-    {
-        $siswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])->findOrFail($siswa_id);
+{
+    $siswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])->findOrFail($siswa_id);
 
-        $pembimbingId = Auth::user()->pembimbing->id;
+    $pembimbingId = Auth::user()->pembimbing->id;
 
-        $isBimbingan = optional(optional($siswa->penetapanPrakerinTerbaru)->dudiJurusan)->pembimbing_id === $pembimbingId;
+    $isBimbingan = optional(optional($siswa->penetapanPrakerinTerbaru)->dudiJurusan)->pembimbing_id === $pembimbingId;
 
-        if (!$isBimbingan) {
-            abort(403, 'Akses ditolak');
+    if (!$isBimbingan) {
+        abort(403, 'Akses ditolak');
+    }
+
+    $penetapan = $siswa->penetapanPrakerinTerbaru;
+
+    if ($penetapan) {
+        $query = $penetapan->jurnal()->with('validasi');
+
+        // cek apakah ada filter status dari request
+        if (request('status')) {
+            $query->whereHas('validasi', function ($q) {
+                $q->where('status_validasi', request('status'));
+            });
         }
 
-        $penetapan = $siswa->penetapanPrakerinTerbaru;
-
-        $dataJurnal = $penetapan
-            ? $penetapan->jurnal()->with('validasi')->paginate(10)
-            : collect();
-
-        return view('guru.detail_jurnal', compact('siswa', 'dataJurnal'));
+        $dataJurnal = $query->paginate(10);
+    } else {
+        $dataJurnal = collect();
     }
+
+    return view('guru.detail_jurnal', compact('siswa', 'dataJurnal'));
+}
+
 
     public function validasi(Request $request, $id)
     { 

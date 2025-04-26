@@ -11,7 +11,16 @@ class JurusanController extends Controller
 {
     public function index()
     {
-        $dataJurusan = Jurusan::orderBy('nama_jurusan', 'asc')->paginate(10);
+        $status = request('status', 'aktif'); 
+
+        $dataJurusan = Jurusan::where(function ($query) use ($status) {
+            if ($status) {
+                $query->where('status', $status);
+            }
+        })
+        ->orderBy('nama_jurusan', 'asc')
+        ->paginate(10);
+
         return view('admin_utama.jurusan', compact('dataJurusan'));
     }
 

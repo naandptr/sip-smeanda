@@ -12,11 +12,26 @@ class KelasController extends Controller
 {
     public function index()
     {
-        $dataKelas = Kelas::with(['jurusan', 'tahunAjar'])->paginate(10);
+        $tahunAjar = TahunAjar::orderBy('periode_mulai', 'desc')->get();
         $jurusan = Jurusan::where('status', 'aktif')->get();
-        $tahunAjar = TahunAjar::where('status', 'aktif')->orderBy('periode_mulai', 'desc')->get();
-    
-        return view('admin_utama.kelas', compact('dataKelas', 'jurusan', 'tahunAjar'));
+
+        $tahunAjarAktif = TahunAjar::where('status', 'aktif')->first(); 
+
+        $tahunAjaran = request('tahun_ajaran') ?? ($tahunAjarAktif ? $tahunAjarAktif->tahun_ajaran : null);
+
+        $dataKelas = Kelas::with(['jurusan', 'tahunAjar'])
+            ->whereHas('tahunAjar', function ($query) use ($tahunAjaran) {
+                if ($tahunAjaran) {
+                    $query->where('tahun_ajaran', $tahunAjaran);
+                }
+            })
+            ->paginate(10);
+
+        return view('admin_utama.kelas', [
+            'dataKelas' => $dataKelas,
+            'jurusan' => $jurusan,
+            'tahunAjar' => $tahunAjar,
+        ]);
     }
 
     public function store(Request $request)

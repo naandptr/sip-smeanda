@@ -13,6 +13,20 @@
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('admin.jurusan') }}">
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                        <option value="nonaktif" {{ request('status') == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-action">
             <button class="btn-open" id="tambahJurusan" data-bs-toggle="modal" data-bs-target="#modalJurusan">Tambah Jurusan</button>
             <x-modal_jurusan></x-modal_jurusan>

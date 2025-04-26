@@ -80,8 +80,8 @@
                     <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan DUDI</h4>
                 </a>
                 <a href="{{ route('jurusan.prakerin') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('jurusan.prakerin') ? 'active' : '' }}">
-                    <img src="{{ asset('img/prakerin-icon.png') }}" alt="penetapan siswa" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan Siswa</h4>
+                    <img src="{{ asset('img/prakerin-icon.png') }}" alt="penetapan prakerin" height="20" />
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Penetapan Prakerin</h4>
                 </a>
                 <a href="{{ route('akun.show') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs(['akun.show', 'akun.show.ganti_password']) ? 'active' : '' }}">
                     <img src="{{ asset('img/akun-icon.png') }}" alt="dashboard" height="20" />

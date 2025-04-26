@@ -13,6 +13,23 @@
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('admin.kelas') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($tahunAjar as $tahun)
+                            <option value="{{ $tahun->tahun_ajaran }}" {{ request('tahun_ajaran', $tahunAjar->firstWhere('status', 'aktif')->tahun_ajaran ?? '') == $tahun->tahun_ajaran ? 'selected' : '' }}>
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-action">
             <button class="btn-open" id="tambahKelas" data-bs-toggle="modal" data-bs-target="#modalKelas">Tambah Kelas</button>
             <x-modal_kelas :jurusan="$jurusan" :tahunAjar="$tahunAjar" />

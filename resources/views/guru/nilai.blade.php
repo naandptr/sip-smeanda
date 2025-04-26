@@ -8,12 +8,36 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Penilaian</h1>
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('guru.nilai') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($dataTahunAjaran as $tahun)
+                            <option value="{{ $tahun }}" {{ request('tahun_ajaran') == $tahun ? 'selected' : '' }}>
+                                {{ $tahun }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="belum_dimulai" {{ request('status') == 'belum_dimulai' ? 'selected' : '' }}>Belum Dimulai</option>
+                        <option value="berlangsung" {{ request('status') == 'berlangsung' ? 'selected' : '' }}>Berlangsung</option>
+                        <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-action">
             <a href="{{ route('nilai.form') }}"><button class="btn-open">+ Penilaian</button></a>
         </div>
@@ -30,16 +54,22 @@
                     </thead>
                     <tbody class="data-body">
                         @foreach ($dataSiswa as $siswa)
-                        <tr>
-                            <td>{{ $siswa->nis }}</td>
-                            <td>{{ $siswa->nama }}</td>
-                            <td>{{ $siswa->kelas->nama_kelas }}</td>
-                            <td class="data-aksi">
-                                <a href="{{ route('nilai.download', $siswa->penilaian->id) }}">
-                                    <button class="btn-aksi">Unduh</button>
-                                </a>
-                            </td>
-                        </tr>
+                            @if ($siswa->penetapanPrakerin && $siswa->penetapanPrakerin->isNotEmpty())
+                                @foreach ($siswa->penetapanPrakerin as $penetapan)
+                                    @if ($penetapan->penilaian && $penetapan->penilaian->isNotEmpty())
+                                        <tr>
+                                            <td>{{ $siswa->nis }}</td>
+                                            <td>{{ $siswa->nama }}</td>
+                                            <td>{{ $siswa->kelas->nama_kelas }}</td>
+                                            <td class="data-aksi">
+                                                <a href="{{ route('nilai.download', $penetapan->penilaian->first()->id) }}">
+                                                    <button class="btn-aksi">Unduh</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            @endif
                         @endforeach
                     </tbody>
                     <tfoot>

@@ -16,14 +16,26 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with([
+        $query = User::with([
             'siswa.kelas',
             'pembimbing',
             'adminJurusan.jurusan'
         ])
         ->whereNotIn('role', ['Admin Utama'])
-        ->orderBy('created_at', 'desc')
-        ->paginate(10); 
+        ->orderBy('created_at', 'desc');
+
+        $role = request('role');
+        $status = request('status');
+
+        if (!empty($role)) {
+            $query->where('role', $role);
+        }
+
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+
+        $users = $query->paginate(10);
 
         $formatted = $users->getCollection()->map(function ($user) {
             $userData = [
@@ -72,7 +84,9 @@ class UserController extends Controller
         return view('admin_utama.user', [
             'users' => $users,
             'jurusans' => Jurusan::all(),
-            'kelas' => Kelas::all()
+            'kelas' => Kelas::whereHas('tahunAjar', function($query) {
+                $query->where('status', 'Aktif');
+            })->get()
         ]);
     }
 
@@ -83,11 +97,18 @@ class UserController extends Controller
         try {
             $request->validate([
                 'roleUser' => 'required|in:Siswa,Guru,Admin Jurusan',
-                'namaUser' => 'required|string|max:255|unique:tbl_users,username',
+                'namaUser' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'unique:tbl_users,username',
+                    'regex:/^[a-zA-Z0-9._-]+$/', 
+                ],
             ],[
                 'namaUser.unique' => 'Nama pengguna sudah ada sebelumnya',
                 'roleUser.required' => 'Silakan pilih peran pengguna',
                 'namaUser.required' => 'Nama pengguna harus diisi',
+                'namaUser.regex' => 'Nama pengguna tidak boleh mengandung spasi atau karakter khusus selain titik, garis bawah, dan tanda hubung',
             ]);
 
             $user = User::create([
@@ -221,12 +242,19 @@ class UserController extends Controller
 
         try {
             $request->validate([
-                'namaUser' => 'required|string|max:255|unique:tbl_users,username,' . $id,
+                'namaUser' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    'unique:tbl_users,username,' . $id,
+                    'regex:/^[a-zA-Z0-9._-]+$/',
+                ],
             ], [
                 'namaUser.unique' => 'Nama pengguna sudah ada sebelumnya',
                 'namaUser.required' => 'Nama pengguna harus diisi',
+                'namaUser.regex' => 'Nama pengguna tidak boleh mengandung spasi atau karakter khusus selain titik, garis bawah, dan tanda hubung',
             ]);
-    
+            
             $user->update([
                 'username' => $request->namaUser,
             ]);

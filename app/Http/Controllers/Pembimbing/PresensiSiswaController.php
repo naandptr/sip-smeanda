@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
 use App\Models\Presensi;
+use App\Models\TahunAjar;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiSiswaController extends Controller
@@ -14,12 +15,31 @@ class PresensiSiswaController extends Controller
     {
         $pembimbingId = Auth::user()->pembimbing->id;
 
-        $dataSiswa = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])->get()->filter(function ($siswa) use ($pembimbingId) {
-            $penetapanTerbaru = $siswa->penetapanPrakerinTerbaru;
-            return $penetapanTerbaru &&
-                   $penetapanTerbaru->dudiJurusan &&
-                   $penetapanTerbaru->dudiJurusan->pembimbing_id == $pembimbingId;
-        })->values();
+        $tahunAjaranAktif = TahunAjar::where('status', 'Aktif')->first();
+
+        $tahunAjaran = request('tahun_ajaran', $tahunAjaranAktif ? $tahunAjaranAktif->tahun_ajaran : null);
+        $status = request('status');
+
+        $dataSiswaQuery = Siswa::with(['penetapanPrakerinTerbaru.dudiJurusan'])
+            ->whereHas('penetapanPrakerinTerbaru.dudiJurusan', function ($query) use ($pembimbingId) {
+                $query->where('pembimbing_id', $pembimbingId);
+            });
+
+        if ($tahunAjaran) {
+            $tahunAjaranId = TahunAjar::where('tahun_ajaran', $tahunAjaran)->first()->id;
+
+            $dataSiswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($tahunAjaranId) {
+                $query->where('tahun_ajar_id', $tahunAjaranId);
+            });
+        }
+
+        if ($status) {
+            $dataSiswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($status) {
+                $query->where('status', $status);
+            });
+        }
+
+        $dataSiswa = $dataSiswaQuery->get();
 
         $currentPage = request()->get('page', 1);
         $perPage = 10;
@@ -31,7 +51,13 @@ class PresensiSiswaController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('guru.presensi', ['dataSiswa' => $paginatedSiswa]);
+        $dataTahunAjaran = TahunAjar::pluck('tahun_ajaran');
+
+        return view('guru.presensi', [
+            'dataSiswa' => $paginatedSiswa,
+            'dataTahunAjaran' => $dataTahunAjaran,
+            'tahunAjaranAktif' => $tahunAjaranAktif->tahun_ajaran ?? null
+        ]);
     }
 
     public function detail($siswa_id)

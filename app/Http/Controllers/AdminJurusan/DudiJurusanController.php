@@ -13,12 +13,19 @@ use App\Models\Pembimbing;
 
 class DudiJurusanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
+        $tahunAjar = TahunAjar::all();
+
+        $tahunAjarAktif = TahunAjar::where('status', 'aktif')->first();
+
+        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif->id); 
+
         $dataDudiJurusan = DudiJurusan::with(['pembimbing', 'tahunAjar', 'dudi'])
             ->where('jurusan_id', $jurusanId)
+            ->where('tahun_ajar_id', $tahunAjarId)
             ->paginate(10);
 
         $sorted = $dataDudiJurusan->getCollection()->sort(function ($a, $b) {
@@ -30,10 +37,9 @@ class DudiJurusanController extends Controller
         $dataDudiJurusan->setCollection($sorted);
 
         $dudi = Dudi::all();
-        $tahunAjar = TahunAjar::where('status', 'aktif')->get();
         $pembimbing = Pembimbing::orderBy('nama', 'asc')->get();
 
-        return view('admin_jurusan.dudi_jurusan', compact('dataDudiJurusan', 'dudi', 'tahunAjar', 'pembimbing'));
+        return view('admin_jurusan.dudi_jurusan', compact('dataDudiJurusan', 'dudi', 'tahunAjar', 'pembimbing', 'tahunAjarAktif'));
     }
 
     public function store(Request $request)

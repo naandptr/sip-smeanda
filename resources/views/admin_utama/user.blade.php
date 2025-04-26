@@ -13,6 +13,28 @@
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('admin.user') }}">
+                <div class="filter-value">
+                    <select name="role">
+                        <option value="">Pilih Role</option>
+                        <option value="siswa" {{ request('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                        <option value="guru" {{ request('role') == 'guru' ? 'selected' : '' }}>Guru</option>
+                        <option value="admin_jurusan" {{ request('role') == 'admin_jurusan' ? 'selected' : '' }}>Admin Jurusan</option>
+                    </select>
+                </div>
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>            
+        </div>
         <div class="data-action">
             <button class="btn-open" id="tambahUser" data-bs-toggle="modal" data-bs-target="#modalUser">Tambah User</button>
             <x-modal_user :jurusans="$jurusans" :kelas="$kelas" />

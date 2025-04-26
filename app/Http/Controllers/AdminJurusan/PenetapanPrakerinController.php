@@ -14,15 +14,32 @@ use App\Models\TahunAjar;
 
 class PenetapanPrakerinController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
 
-        $dataPrakerin = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
+        $tahunAjarAktif = TahunAjar::where('status', 'Aktif')->first();
+
+        $dataTahunAjaran = TahunAjar::all();
+
+        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif->id);
+
+        $status = $request->get('status');
+
+        $query = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
             ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
                 $query->where('jurusan_id', $jurusanId);
-            })
-            ->paginate(10); 
+            });
+
+        if ($tahunAjarId) {
+            $query->where('tahun_ajar_id', $tahunAjarId);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $dataPrakerin = $query->paginate(10);
 
         $sorted = $dataPrakerin->getCollection()->sort(function ($a, $b) {
             return strcmp($a->siswa->nama ?? '', $b->siswa->nama ?? '')
@@ -34,17 +51,23 @@ class PenetapanPrakerinController extends Controller
         $dataPrakerin->setCollection($sorted);
 
         $siswa = Siswa::whereHas('kelas', function ($query) use ($jurusanId) {
-            $query->where('jurusan_id', $jurusanId);
+            $query->where('jurusan_id', $jurusanId)
+                ->whereHas('tahunAjar', function ($q) {
+                    $q->where('status', 'Aktif');
+                });
         })->orderBy('nama', 'asc')->get();
 
         $dudiJurusan = DudiJurusan::with('dudi')
             ->where('jurusan_id', $jurusanId)
+            ->whereHas('tahunAjar', function ($query) {
+                $query->where('status', 'Aktif');
+            })
             ->get()
             ->sortBy(fn($item) => $item->dudi->nama_dudi ?? '');
 
-        $tahunAjar = TahunAjar::where('status', 'aktif')->get();
+        $tahunAjar = TahunAjar::all();
 
-        return view('admin_jurusan.prakerin', compact('dataPrakerin', 'siswa', 'dudiJurusan', 'tahunAjar'));
+        return view('admin_jurusan.prakerin', compact('dataPrakerin', 'siswa', 'dudiJurusan', 'tahunAjar', 'dataTahunAjaran', 'tahunAjarAktif'));
     }
 
     public function store(Request $request)
@@ -74,7 +97,7 @@ class PenetapanPrakerinController extends Controller
         ) {
             return response()->json([
                 'success' => false,
-                'message' => 'Tanggal mulai dan selesai harus berada di dalam rentang tahun ajar.'
+                'message' => 'Tanggal mulai dan selesai harus berada di dalam rentang tahun ajar'
             ], 422);
         }
 
@@ -85,14 +108,15 @@ class PenetapanPrakerinController extends Controller
         if ($cekPenetapan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Siswa ini sudah memiliki penetapan prakerin yang sedang berlangsung atau belum dimulai.'
+                'message' => 'Siswa ini sudah memiliki penetapan prakerin yang sedang berlangsung atau belum dimulai'
             ], 422);
         }
 
         $now = Carbon::now();
-        if ($now->lt($tanggalMulai)) {
+
+        if ($now->lt($tanggalMulai->startOfDay())) {
             $status = 'Belum Dimulai';
-        } elseif ($now->between($tanggalMulai, $tanggalSelesai)) {
+        } elseif ($now->between($tanggalMulai->startOfDay(), $tanggalSelesai->endOfDay())) {
             $status = 'Berlangsung';
         } else {
             $status = 'Selesai';
@@ -144,7 +168,7 @@ class PenetapanPrakerinController extends Controller
         ) {
             return response()->json([
                 'success' => false,
-                'message' => 'Tanggal mulai dan selesai harus berada di dalam rentang tahun ajar.'
+                'message' => 'Tanggal mulai dan selesai harus berada di dalam rentang tahun ajar'
             ], 422);
         }
 
@@ -156,7 +180,7 @@ class PenetapanPrakerinController extends Controller
         if ($cekPenetapan->isNotEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Siswa ini sudah memiliki penetapan prakerin lain yang sedang berlangsung atau belum dimulai.'
+                'message' => 'Siswa ini sudah memiliki penetapan prakerin lain yang sedang berlangsung atau belum dimulai'
             ], 422);
         }
 

@@ -8,12 +8,29 @@
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
         <h1>Penetapan DUDI</h1>
     </div>
 
     <div class="data-section">
+        <div class="data-filter">    
+            <form method="GET" action="{{ route('jurusan.dudi-jurusan') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($tahunAjar as $tahun)
+                            <option value="{{ $tahun->id }}" {{ request('tahun_ajaran') == $tahun->id ? 'selected' : '' }}>
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>
+        </div>
+        
         <div class="data-action">
             <button class="btn-open" id="tambahDudiJurusan" data-bs-toggle="modal" data-bs-target="#modalDudiJurusan">+ Penetapan</button>
             <x-modal_dudi_jurusan :dudi="$dudi" :pembimbing="$pembimbing" :tahunAjar="$tahunAjar" />

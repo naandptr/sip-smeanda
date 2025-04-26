@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pembimbing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
+use App\Models\TahunAjar;
 use App\Models\PenilaianDetail;
 use App\Models\Ketidakhadiran;
 use App\Models\Siswa;
@@ -18,23 +19,46 @@ class PenilaianController extends Controller
     public function index()
     {
         $pembimbing = Auth::user()->pembimbing->id;
+        $tahunAjaranAktif = TahunAjar::where('status', 'Aktif')->first();
+        $tahunAjaranFilter = request('tahun_ajaran');  
+        $statusFilter = request('status'); 
 
         $dudiJurusan = DudiJurusan::where('pembimbing_id', $pembimbing)
             ->pluck('id');
+
+        if (!$tahunAjaranFilter && $tahunAjaranAktif) {
+            $tahunAjaranFilter = $tahunAjaranAktif->tahun_ajaran;
+        }
 
         $siswaQuery = Siswa::whereHas('penetapanPrakerinTerbaru', function ($query) use ($dudiJurusan) {
                 $query->whereIn('dudi_jurusan_id', $dudiJurusan);
             })
             ->whereHas('penetapanPrakerinTerbaru.penilaian') 
             ->with(['kelas', 'penetapanPrakerinTerbaru.penilaian']);
-        
+
+
+        if ($tahunAjaranFilter) {
+            $tahunAjaranId = TahunAjar::where('tahun_ajaran', $tahunAjaranFilter)->first()->id;
+            $siswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($tahunAjaranId) {
+                $query->where('tahun_ajar_id', $tahunAjaranId);
+            });
+        }
+
+        if ($statusFilter) {
+            $siswaQuery->whereHas('penetapanPrakerinTerbaru', function ($query) use ($statusFilter) {
+                $query->where('status', $statusFilter);
+            });
+        }
+
         $dataSiswa = $siswaQuery->paginate(10);
 
-            foreach ($dataSiswa as $siswa) {
-                $siswa->penilaian = $siswa->penetapanPrakerinTerbaru->penilaian->first() ?? null;
-            }
+        foreach ($dataSiswa as $siswa) {
+            $siswa->penilaian = $siswa->penetapanPrakerinTerbaru->penilaian->first() ?? null;
+        }
 
-        return view('guru.nilai', compact('dataSiswa'));
+        $dataTahunAjaran = TahunAjar::pluck('tahun_ajaran', 'id');
+
+        return view('guru.nilai', compact('dataSiswa', 'dataTahunAjaran', 'tahunAjaranAktif'));
     }
 
     public function showForm()
@@ -42,9 +66,13 @@ class PenilaianController extends Controller
         
         $pembimbing = Auth::user()->pembimbing->id;
 
-        $dataSiswa = Siswa::whereHas('penetapanPrakerinTerbaru.dudiJurusan', function ($query) use ($pembimbing) {
-            $query->where('pembimbing_id', $pembimbing);
-        })->get();
+        $dataSiswa = Siswa::whereHas('penetapanPrakerinTerbaru', function ($query) use ($pembimbing) {
+            $query->whereHas('dudiJurusan', function ($q) use ($pembimbing) {
+                $q->where('pembimbing_id', $pembimbing);
+            });
+        })
+        ->whereDoesntHave('penetapanPrakerinTerbaru.penilaian') 
+        ->get();
 
         return view('guru.tambah_nilai', [
             'dataSiswa' => $dataSiswa,

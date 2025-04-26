@@ -10,6 +10,23 @@
     </div>
 
     <div class="data-section">
+        <div class="data-filter">    
+            <form method="GET" action="{{ route('jurusan.dokumen') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($dataTahunAjaran as $tahun)
+                            <option value="{{ $tahun->id }}" {{ request('tahun_ajaran') == $tahun->id ? 'selected' : '' }}>
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>
+        </div>
         <div class="data-content">
             <div class="table-wrapper">
                 <table class="data-table">

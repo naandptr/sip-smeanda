@@ -4,16 +4,41 @@
 
 @extends('layouts.app')
 
-@section('title', 'Penetapan Siswa')
+@section('title', 'Penetapan Prakerin')
 
 @section('content')
 <div class="data-container">
-    <!-- Header -->
     <div class="header">
-        <h1>Penetapan Siswa</h1>
+        <h1>Penetapan Prakerin</h1>
     </div>
 
     <div class="data-section">
+        <div class="data-filter">
+            <form method="GET" action="{{ route('jurusan.prakerin') }}">
+                <div class="filter-value">
+                    <select name="tahun_ajaran">
+                        <option value="">Pilih Tahun Ajaran</option>
+                        @foreach ($tahunAjar as $tahun)
+                            <option value="{{ $tahun->id }}" {{ request('tahun_ajaran', $tahunAjarAktif->id) == $tahun->id ? 'selected' : '' }}>
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="filter-value">
+                    <select name="status">
+                        <option value="">Pilih Status</option>
+                        <option value="belum_dimulai" {{ request('status') == 'belum_dimulai' ? 'selected' : '' }}>Belum Dimulai</option>
+                        <option value="berlangsung" {{ request('status') == 'berlangsung' ? 'selected' : '' }}>Berlangsung</option>
+                        <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-icon">
+                    <img src="{{ asset('img/filter-icon.png') }}" alt="Filter">
+                </button>
+            </form>
+        </div>
+
         <div class="data-action">
             <button class="btn-open" id="tambahPrakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">+ Penetapan</button>
             <x-modal_prakerin :siswa="$siswa" :dudiJurusan="$dudiJurusan" :tahunAjar="$tahunAjar" />
@@ -26,6 +51,8 @@
                             <th>NO</th>
                             <th>NAMA</th>
                             <th>PENETAPAN DUDI</th>
+                            <th>TAHUN AJARAN</th>
+                            <th>STATUS PRAKERIN</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
@@ -35,6 +62,25 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $prakerin->siswa->nama }}</td>
                             <td>{{ $prakerin->dudiJurusan->dudi->nama_dudi ?? '-' }}</td>
+                            <td>{{ $prakerin->tahunAjar->tahun_ajaran ?? '-' }}</td>
+                            @php
+                                $status = strtolower($prakerin->status ?? 'belum_dimulai');
+                                $statusClass = match($status) {
+                                    'belum_dimulai' => 'not-started',
+                                    'berlangsung' => 'ongoing',
+                                    'selesai' => 'selesai',
+                                    'dibatalkan' => 'canceled',
+                                    default => 'not-started',
+                                };
+                                $statusLabel = match($status) {
+                                    'belum_dimulai' => 'BELUM DIMULAI',
+                                    'berlangsung' => 'BERLANGSUNG',
+                                    'selesai' => 'SELESAI',
+                                    'dibatalkan' => 'DIBATALKAN',
+                                    default => 'BELUM DIMULAI',
+                                };
+                            @endphp
+                            <td><div class="status-badge {{ $statusClass }}">{{ $statusLabel }}</div></td>
                             <td class="data-aksi">
                                 <!-- Tombol Lihat -->
                                 <button class="btn-icon" data-bs-toggle="modal" data-bs-target="#modalDetailPrakerin-{{ $prakerin->id }}">
@@ -54,7 +100,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="data-footer">
-                            <td colspan="4">
+                            <td colspan="6">
                                 <div class="pagination custom-pagination">
                                     @if ($dataPrakerin->onFirstPage())
                                         <span class="prev disabled">Sebelumnya</span>
