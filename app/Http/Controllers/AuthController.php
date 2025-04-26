@@ -141,9 +141,17 @@ class AuthController extends Controller
     public function changePasswordAwal(Request $request)
     {
         $request->validate([
-            'new-pw' => 'required|string|min:6',
+            'new-pw' => [
+                'required',
+                'string',
+                'min:8', 
+                'regex:/[a-z]/', 
+                'regex:/[0-9]/', 
+            ],
             'confirm-pw' => 'required|same:new-pw',
-        ],[
+        ], [
+            'new-pw.min' => 'Kata sandi minimal harus 8 karakter.',
+            'new-pw.regex' => 'Kata sandi harus mengandung huruf dan angka.',
             'confirm-pw.same' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi baru.',
         ]);
 
@@ -180,8 +188,17 @@ class AuthController extends Controller
     {
         $request->validate([
             'old-pw' => 'required|string',
-            'new-pw' => 'required|string|min:6',
+            'new-pw' => [
+                'required',
+                'string',
+                'min:8', 
+                'regex:/[a-z]/', 
+                'regex:/[0-9]/', 
+            ],
             'confirm-pw' => 'required|string',
+        ],[
+            'new-pw.min' => 'Kata sandi minimal harus 8 karakter.',
+            'new-pw.regex' => 'Kata sandi harus mengandung huruf dan angka.',
         ]);
 
         if ($request->input('new-pw') !== $request->input('confirm-pw')) {

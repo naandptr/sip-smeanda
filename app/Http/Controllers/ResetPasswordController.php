@@ -61,9 +61,18 @@ class ResetPasswordController extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'new-pw' => 'required|string|min:6',
+            'new-pw' => [
+                'required',
+                'string',
+                'min:8', 
+                'regex:/[a-z]/', 
+                'regex:/[0-9]/', 
+            ],
             'confirm-pw' => 'required|same:new-pw',
             'token' => 'required',
+        ],[
+            'new-pw.min' => 'Kata sandi minimal harus 8 karakter.',
+            'new-pw.regex' => 'Kata sandi harus mengandung huruf dan angka.',
         ]);
 
         $resetData = DB::table('tbl_password_resets')->where('token', $request->token)->first();
