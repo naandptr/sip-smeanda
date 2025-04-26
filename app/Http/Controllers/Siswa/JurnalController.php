@@ -10,6 +10,7 @@ use App\Models\PenetapanPrakerin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class JurnalController extends Controller
 {
@@ -20,7 +21,8 @@ class JurnalController extends Controller
         $penetapan = PenetapanPrakerin::where('siswa_id', $siswaId)->first();
 
         if (!$penetapan) {
-            return view('siswa.jurnal', ['dataJurnal' => []]);
+            $emptyJurnal = new LengthAwarePaginator([], 0, 10);
+            return view('siswa.jurnal', ['dataJurnal' => $emptyJurnal]);
         }
 
         $dataJurnal = Jurnal::with('validasi')

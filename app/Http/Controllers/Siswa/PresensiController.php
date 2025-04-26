@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PresensiController extends Controller
 {
@@ -18,7 +19,8 @@ class PresensiController extends Controller
         $penetapan = PenetapanPrakerin::where('siswa_id', $siswa->id)->first();
 
         if (!$penetapan) {
-            return view('siswa.presensi', ['dataPresensi' => []]);
+            $emptyPresensi = new LengthAwarePaginator([], 0, 10);
+            return view('siswa.presensi', ['dataPresensi' => $emptyPresensi]);
         }
 
         $dataPresensi = Presensi::where('penetapan_prakerin_id', $penetapan->id)
