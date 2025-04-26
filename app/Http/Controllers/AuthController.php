@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log; 
 use App\Mail\AccountConfirmationMail;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -92,7 +93,15 @@ class AuthController extends Controller
         }
 
         $validated = $request->validate([
-            'emailUser' => 'required|email|unique:tbl_users,email',
+            'emailUser' => [
+            'required',
+            'email',
+            Rule::unique('tbl_users', 'email')->ignore($user->id, 'id'),
+        ],
+        ], [
+            'emailUser.required' => 'Email wajib diisi.',
+            'emailUser.email' => 'Format email tidak valid.',
+            'emailUser.unique' => 'Email sudah digunakan oleh pengguna lain.',
         ]);
 
         $user->email = $validated['emailUser'];
@@ -121,7 +130,7 @@ class AuthController extends Controller
 
         $user->markEmailAsVerified();
 
-        return redirect()->route('login')->with('message', 'Akun Anda telah diverifikasi.');
+        return redirect()->route('login')->with('message', 'Akun Anda telah diverifikasi. Silakan masuk.');
     }
 
     public function changePasswordFormAwal()
@@ -134,6 +143,8 @@ class AuthController extends Controller
         $request->validate([
             'new-pw' => 'required|string|min:6',
             'confirm-pw' => 'required|same:new-pw',
+        ],[
+            'confirm-pw.same' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi baru.',
         ]);
 
         /** @var \App\Models\User $user */

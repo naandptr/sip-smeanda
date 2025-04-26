@@ -19,6 +19,8 @@
                 <h1>SETUP AKUN</h1>
                 <h4>Sebelum masuk untuk akses, harap konfirmasi akun Anda.</h4>
             </div>
+
+            <div id="alert-area"></div>
     
             <form action="{{ route('setup-akun') }}" method="POST" class="auth-form" id="setupForm">
                 @csrf

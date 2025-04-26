@@ -15,6 +15,15 @@
                 <h1>PERBARUI KATA SANDI</h1>
                 <h4>Perbaru kata sandi Anda.</h4>
             </div>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
+
             <form action="{{ route('ganti-password-awal.store') }}" method="POST" class="auth-form" id="formGantiPasswordAwal">
                 @csrf         
                 <div class="auth-group">        
