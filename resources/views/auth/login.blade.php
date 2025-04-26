@@ -25,6 +25,14 @@
                     {{ session('message') }}
                 </div>
             @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
     
             <form action="{{ route('login') }}" method="POST" class="auth-form" id="loginForm">
                 @csrf
