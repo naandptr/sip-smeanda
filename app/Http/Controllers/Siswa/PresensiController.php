@@ -42,7 +42,7 @@ class PresensiController extends Controller
         ]);
 
         $siswa = Auth::user()->siswa;
-        $today = Carbon::parse($request->tglPresensiFormatted);
+        $today = Carbon::parse($request->tglPresensiFormatted)->startOfDay();
         $jenis = $request->jenisPresensi;
 
         $penetapan = PenetapanPrakerin::where('siswa_id', $siswa->id)
