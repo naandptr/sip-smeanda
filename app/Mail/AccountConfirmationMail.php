@@ -22,7 +22,7 @@ class AccountConfirmationMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Verifikasi Akun')
+        return $this->subject('Verifikasi Akun Prakerin')
                     ->view('emails.account_confirmation');
     }
 

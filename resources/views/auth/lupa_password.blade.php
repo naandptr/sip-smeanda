@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'auth/lupa_password'; 
+@endphp
+
 @extends('layouts.auth')
 
 @section('title', 'Lupa Password')
@@ -15,7 +19,16 @@
                 <h1>LUPA KATA SANDI</h1>
                 <h4>Masukkan email Anda yang telah terdaftar. Kami akan mengirimi Anda tautan untuk kembali ke akun Anda.</h4>
             </div>
-            <form action="" method="POST" class="auth-form" id="formLupaPassword">
+
+            <div id="alert-area"></div>
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <form action="{{ route('password.email') }}" method="POST" class="auth-form" id="formLupaPassword">
                 @csrf
                 <div class="auth-group">        
                     <div class="auth-field">
@@ -24,7 +37,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit">Kirim Tautan Masuk</button>
+                    <button type="submit" class="btn-submit" id="submitLupaPassword">Kirim Tautan Masuk</button>
                 </div>
             </form>
         </div>
@@ -35,3 +48,5 @@
     </div>
 </div>
 @endsection
+
+

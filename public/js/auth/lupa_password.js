@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    $('#setupForm').submit(function(e) {
+    $('#formLupaPassword').submit(function(e) {
         e.preventDefault();
         
         const form = $(this);
-  
+
         $.ajax({
             url: form.attr('action'),
             method: 'POST',
@@ -11,7 +11,7 @@ $(document).ready(function () {
             success: function(response) {
                 Swal.fire({
                     title: 'Berhasil!',
-                    html: 'Tautan konfirmasi telah dikirim ke email Anda. Silakan cek email Anda untuk mengaktifkan akun.',
+                    html: 'Tautan pemulihan kata sandi telah dikirim ke email Anda.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
@@ -20,29 +20,22 @@ $(document).ready(function () {
                     }
                 });
             },
-            error: function(xhr) {
+            error: function(xhr) {       
+                let errorHtml = '<div class="alert alert-danger">';
+                
                 if (xhr.status === 422) {
                     const errors = xhr.responseJSON.errors;
-                    let errorMessage = '';
                     
                     for (const key in errors) {
-                        errorMessage += errors[key][0] + '<br>';
+                        errorHtml += `<div>${errors[key][0]}</div>`;
                     }
-                    
-                    Swal.fire({
-                        title: 'Gagal Setup Akun',
-                        html: errorMessage,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
                 } else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Terjadi kesalahan saat memproses setup akun',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
+                    errorHtml += '<div>Terjadi kesalahan saat mengirim email.</div>';
                 }
+
+                errorHtml += '</div>';
+
+                $('#alert-area').html(errorHtml);
             }
         });
     });

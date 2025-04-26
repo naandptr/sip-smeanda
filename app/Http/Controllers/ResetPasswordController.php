@@ -16,24 +16,45 @@ class ResetPasswordController extends Controller
     public function sendResetLink(Request $request)
     {
         $request->validate([
-            'emailUser' => 'required|email|exists:tbl_users,email',
+            'emailUser' => 'required|email',
         ]);
 
-        $token = Str::random(60);
         $email = $request->emailUser;
+
+        $user = User::where('email', $email)->first(); 
+
+        if (!$user) {
+            return response()->json([
+                'errors' => [
+                    'emailUser' => ['Email tidak terdaftar.']
+                ]
+            ], 422);
+        }
+
+        DB::table('tbl_password_resets')->where('email', $email)->delete();
+
+        $token = Str::random(60);
 
         DB::table('tbl_password_resets')->updateOrInsert(
             ['email' => $email],
             ['token' => $token, 'created_at' => Carbon::now()]
         );
 
-        Mail::to($email)->send(new ResetPasswordMail($token));
+        Mail::to($email)->send(new ResetPasswordMail($user, $token));
 
-        return back()->with('message', 'Tautan reset password telah dikirim ke email Anda.');
+        return response()->json([
+            'message' => 'Tautan pemulihan kata sandi telah dikirim ke email Anda.'
+        ]);
     }
 
     public function showResetForm($token)
     {
+        $resetData = DB::table('tbl_password_resets')->where('token', $token)->first();
+
+        if (!$resetData || Carbon::parse($resetData->created_at)->addMinutes(60)->isPast()) {
+            return redirect()->route('lupa-password')->with('error', 'Tautan pemulihan sudah tidak berlaku. Silakan minta tautan baru.');
+        }
+
         return view('auth.ganti_password', ['token' => $token]);
     }
 
@@ -48,7 +69,7 @@ class ResetPasswordController extends Controller
         $resetData = DB::table('tbl_password_resets')->where('token', $request->token)->first();
 
         if (!$resetData || Carbon::parse($resetData->created_at)->addMinutes(60)->isPast()) {
-            return back()->withErrors(['error' => 'Token tidak valid atau sudah kadaluarsa.']);
+            return redirect()->route('lupa-password')->with('error', 'Tautan pemulihan sudah tidak berlaku. Silakan minta tautan baru.');
         }
 
         $user = User::where('email', $resetData->email)->first();
@@ -63,6 +84,6 @@ class ResetPasswordController extends Controller
 
         DB::table('tbl_password_resets')->where('email', $user->email)->delete();
 
-        return redirect()->route('login')->with('message', 'Password berhasil diperbarui. Silakan login.');
+        return redirect()->route('login')->with('message', 'Kata sandi berhasil diperbarui. Silakan masuk.');
     }
 }

@@ -20,6 +20,14 @@
         <script src="{{ asset('js/auth/setup_akun.js') }}"></script>
     @endif
 
+    @if($page_name === 'auth/lupa_password')
+        <script src="{{ asset('js/auth/lupa_password.js') }}"></script>
+    @endif
+
+    @if($page_name === 'auth/ganti_password')
+        <script src="{{ asset('js/auth/ganti_password.js') }}"></script>
+    @endif
+
     @if($page_name === 'admin_utama/user')
         <script src="{{ asset('js/admin_utama/user.js') }}"></script>
     @endif

@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         if (!Hash::check($credentials['password'], $user->password)) {
             Auth::logout(); 
-            return back()->withErrors(['password' => 'Password salah']);
+            return back()->withErrors(['password' => 'Kata sandi salah.']);
         }
 
         if (!$user->hasVerifiedEmail()) {
@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         if ($user->status !== User::STATUS_AKTIF) {
             Auth::logout();
-            return back()->withErrors(['username' => 'Akun dinonaktifkan']);
+            return back()->withErrors(['username' => 'Akun dinonaktifkan.']);
         }
 
         Auth::login($user);
@@ -99,7 +99,7 @@ class AuthController extends Controller
         $user->email_verification_token = Str::random(60);
         
         if (!$user->save()) {
-            return back()->withErrors(['error' => 'Gagal menyimpan perubahan']);
+            return back()->withErrors(['error' => 'Gagal menyimpan perubahan.']);
         }
 
         Mail::to($user->email)->send(new AccountConfirmationMail($user, $user->email_verification_token));
@@ -115,7 +115,7 @@ class AuthController extends Controller
 
         if (!$user) {
             return redirect()->route('login')->withErrors([
-                'username' => 'Tautan verifikasi tidak valid atau sudah kadaluarsa.',
+                'username' => 'Tautan verifikasi sudah tidak berlaku. Silakan minta tautan baru.',
             ]);
         }
 
@@ -145,7 +145,7 @@ class AuthController extends Controller
 
         Auth::logout();
 
-        return redirect()->route('login')->with('message', 'Kata Sandi berhasil diubah. Silakan masuk.');
+        return redirect()->route('login')->with('message', 'Kata sandi berhasil diubah. Silakan masuk.');
     }
 
     public function showLupaPasswordForm()

@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'auth/ganti_password'; 
+@endphp
+
 @extends('layouts.auth')
 
 @section('title', 'Ganti Password')
@@ -15,6 +19,9 @@
                 <h1>PERBARUI KATA SANDI</h1>
                 <h4>Perbaru kata sandi Anda.</h4>
             </div>
+
+            <div id="alert-area"></div>
+
             <form action="{{ route('password.update') }}" method="POST" class="auth-form" id="formGantiPassword">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">            
@@ -37,7 +44,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit">Atur Kata Sandi</button>
+                    <button type="submit" class="btn-submit" id="submitGantiPassword">Atur Kata Sandi</button>
                 </div>
             </form>
         </div>

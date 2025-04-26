@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <div class="header">
-            Verifikasi Akun Anda
+            Verifikasi Akun 
         </div>
         <div class="content">
             <p>Halo, <strong>{{ $user->username }}</strong>,</p>
