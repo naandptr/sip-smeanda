@@ -65,7 +65,7 @@ class ResetPasswordController extends Controller
                 'required',
                 'string',
                 'min:8', 
-                'regex:/[a-z]/', 
+                'regex:/[a-zA-Z]/', 
                 'regex:/[0-9]/', 
             ],
             'confirm-pw' => 'required|same:new-pw',
