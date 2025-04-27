@@ -3,6 +3,11 @@ $(document).ready(function () {
         e.preventDefault();
         
         const form = $(this);
+
+        const submitButton = $('#submitSetup');
+        const originalButtonText = submitButton.html(); 
+
+        submitButton.prop('disabled', true).html('<span class="spinner"></span> Memproses...');
   
         $.ajax({
             url: form.attr('action'),
@@ -38,6 +43,9 @@ $(document).ready(function () {
                 errorHtml += '</div>';
             
                 $('#alert-area').html(errorHtml);
+            },
+            complete: function() {
+                submitButton.prop('disabled', false).html(originalButtonText);
             }
         });
     });

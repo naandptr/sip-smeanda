@@ -1,6 +1,6 @@
 $(document).ready(function () { 
-    $('#loginForm').submit(function() {
-        const submitButton = $('#submitLogin');
+    $('#formGantiPasswordAwal').submit(function() {
+        const submitButton = $('#submitGantiPasswordAwal');
 
         submitButton.prop('disabled', true).html('<span class="spinner"></span> Memproses...');
     });

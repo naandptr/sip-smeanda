@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'auth/ganti_password_awal'; 
+@endphp
+
 @extends('layouts.auth')
 
 @section('title', 'Ganti Password')
@@ -45,7 +49,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit">Atur Kata Sandi</button>
+                    <button type="submit" class="btn-submit" id="submitGantiPasswordAwal">Atur Kata Sandi</button>
                 </div>
             </form>
         </div>

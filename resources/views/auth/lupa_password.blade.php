@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="auth-button">
-                    <button type="submit" class="btn-submit" id="submitLupaPassword">Kirim Tautan Masuk</button>
+                    <button type="submit" class="btn-submit" id="submitLupaPassword">Kirim Tautan</button>
                 </div>
             </form>
         </div>

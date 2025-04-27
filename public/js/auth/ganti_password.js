@@ -4,6 +4,11 @@ $(document).ready(function() {
         const newPassword = $('#newPw').val();
         const confirmPassword = $('#confirmPw').val();
 
+        const submitButton = $('#submitGantiPassword');
+        const originalButtonText = submitButton.html(); 
+
+        submitButton.prop('disabled', true).html('<span class="spinner"></span> Memproses...');
+
         $('#alert-area').html(''); 
 
         if (newPassword !== confirmPassword) {

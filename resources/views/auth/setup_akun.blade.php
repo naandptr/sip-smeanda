@@ -21,7 +21,7 @@
             </div>
 
             <div id="alert-area"></div>
-    
+            
             <form action="{{ route('setup-akun') }}" method="POST" class="auth-form" id="setupForm">
                 @csrf
                 <div class="auth-group">        

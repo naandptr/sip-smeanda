@@ -4,6 +4,11 @@ $(document).ready(function () {
         
         const form = $(this);
 
+        const submitButton = $('#submitLupaPassword');
+        const originalButtonText = submitButton.html(); 
+
+        submitButton.prop('disabled', true).html('<span class="spinner"></span> Memproses...');
+
         $.ajax({
             url: form.attr('action'),
             method: 'POST',
@@ -36,6 +41,9 @@ $(document).ready(function () {
                 errorHtml += '</div>';
 
                 $('#alert-area').html(errorHtml);
+            },
+            complete: function() {
+                submitButton.prop('disabled', false).html(originalButtonText);
             }
         });
     });

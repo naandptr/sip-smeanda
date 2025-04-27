@@ -28,6 +28,10 @@
         <script src="{{ asset('js/auth/ganti_password.js') }}"></script>
     @endif
 
+    @if($page_name === 'auth/ganti_password_awal')
+        <script src="{{ asset('js/auth/ganti_password_awal.js') }}"></script>
+    @endif
+
     @if($page_name === 'admin_utama/user')
         <script src="{{ asset('js/admin_utama/user.js') }}"></script>
     @endif
