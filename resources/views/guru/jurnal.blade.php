@@ -66,19 +66,19 @@
                         <td colspan="5">
                             <div class="pagination custom-pagination">
                                 @if ($dataSiswa->onFirstPage())
-                                    <span class="prev disabled">Previous</span>
+                                    <span class="prev disabled">Sebelumnya</span>
                                 @else
-                                    <a href="{{ $dataSiswa->previousPageUrl() }}" class="prev">Previous</a>
+                                    <a href="{{ $dataSiswa->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                 @endif
                 
                                 <span class="page-info">
-                                    {{ $dataSiswa->firstItem() }}-{{ $dataSiswa->lastItem() }} of {{ $dataSiswa->total() }}
+                                    {{ $dataSiswa->firstItem() }}-{{ $dataSiswa->lastItem() }} dari {{ $dataSiswa->total() }}
                                 </span>
                 
                                 @if ($dataSiswa->hasMorePages())
-                                    <a href="{{ $dataSiswa->nextPageUrl() }}" class="next">Next</a>
+                                    <a href="{{ $dataSiswa->nextPageUrl() }}" class="next">Selanjutnya</a>
                                 @else
-                                    <span class="next disabled">Next</span>
+                                    <span class="next disabled">Selanjutnya</span>
                                 @endif
                             </div>
                         </td>

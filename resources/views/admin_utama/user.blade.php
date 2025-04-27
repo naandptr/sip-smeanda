@@ -9,7 +9,7 @@
 @section('content')
 <div class="data-container">
     <div class="header">
-        <h1>Data User</h1>
+        <h1>Kelola Pengguna</h1>
     </div>
 
     <div class="data-section">
@@ -17,7 +17,7 @@
             <form method="GET" action="{{ route('admin.user') }}">
                 <div class="filter-value">
                     <select name="role">
-                        <option value="">Pilih Role</option>
+                        <option value="">Pilih Peran</option>
                         <option value="siswa" {{ request('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
                         <option value="guru" {{ request('role') == 'guru' ? 'selected' : '' }}>Guru</option>
                         <option value="admin_jurusan" {{ request('role') == 'admin_jurusan' ? 'selected' : '' }}>Admin Jurusan</option>
@@ -36,7 +36,7 @@
             </form>            
         </div>
         <div class="data-action">
-            <button class="btn-open" id="tambahUser" data-bs-toggle="modal" data-bs-target="#modalUser">Tambah User</button>
+            <button class="btn-open" id="tambahUser" data-bs-toggle="modal" data-bs-target="#modalUser">+ Pengguna</button>
             <x-modal_user :jurusans="$jurusans" :kelas="$kelas" />
         </div>
         <div class="data-content">
@@ -46,7 +46,7 @@
                         <tr>
                             <th>NO</th>
                             <th>NAMA PENGGUNA</th>
-                            <th>ROLE</th>
+                            <th>PERAN</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
@@ -80,19 +80,19 @@
                             <td colspan="5">
                                 <div class="pagination custom-pagination">
                                     @if ($users->onFirstPage())
-                                        <span class="prev disabled">Previous</span>
+                                        <span class="prev disabled">Sebelumnya</span>
                                     @else
-                                        <a href="{{ $users->previousPageUrl() }}" class="prev">Previous</a>
+                                        <a href="{{ $users->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                     @endif
                     
                                     <span class="page-info">
-                                        {{ $users->firstItem() }}-{{ $users->lastItem() }} of {{ $users->total() }}
+                                        {{ $users->firstItem() }}-{{ $users->lastItem() }} dari {{ $users->total() }}
                                     </span>
                     
                                     @if ($users->hasMorePages())
-                                        <a href="{{ $users->nextPageUrl() }}" class="next">Next</a>
+                                        <a href="{{ $users->nextPageUrl() }}" class="next">Selanjutnya</a>
                                     @else
-                                        <span class="next disabled">Next</span>
+                                        <span class="next disabled">Selanjutnya</span>
                                     @endif
                                 </div>
                             </td>

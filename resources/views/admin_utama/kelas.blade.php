@@ -9,7 +9,7 @@
 @section('content')
 <div class="data-container">
     <div class="header">
-        <h1>Data Kelas</h1>
+        <h1>Kelola Kelas</h1>
     </div>
 
     <div class="data-section">
@@ -31,7 +31,7 @@
             </form>            
         </div>
         <div class="data-action">
-            <button class="btn-open" id="tambahKelas" data-bs-toggle="modal" data-bs-target="#modalKelas">Tambah Kelas</button>
+            <button class="btn-open" id="tambahKelas" data-bs-toggle="modal" data-bs-target="#modalKelas">+ Kelas</button>
             <x-modal_kelas :jurusan="$jurusan" :tahunAjar="$tahunAjar" />
         </div>
         <div class="data-content">
@@ -69,19 +69,19 @@
                             <td colspan="5">
                                 <div class="pagination custom-pagination">
                                     @if ($dataKelas->onFirstPage())
-                                        <span class="prev disabled">Previous</span>
+                                        <span class="prev disabled">Sebelumnya</span>
                                     @else
-                                        <a href="{{ $dataKelas->previousPageUrl() }}" class="prev">Previous</a>
+                                        <a href="{{ $dataKelas->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                     @endif
                     
                                     <span class="page-info">
-                                        {{ $dataKelas->firstItem() }}-{{ $dataKelas->lastItem() }} of {{ $dataKelas->total() }}
+                                        {{ $dataKelas->firstItem() }}-{{ $dataKelas->lastItem() }} dari {{ $dataKelas->total() }}
                                     </span>
                     
                                     @if ($dataKelas->hasMorePages())
-                                        <a href="{{ $dataKelas->nextPageUrl() }}" class="next">Next</a>
+                                        <a href="{{ $dataKelas->nextPageUrl() }}" class="next">Selanjutnya</a>
                                     @else
-                                        <span class="next disabled">Next</span>
+                                        <span class="next disabled">Selanjutnya</span>
                                     @endif
                                 </div>
                             </td>

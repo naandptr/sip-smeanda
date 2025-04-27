@@ -101,7 +101,7 @@
                 <h4>Pengguna</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
-                    <h2>{{ $totalUsers }} User</h2>
+                    <h2>{{ $totalUsers }} Pengguna</h2>
                 </div>
             </div>
             <div class="card-item">

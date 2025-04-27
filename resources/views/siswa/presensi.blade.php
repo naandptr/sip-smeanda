@@ -23,7 +23,7 @@
                 <table class="presensi-table data-table">
                     <thead class="presensi-header data-header">
                         <tr>
-                            <th>ID</th>
+                            <th>NO</th>
                             <th>TANGGAL</th>
                             <th>JENIS PRESENSI</th>
                             <th>STATUS</th>

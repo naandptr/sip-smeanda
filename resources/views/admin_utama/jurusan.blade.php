@@ -9,7 +9,7 @@
 @section('content')
 <div class="data-container">
     <div class="header">
-        <h1>Data Jurusan</h1>
+        <h1>Kelola Jurusan</h1>
     </div>
 
     <div class="data-section">
@@ -28,7 +28,7 @@
             </form>            
         </div>
         <div class="data-action">
-            <button class="btn-open" id="tambahJurusan" data-bs-toggle="modal" data-bs-target="#modalJurusan">Tambah Jurusan</button>
+            <button class="btn-open" id="tambahJurusan" data-bs-toggle="modal" data-bs-target="#modalJurusan">+ Jurusan</button>
             <x-modal_jurusan></x-modal_jurusan>
         </div>
         <div class="data-content">
@@ -66,19 +66,19 @@
                             <td colspan="5">
                                 <div class="pagination custom-pagination">
                                     @if ($dataJurusan->onFirstPage())
-                                        <span class="prev disabled">Previous</span>
+                                        <span class="prev disabled">Sebelumnya</span>
                                     @else
-                                        <a href="{{ $dataJurusan->previousPageUrl() }}" class="prev">Previous</a>
+                                        <a href="{{ $dataJurusan->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                     @endif
                     
                                     <span class="page-info">
-                                        {{ $dataJurusan->firstItem() }}-{{ $dataJurusan->lastItem() }} of {{ $dataJurusan->total() }}
+                                        {{ $dataJurusan->firstItem() }}-{{ $dataJurusan->lastItem() }} dari {{ $dataJurusan->total() }}
                                     </span>
                     
                                     @if ($dataJurusan->hasMorePages())
-                                        <a href="{{ $dataJurusan->nextPageUrl() }}" class="next">Next</a>
+                                        <a href="{{ $dataJurusan->nextPageUrl() }}" class="next">Selanjutnya</a>
                                     @else
-                                        <span class="next disabled">Next</span>
+                                        <span class="next disabled">Selanjutnya</span>
                                     @endif
                                 </div>
                             </td>

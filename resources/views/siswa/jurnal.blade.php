@@ -24,7 +24,7 @@
                 <table class="jurnal-table data-table">
                     <thead class="jurnal-header data-header">
                         <tr>
-                            <th>ID</th>
+                            <th>NO</th>
                             <th>TANGGAL</th>
                             <th>DESKRIPSI</th>
                             <th>STATUS</th>

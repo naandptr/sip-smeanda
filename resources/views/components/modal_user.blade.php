@@ -6,10 +6,10 @@
             @csrf
                 <div class="modal-form-body">
                     <div class="modal-form-group">
-                        <label for="roleUser">Role<span class="required-label">*</span></label>
+                        <label for="roleUser">Peran<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="roleUser" name="roleUser" required>
-                                <option value="" selected disabled>Pilih Role</option>
+                                <option value="" selected disabled>Pilih Peran</option>
                                 <option>Siswa</option>
                                 <option>Guru</option>
                                 <option>Admin Jurusan</option>
@@ -17,13 +17,13 @@
                         </div>
                     </div>
                     <div class="modal-form-group">
-                        <label for="namaUser">Username<span class="required-label">*</span></label>
+                        <label for="namaUser">Nama Pengguna<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <input type="text" id="namaUser" name="namaUser" required>
                         </div>
                     </div>
                     <div class="modal-form-group" id="passwordField">
-                        <label for="pwUser">Password<span class="required-label">*</span></label>
+                        <label for="pwUser">Kata Sandi<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <div class="password-default"><i>123456</i></div>
                             <input type="hidden" id="pwUser" name="pwUser" value="123456">

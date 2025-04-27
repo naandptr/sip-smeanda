@@ -85,19 +85,19 @@
                         <td colspan="6">
                             <div class="pagination custom-pagination">
                                 @if ($dataJurnal->onFirstPage())
-                                    <span class="prev disabled">Previous</span>
+                                    <span class="prev disabled">Sebelumnya</span>
                                 @else
-                                    <a href="{{ $dataJurnal->previousPageUrl() }}" class="prev">Previous</a>
+                                    <a href="{{ $dataJurnal->previousPageUrl() }}" class="prev">Sebelumnya</a>
                                 @endif
                 
                                 <span class="page-info">
-                                    {{ $dataJurnal->firstItem() }}-{{ $dataJurnal->lastItem() }} of {{ $dataJurnal->total() }}
+                                    {{ $dataJurnal->firstItem() }}-{{ $dataJurnal->lastItem() }} dari {{ $dataJurnal->total() }}
                                 </span>
                 
                                 @if ($dataJurnal->hasMorePages())
-                                    <a href="{{ $dataJurnal->nextPageUrl() }}" class="next">Next</a>
+                                    <a href="{{ $dataJurnal->nextPageUrl() }}" class="next">Selanjutnya</a>
                                 @else
-                                    <span class="next disabled">Next</span>
+                                    <span class="next disabled">Selanjutnya</span>
                                 @endif
                             </div>
                         </td>
