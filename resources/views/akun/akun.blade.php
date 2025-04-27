@@ -18,8 +18,16 @@
         <table class="item-user">    
             @if ($role === User::ROLE_GURU)
             <tr>
-                <td style="width: 30%;">Nama</td>
+                <td style="width: 30%;">Nama Lengkap</td>
                 <td style="width: 70%;">{{ Auth::user()->pembimbing->nama }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Nama Pengguna</td>
+                <td style="width: 70%;">{{ Auth::user()->username }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Email</td>
+                <td style="width: 70%;">{{ Auth::user()->email }}</td>
             </tr>
             <tr>
                 <td>NIP</td>
@@ -27,8 +35,16 @@
             </tr>
             @elseif ($role === User::ROLE_SISWA)
             <tr>
-                <td style="width: 30%;">Nama</td>
+                <td style="width: 30%;">Nama Lengkap</td>
                 <td style="width: 70%;">{{ Auth::user()->siswa->nama }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Nama Pengguna</td>
+                <td style="width: 70%;">{{ Auth::user()->username }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Email</td>
+                <td style="width: 70%;">{{ Auth::user()->email }}</td>
             </tr>
             <tr>
                 <td>NIS</td>
@@ -44,8 +60,16 @@
             </tr>
             @elseif ($role === User::ROLE_ADMIN_JURUSAN)
             <tr>
-                <td style="width: 30%;">Nama</td>
+                <td style="width: 30%;">Nama Lengkap</td>
                 <td style="width: 70%;">{{ Auth::user()->adminJurusan->nama }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Nama Pengguna</td>
+                <td style="width: 70%;">{{ Auth::user()->username }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%;">Email</td>
+                <td style="width: 70%;">{{ Auth::user()->email }}</td>
             </tr>
             <tr>
                 <td>Jurusan</td>
