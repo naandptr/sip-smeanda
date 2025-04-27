@@ -60,14 +60,21 @@ $(document).ready(function () {
         server: null,
         fileValidateTypeDetectType: (source, type) => new Promise((resolve) => resolve(type)),
         labelIdle: `
-            <div style="text-align: center;">
-                <img src="/img/add-icon.png" alt="Upload Icon">
-                <h1>Seret berkas Anda di sini</h1>
-                <span style="color: blue; cursor: pointer;">Pilih berkas </span>
-                <p>dari perangkat Anda</p>
+            <div class="filepond-label-wrapper">
+                <img src="/img/add-icon.png" alt="Upload Icon" class="filepond-icon">
+                <h1 class="filepond-title">Seret berkas Anda di sini</h1>
+                
+                <div class="filepond-link-description-wrapper">
+                <span class="filepond-link">Pilih berkas</span>
+                    <p class="filepond-description">dari perangkat Anda</p>
+                </div>
+                <p class="filepond-note"><i>Unggah foto dengan format PNG, JPG, JPEG, PDF dengan ukuran maksimal 2MB</i></p>
             </div>
-        `
+        `,
+        styleItemPanelAspectRatio: 1,
     });
+    
+    
 
     FilePond.setOptions({
         server: {

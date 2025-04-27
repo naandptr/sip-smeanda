@@ -3,15 +3,17 @@
     use App\Models\User;
 
     $user = Auth::user();
-    $nama = 'User'; // Default jika tidak ada user yang login
+    $nama = 'User'; 
 
     if ($user) {
         if ($user->role === User::ROLE_ADMIN_UTAMA) {
             $nama = $user->username; 
         } elseif ($user->role === 'Siswa') {
-            $nama = $user->siswa->nama ?? 'User';
+            $namaLengkap = $user->siswa->nama ?? 'User';
+            $nama = explode(' ', $namaLengkap)[0];
         } elseif ($user->role === 'Guru') {
-            $nama = $user->pembimbing->nama ?? 'User';
+            $namaLengkap = $user->pembimbing->nama ?? 'User';
+            $nama = explode(' ', $namaLengkap)[0]; 
         } elseif ($user->role === 'Admin Jurusan') {
             $nama = $user->adminJurusan->nama ?? 'User';
         }
