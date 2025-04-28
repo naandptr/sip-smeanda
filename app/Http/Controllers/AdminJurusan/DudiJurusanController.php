@@ -28,13 +28,21 @@ class DudiJurusanController extends Controller
             ->where('tahun_ajar_id', $tahunAjarId)
             ->paginate(10);
 
-        $sorted = $dataDudiJurusan->getCollection()->sort(function ($a, $b) {
+        $sorted = $dataDudiJurusan->items(); 
+        usort($sorted, function ($a, $b) {
             return strcmp($a->pembimbing->nama ?? '', $b->pembimbing->nama ?? '')
                 ?: strcmp($a->tahunAjar->tahun_ajaran ?? '', $b->tahunAjar->tahun_ajaran ?? '')
                 ?: strcmp($a->dudi->nama_dudi ?? '', $b->dudi->nama_dudi ?? '');
         });
 
-        $dataDudiJurusan->setCollection($sorted);
+
+        $dataDudiJurusan = new \Illuminate\Pagination\LengthAwarePaginator(
+            $sorted, 
+            $dataDudiJurusan->total(), 
+            $dataDudiJurusan->perPage(), 
+            $dataDudiJurusan->currentPage(), 
+            ['path' => \Request::url(), 'query' => \Request::query()] 
+        );
 
         $dudi = Dudi::all();
         $pembimbing = Pembimbing::orderBy('nama', 'asc')->get();

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\AccountConfirmationMail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -28,32 +29,33 @@ class AuthController extends Controller
 
         $user = User::where('username', $credentials['username'])->first();
 
-        if (!$user) {
-            return back()->withErrors(['username' => 'Akun tidak ditemukan.']);
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            if ($request->ajax()) {
+                return response()->json(['errors' => ['username' => ['Nama pengguna atau kata sandi salah.']]], 422);
+            }
+            return back()->withErrors(['username' => 'Nama pengguna atau kata sandi salah.']);
         }
-
-        if (!Hash::check($credentials['password'], $user->password)) {
-            Auth::logout(); 
-            return back()->withErrors(['password' => 'Kata sandi salah.']);
-        }
-
+    
         if (!$user->hasVerifiedEmail()) {
             Auth::login($user);
-            return redirect()->route('setup-akun');
+            return response()->json(['redirect' => route('setup-akun')]);
         }
-
+    
         if ($user->is_default_password) {
-            Auth::login($user); 
-            return redirect()->route('ganti-password-awal');
+            Auth::login($user);
+            return response()->json(['redirect' => route('ganti-password-awal')]);
         }
-
+    
         if ($user->status !== User::STATUS_AKTIF) {
             Auth::logout();
+            if ($request->ajax()) {
+                return response()->json(['errors' => ['username' => ['Akun dinonaktifkan.']]], 422);
+            }
             return back()->withErrors(['username' => 'Akun dinonaktifkan.']);
         }
-
+    
         Auth::login($user);
-        return redirect()->intended(route('dashboard'));
+        return response()->json(['redirect' => route('dashboard')]);
     }
 
     public function logout(Request $request)
@@ -140,13 +142,13 @@ class AuthController extends Controller
 
     public function changePasswordAwal(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'new-pw' => [
                 'required',
                 'string',
-                'min:8', 
-                'regex:/[a-zA-Z]/', 
-                'regex:/[0-9]/', 
+                'min:8',
+                'regex:/[a-zA-Z]/',
+                'regex:/[0-9]/',
             ],
             'confirm-pw' => 'required|same:new-pw',
         ], [
@@ -155,18 +157,24 @@ class AuthController extends Controller
             'confirm-pw.same' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi baru.',
         ]);
 
-        /** @var \App\Models\User $user */
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all()
+            ], 422);
+        }
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $user->password = Hash::make($request->input('new-pw'));
         $user->is_default_password = false;
         $user->save();
 
-        Auth::logout();
-
-        return redirect()->route('login')->with('message', 'Kata sandi berhasil diubah. Silakan masuk.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Kata sandi berhasil diubah.'
+        ]);
     }
-
     public function showLupaPasswordForm()
     {
         return view('auth.lupa_password');

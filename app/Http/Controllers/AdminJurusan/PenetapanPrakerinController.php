@@ -41,14 +41,31 @@ class PenetapanPrakerinController extends Controller
 
         $dataPrakerin = $query->paginate(10);
 
-        $sorted = $dataPrakerin->getCollection()->sort(function ($a, $b) {
-            return strcmp($a->siswa->nama ?? '', $b->siswa->nama ?? '')
-                ?: strcmp($a->dudiJurusan->dudi->nama_dudi ?? '', $b->dudiJurusan->dudi->nama_dudi ?? '')
-                ?: strcmp($b->tahunAjar->periode_mulai ?? '', $a->tahunAjar->periode_mulai ?? '')
+        $query = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
+            ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
+                $query->where('jurusan_id', $jurusanId);
+            });
+
+        if ($tahunAjarId) {
+            $query->where('tahun_ajar_id', $tahunAjarId);
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $dataPrakerin = $query->get()->sort(function ($a, $b) {
+            return strcmp(optional($a->siswa)->nama ?? '', optional($b->siswa)->nama ?? '')
+                ?: strcmp(optional($a->dudiJurusan->dudi)->nama_dudi ?? '', optional($b->dudiJurusan->dudi)->nama_dudi ?? '')
+                ?: strcmp(optional($b->tahunAjar)->periode_mulai ?? '', optional($a->tahunAjar)->periode_mulai ?? '')
                 ?: strcmp($b->tanggal_mulai ?? '', $a->tanggal_mulai ?? '');
         });
-
-        $dataPrakerin->setCollection($sorted);
+        $dataPrakerin = new \Illuminate\Pagination\LengthAwarePaginator(
+            $dataPrakerin, 
+            $dataPrakerin->count(), 
+            10, 
+            $request->get('page', 1)
+        );
 
         $siswa = Siswa::whereHas('kelas', function ($query) use ($jurusanId) {
             $query->where('jurusan_id', $jurusanId)

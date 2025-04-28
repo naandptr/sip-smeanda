@@ -20,21 +20,7 @@
                 <h4>Perbaru kata sandi Anda.</h4>
             </div>
 
-            <div id="alert-area">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            <div>{{ $error }}</div>
-                        @endforeach
-                    </div>
-                @endif
-            
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-            </div>            
+            <div id="alert-area"></div>       
 
             <form action="{{ route('password.update') }}" method="POST" class="auth-form" id="formGantiPassword">
                 @csrf

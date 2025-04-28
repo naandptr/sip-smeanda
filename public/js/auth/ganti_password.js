@@ -1,25 +1,45 @@
 $(document).ready(function() {
     $('#formGantiPassword').submit(function(e) {     
         e.preventDefault(); 
-        const newPassword = $('#newPw').val();
-        const confirmPassword = $('#confirmPw').val();
 
         const submitButton = $('#submitGantiPassword');
         const originalButtonText = submitButton.html(); 
+        const alertArea = $('#alert-area');
 
         submitButton.prop('disabled', true).html('<span class="spinner"></span> Memproses...');
+        alertArea.html(''); 
 
-        $('#alert-area').html(''); 
+        const formData = $(this).serialize();
 
-        if (newPassword !== confirmPassword) {
-            let errorHtml = `
-                <div class="alert alert-danger">
-                    Kata sandi baru dan konfirmasi kata sandi tidak cocok.
-                </div>
-            `;
-            $('#alert-area').html(errorHtml);
-        } else {
-            this.submit(); 
-        }
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    window.location.href = response.redirect; 
+                }
+            },
+            
+            error: function(xhr) {
+                let response = xhr.responseJSON;
+                let firstError = 'Terjadi kesalahan. Silakan coba lagi.'; 
+            
+                if (response && response.errors) {
+                    const errorsArray = Object.values(response.errors).flat();
+                    if (errorsArray.length > 0) {
+                        firstError = errorsArray[0]; 
+                    }
+                }
+            
+                let errorHtml = `<div class="alert alert-danger">${firstError}</div>`;
+            
+                $('#alert-area').html(errorHtml);
+                submitButton.prop('disabled', false).html(originalButtonText);
+            }
+            
+        });
     });
 });
+

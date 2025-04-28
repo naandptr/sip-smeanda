@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
 {
@@ -60,7 +61,7 @@ class ResetPasswordController extends Controller
 
     public function resetPassword(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'new-pw' => [
                 'required',
                 'string',
@@ -70,21 +71,35 @@ class ResetPasswordController extends Controller
             ],
             'confirm-pw' => 'required|same:new-pw',
             'token' => 'required',
-        ],[
+        ], [
             'new-pw.min' => 'Kata sandi minimal harus 8 karakter.',
             'new-pw.regex' => 'Kata sandi harus mengandung huruf dan angka.',
+            'confirm-pw.same' => 'Konfirmasi kata sandi tidak cocok dengan kata sandi baru.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()->all(),
+            ], 422);
+        }
 
         $resetData = DB::table('tbl_password_resets')->where('token', $request->token)->first();
 
         if (!$resetData || Carbon::parse($resetData->created_at)->addMinutes(60)->isPast()) {
-            return redirect()->route('lupa-password')->with('error', 'Tautan pemulihan sudah tidak berlaku. Silakan minta tautan baru.');
+            return response()->json([
+                'success' => false,
+                'errors' => ['Tautan pemulihan sudah tidak berlaku. Silakan minta tautan baru.'],
+            ], 400);
         }
 
         $user = User::where('email', $resetData->email)->first();
 
         if (!$user) {
-            return back()->withErrors(['error' => 'Pengguna tidak ditemukan.']);
+            return response()->json([
+                'success' => false,
+                'errors' => ['Pengguna tidak ditemukan.'],
+            ], 404);
         }
 
         $user->password = Hash::make($request->input('new-pw'));
@@ -93,6 +108,11 @@ class ResetPasswordController extends Controller
 
         DB::table('tbl_password_resets')->where('email', $user->email)->delete();
 
-        return redirect()->route('login')->with('message', 'Kata sandi berhasil diperbarui. Silakan masuk.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Kata sandi berhasil diperbarui. Silakan masuk.',
+            'redirect' => route('login'),
+        ]);
+        
     }
 }
