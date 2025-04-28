@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">Nama DUDI</h5>
+                        <h5 class="modal-view-label">Penetapan DUDI</h5>
                         <div class="modal-view-value">
                             <h5>{{ $prakerin->dudiJurusan->dudi->nama_dudi ?? '-' }}</h5>
                         </div>

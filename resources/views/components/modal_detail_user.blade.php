@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-view-body">
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">Username</h5>
+                        <h5 class="modal-view-label">Nama Pengguna</h5>
                         <div class="modal-view-value">
                             <h5>{{ $user['username'] }}</h5>
                         </div>
@@ -51,7 +51,7 @@
                         </div>
                     @elseif ($user['role'] === 'Admin Jurusan')
                         <div class="modal-view-item">
-                            <h5 class="modal-view-label">Nama</h5>
+                            <h5 class="modal-view-label">Nama Lengkap</h5>
                             <div class="modal-view-value">
                                 <h5>{{ $user['detail']['nama'] ?? '-' }}</h5>
                             </div>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="modal-view-item">
-                        <h5 class="modal-view-label">Role</h5>
+                        <h5 class="modal-view-label">Peran</h5>
                         <div class="modal-view-value">
                             <h5>{{ $user['role'] }}</h5>
                         </div>
