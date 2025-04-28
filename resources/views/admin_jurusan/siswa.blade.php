@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Data Siswa')
+@section('title', 'Siswa Jurusan')
 
 @section('content')
 <div class="data-container">
     <div class="header">
-        <h1>Data Siswa</h1>
+        <h1>Siswa Jurusan</h1>
     </div>
 
     <div class="data-section">

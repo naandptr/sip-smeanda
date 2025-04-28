@@ -68,8 +68,8 @@
                 
             @elseif ($role === User::ROLE_ADMIN_JURUSAN)
                 <a href="{{ route('jurusan.siswa') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('jurusan.siswa') ? 'active' : '' }}">
-                    <img src="{{ asset('img/siswa-icon.png') }}" alt="data siswa" height="20" />
-                    <h4 class="ms-2 mb-0 fs-6 menu-text">Data Siswa</h4>
+                    <img src="{{ asset('img/siswa-icon.png') }}" alt="siswa jurusan" height="20" />
+                    <h4 class="ms-2 mb-0 fs-6 menu-text">Siswa Jurusan</h4>
                 </a>
                 <a href="{{ route('jurusan.dokumen') }}" class="menu d-flex align-items-center mb-2 p-2 rounded {{ request()->routeIs('jurusan.dokumen') ? 'active' : '' }}">
                     <img src="{{ asset('img/dokumen-icon.png') }}" alt="dokumen" height="20" />

@@ -28,7 +28,7 @@
                             <th>JENIS PRESENSI</th>
                             <th>STATUS</th>
                             <th>KETERANGAN</th>
-                            <th>FOTO</th>
+                            <th>AKSI</th>
                         </tr>
                     </thead>
                     <tbody class="presensi-body data-body">

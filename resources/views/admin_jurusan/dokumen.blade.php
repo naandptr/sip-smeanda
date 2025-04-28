@@ -37,7 +37,7 @@
                             <th>KELAS</th>
                             <th>CV</th>
                             <th>PORTOFOLIO</th>
-                            <th>LAPORAN AKHIR</th>
+                            <th>LAPORAN</th>
                             <th>SERTIFIKAT</th>
                         </tr>
                     </thead>
