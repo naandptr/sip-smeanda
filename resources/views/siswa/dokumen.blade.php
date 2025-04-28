@@ -115,7 +115,7 @@
 
     <div class="document-section">
         <div class="document-title">
-            <h2>Sertifikat Magang</h2>
+            <h2>Sertifikat Prakerin</h2>
         </div>
         <form action="{{ route('dokumen.upload', 'Sertifikat') }}" data-jenis="sertifikat" class="form-dokumen" id="formSertifikat" method="POST" enctype="multipart/form-data">
             @csrf

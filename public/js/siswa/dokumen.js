@@ -51,7 +51,7 @@ $(document).ready(function() {
     
         if (!file) {
             Swal.fire({
-                imageUrl: "/img/error-icon.png",
+                icon: "error",
                 title: "Berkas belum dipilih!",
                 text: "Silakan pilih berkas terlebih dahulu.",
             });
@@ -59,7 +59,7 @@ $(document).ready(function() {
         }
     
         Swal.fire({
-            imageUrl: "/img/confirm-icon.png",
+            icon: "warning",
             title: "Apakah kamu yakin ingin mengunggah berkas ini?",
             text: "Pastikan data sudah benar sebelum melanjutkan",
             showCancelButton: true,
