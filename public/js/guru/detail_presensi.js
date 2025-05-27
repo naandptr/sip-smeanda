@@ -1,5 +1,5 @@
 $(document).ready(function () {
-const buttons = document.querySelectorAll('.show-detail-presensi');
+    const buttons = document.querySelectorAll('[data-file-url]');
     const image = document.getElementById('previewImage');
     const pdf = document.getElementById('previewPDF');
 
@@ -18,6 +18,10 @@ const buttons = document.querySelectorAll('.show-detail-presensi');
                 pdf.src = fileUrl;
                 pdf.style.display = 'block';
             }
+
+            const modalElement = document.getElementById('modalDetailPresensi');
+            const modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
         });
     });
 });

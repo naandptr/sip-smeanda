@@ -41,7 +41,7 @@
 
         <div class="data-action">
             <button class="btn-open" id="tambahPrakerin" data-bs-toggle="modal" data-bs-target="#modalPrakerin">+ Penetapan</button>
-            <x-modal_prakerin :siswa="$siswa" :dudiJurusan="$dudiJurusan" :tahunAjar="$tahunAjar" />
+            <x-modal_prakerin :siswa="$siswa" :dudiJurusan="$dudiJurusan" :tahunAjar="$tahunAjar" :tahunAjarAktif="$tahunAjarAktif" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">

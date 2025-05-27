@@ -15,6 +15,7 @@
                         <label for="jenisPresensi">Jenis<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="jenisPresensi" name="jenisPresensi">
+                                <option value="" selected>Pilih Jenis Presensi</option>
                                 <option value="Presensi Datang">Presensi Datang</option>
                                 <option value="Presensi Pulang">Presensi Pulang</option>
                             </select>
@@ -24,6 +25,7 @@
                         <label for="statusPresensi">Status<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="statusPresensi" name="statusPresensi">
+                                <option value="" selected>Pilih Status Presensi</option>
                                 <option value="Hadir">Hadir</option>
                                 <option value="Izin">Izin</option>
                                 <option value="Sakit">Sakit</option>
@@ -31,14 +33,14 @@
                         </div>
                     </div>
                     <div class="modal-form-group">
-                        <label for="ketPresensi">Keterangan<span class="required-label">*</span></label>
+                        <label for="ketPresensi">Keterangan</label>
                         <div class="modal-form-value">
                             <input type="text" id="ketPresensi" name="ketPresensi">
                         </div>
                         
                     </div>
                     <div class="modal-form-group">
-                        <label for="filePresensi">Unggah Foto<span class="required-label">*</span></h5></label>
+                        <label for="filePresensi">Bukti Presensi<span class="required-label">*</span></h5></label>
                         <div class="modal-form-value">
                             <input type="file" class="filepond" name="filePresensi" id="filePresensi">
                         </div>

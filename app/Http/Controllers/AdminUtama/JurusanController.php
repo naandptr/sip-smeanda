@@ -44,12 +44,12 @@ class JurusanController extends Controller
         }
 
         $request->validate([
-            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan',
             'kode_jurusan' => 'required|string|max:255|unique:tbl_jurusan,kode_jurusan',
+            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan',
             'status' => 'required|in:Aktif,Nonaktif'
         ],[
-            'nama_jurusan.required' => 'Nama jurusan harus diisi',
             'kode_jurusan.required' => 'Kode jurusan harus diisi',
+            'nama_jurusan.required' => 'Nama jurusan harus diisi',
             'status.required' => 'Status jurusan harus dipilih',
         ]);
 
@@ -89,12 +89,12 @@ class JurusanController extends Controller
         }
         
         $request->validate([
-            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan,' . $id,
             'kode_jurusan' => 'required|string|max:255|unique:tbl_jurusan,kode_jurusan,' . $id,
+            'nama_jurusan' => 'required|string|max:255|unique:tbl_jurusan,nama_jurusan,' . $id,
             'status' => 'required|in:Aktif,Nonaktif'
         ],[
-            'nama_jurusan.required' => 'Nama jurusan harus diisi',
             'kode_jurusan.required' => 'Kode jurusan harus diisi',
+            'nama_jurusan.required' => 'Nama jurusan harus diisi',
             'status.required' => 'Status jurusan harus dipilih',
         ]);
 

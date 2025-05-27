@@ -39,7 +39,13 @@ class PresensiController extends Controller
         ],[
             'jenisPresensi.required' => 'Jenis presensi harus dipilih',
             'filePresensi.required' => 'Bukti presensi harus diunggah',
+            'filePresensi.mimes' => 'Format berkas harus JPG, JPEG, PNG, atau PDF',
+            'filePresensi.max' => 'Ukuran berkas maksimal 2MB',
         ]);
+
+        if ($request->jenisPresensi === 'Presensi Datang' && !$request->statusPresensi) {
+            return response()->json(['message' => 'Status presensi harus dipilih untuk presensi datang'], 422);
+        }
 
         $siswa = Auth::user()->siswa;
         $today = Carbon::parse($request->tglPresensiFormatted)->startOfDay();

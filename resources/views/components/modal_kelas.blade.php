@@ -1,4 +1,4 @@
-@props(['jurusan', 'tahunAjar'])
+@props(['jurusan', 'tahunAjar', 'tahunAjarAktif'])
 
 <div class="modal fade" id="modalKelas" tabindex="-1" aria-labelledby="modalKelas" aria-hidden="true">
     <div class="modal-dialog custom-modal">
@@ -15,6 +15,7 @@
                         <label for="namaJurusan">Jurusan<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="namaJurusan" name="namaJurusan" required>
+                                <option value="" selected>Pilih Jurusan</option>
                                 @foreach($jurusan as $data)
                                     <option value="{{ $data->id }}">{{ $data->nama_jurusan }}</option>
                                 @endforeach
@@ -25,9 +26,13 @@
                         <label for="tahunAjarKelas">Tahun Ajaran<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="tahunAjarKelas" name="tahunAjarKelas" required>
-                                @foreach($tahunAjar as $data)
-                                    <option value="{{ $data->id }}">{{ $data->tahun_ajaran }}</option>
-                                @endforeach
+                                @if($tahunAjarAktif)
+                                    <option value="{{ $tahunAjarAktif->id }}" selected>
+                                        {{ $tahunAjarAktif->tahun_ajaran }}
+                                    </option>
+                                @else
+                                    <option value="">Tidak ada tahun ajaran aktif</option>
+                                @endif
                             </select>
                         </div>
                     </div>

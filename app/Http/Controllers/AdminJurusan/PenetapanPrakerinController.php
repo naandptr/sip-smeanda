@@ -20,9 +20,13 @@ class PenetapanPrakerinController extends Controller
 
         $tahunAjarAktif = TahunAjar::where('status', 'Aktif')->first();
 
+        if (!$tahunAjarAktif) {
+            return back()->with('error', 'Tidak ada tahun ajaran aktif yang ditemukan.');
+        }
+
         $dataTahunAjaran = TahunAjar::all();
 
-        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif->id);
+        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif ? $tahunAjarAktif->id : null); 
 
         $status = $request->get('status');
 
@@ -92,15 +96,15 @@ class PenetapanPrakerinController extends Controller
         $request->validate([
             'siswa_id' => 'required',
             'dudi_jurusan_id' => 'required',
+            'tahun_ajar_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'tahun_ajar_id' => 'required',
         ],[
-            'siswa_id.required' => 'Siswa harus dipilih',
-            'dudi_jurusan_id.required' => 'Lokasi DUDI harus dipilih',
+            'siswa_id.required' => 'Siswa jurusan harus dipilih',
+            'dudi_jurusan_id.required' => 'Penetapan DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
             'tanggal_mulai.required' => 'Tanggal mulai prakerin harus dipilih',
             'tanggal_selesai.required' => 'Tanggal selesai prakerin harus dipilih',
-            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
         ]);
 
         $siswaId = $request->siswa_id;
@@ -162,15 +166,15 @@ class PenetapanPrakerinController extends Controller
         $request->validate([
             'siswa_id' => 'required',
             'dudi_jurusan_id' => 'required',
+            'tahun_ajar_id' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'tahun_ajar_id' => 'required',
         ],[
-            'siswa_id.required' => 'Siswa harus dipilih',
-            'dudi_jurusan_id.required' => 'Lokasi DUDI harus dipilih',
+            'siswa_id.required' => 'Siswa jurusan harus dipilih',
+            'dudi_jurusan_id.required' => 'Penetapan DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
             'tanggal_mulai.required' => 'Tanggal mulai prakerin harus dipilih',
             'tanggal_selesai.required' => 'Tanggal selesai prakerin harus dipilih',
-            'tahun_ajar_id.required' => 'Tahun ajaran prakerin harus dipilih',
         ]);
 
         $penetapan = PenetapanPrakerin::findOrFail($id);

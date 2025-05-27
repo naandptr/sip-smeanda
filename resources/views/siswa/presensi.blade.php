@@ -42,7 +42,7 @@
                             <td class="data-aksi">
                                 <button type="button" class="btn-icon show-detail-presensi"
                                     data-bs-toggle="modal" data-bs-target="#modalDetailPresensi"
-                                    data-file-url="{{ Storage::url($presensi->file) }}">
+                                    data-file-url="{{ asset('storage/' . $presensi->file) }}">
                                     <img src="{{ asset('img/show-icon.png') }}" alt="Detail">
                                 </button>
                                 <x-modal_detail_presensi />

@@ -21,7 +21,11 @@ class DudiJurusanController extends Controller
 
         $tahunAjarAktif = TahunAjar::where('status', 'aktif')->first();
 
-        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif->id); 
+        if (!$tahunAjarAktif) {
+            return back()->with('error', 'Tidak ada tahun ajaran aktif yang ditemukan.');
+        }
+
+        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif ? $tahunAjarAktif->id : null); 
 
         $dataDudiJurusan = DudiJurusan::with(['pembimbing', 'tahunAjar', 'dudi'])
             ->where('jurusan_id', $jurusanId)
@@ -54,12 +58,12 @@ class DudiJurusanController extends Controller
     {
         $request->validate([
             'dudi_id' => 'required',
+            'pembimbing_id' => 'required',
             'tahun_ajar_id' => 'required',
-            'pembimbing_id' => 'required'
         ],[
             'dudi_id.required' => 'Lokasi DUDI harus dipilih',
-            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
             'pembimbing_id.required' => 'Pembimbing DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
         ]);
 
         $jurusanId = Auth::user()->adminJurusan->jurusan_id;
@@ -79,6 +83,7 @@ class DudiJurusanController extends Controller
         $doubleAssignment = DudiJurusan::where('pembimbing_id', $request->pembimbing_id)
             ->where('tahun_ajar_id', $request->tahun_ajar_id)
             ->where('dudi_id', $request->dudi_id)
+            ->where('jurusan_id', $jurusanId) 
             ->exists();
 
         if ($doubleAssignment) {
@@ -108,12 +113,12 @@ class DudiJurusanController extends Controller
     {
         $request->validate([
             'dudi_id' => 'required',
-            'tahun_ajar_id' => 'required',
-            'pembimbing_id' => 'required'
+            'pembimbing_id' => 'required',
+            'tahun_ajar_id' => 'required'
         ],[
             'dudi_id.required' => 'Lokasi DUDI harus dipilih',
-            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
             'pembimbing_id.required' => 'Pembimbing DUDI harus dipilih',
+            'tahun_ajar_id.required' => 'Tahun ajaran harus dipilih',
         ]);
 
         $dudiJurusan = DudiJurusan::findOrFail($id);

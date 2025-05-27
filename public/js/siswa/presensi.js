@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const buttons = document.querySelectorAll('.show-detail-presensi');
+    const buttons = document.querySelectorAll('[data-file-url]');
     const image = document.getElementById('previewImage');
     const pdf = document.getElementById('previewPDF');
 
@@ -18,8 +18,13 @@ $(document).ready(function () {
                 pdf.src = fileUrl;
                 pdf.style.display = 'block';
             }
+
+            const modalElement = document.getElementById('modalDetailPresensi');
+            const modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
         });
     });
+
 
     $("#modalPresensi").on("shown.bs.modal", function () {
         let now = new Date();
@@ -43,7 +48,7 @@ $(document).ready(function () {
         let jenis = $(this).val();
 
         if (jenis === "Presensi Datang") {
-            $("#statusPresensi").prop("disabled", false).prop("required", true);
+            $("#statusPresensi").prop("disabled", false);
             $("#ketPresensi").prop("required", false);
         } else if (jenis === "Presensi Pulang") {
             $("#statusPresensi").prop("disabled", true).val("-");
@@ -126,14 +131,14 @@ $(document).ready(function () {
             return;
         }
     
-        if (jenis === "Presensi Datang" && !status) {
-            Swal.fire({
-                icon: "error",
-                title: "Gagal!",
-                text: "Status presensi harus dipilih",
-            });
-            return;
-        }
+        if (jenis === "Presensi Datang" && (!status || status === "-" || status.trim() === "")) {
+    Swal.fire({
+        icon: "error",
+        title: "Gagal!",
+        text: "Status presensi harus dipilih",
+    });
+    return;
+}
     
         if (filePresensi.length === 0) {
             Swal.fire({

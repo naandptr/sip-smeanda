@@ -43,8 +43,28 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); 
-                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                if (xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    const errors = response.errors;
+
+                    if (errors) {
+                        if (errors.siswa_id) {
+                            Swal.fire("Gagal!", errors.siswa_id[0], "error");
+                        } else if (errors.dudi_jurusan_id) {
+                            Swal.fire("Gagal!", errors.dudi_jurusan_id[0], "error");
+                        } else if (errors.tahun_ajar_id) {
+                            Swal.fire("Gagal!", errors.tahun_ajar_id[0], "error");
+                        } else if (errors.tanggal_mulai) {
+                            Swal.fire("Gagal!", errors.tanggal_mulai[0], "error");
+                        } else if (errors.tanggal_selesai) {
+                            Swal.fire("Gagal!", errors.tanggal_selesai[0], "error");
+                        }
+                    } else {
+                        Swal.fire("Gagal!", response.message || "Terjadi kesalahan.", "error");
+                    }
+                } else {
+                    Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                }
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 
@@ -75,8 +95,28 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                console.log(xhr.responseText); 
-                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                if (xhr.status === 422) {
+                    const response = xhr.responseJSON;
+                    const errors = response.errors;
+
+                    if (errors) {
+                        if (errors.siswa_id) {
+                            Swal.fire("Gagal!", errors.siswa_id[0], "error");
+                        } else if (errors.dudi_jurusan_id) {
+                            Swal.fire("Gagal!", errors.dudi_jurusan_id[0], "error");
+                        } else if (errors.tahun_ajar_id) {
+                            Swal.fire("Gagal!", errors.tahun_ajar_id[0], "error");
+                        } else if (errors.tanggal_mulai) {
+                            Swal.fire("Gagal!", errors.tanggal_mulai[0], "error");
+                        } else if (errors.tanggal_selesai) {
+                            Swal.fire("Gagal!", errors.tanggal_selesai[0], "error");
+                        }
+                    } else {
+                        Swal.fire("Gagal!", response.message || "Terjadi kesalahan.", "error");
+                    }
+                } else {
+                    Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                }
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 

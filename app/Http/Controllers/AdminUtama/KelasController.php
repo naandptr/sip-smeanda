@@ -10,12 +10,18 @@ use App\Models\TahunAjar;
 
 class KelasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $tahunAjar = TahunAjar::orderBy('periode_mulai', 'desc')->get();
         $jurusan = Jurusan::where('status', 'aktif')->get();
 
         $tahunAjarAktif = TahunAjar::where('status', 'aktif')->first(); 
+
+        if (!$tahunAjarAktif) {
+            return back()->with('error', 'Tidak ada tahun ajaran aktif yang ditemukan.');
+        }
+
+        $tahunAjarId = $request->get('tahun_ajaran', $tahunAjarAktif ? $tahunAjarAktif->id : null); 
 
         $tahunAjaran = request('tahun_ajaran') ?? ($tahunAjarAktif ? $tahunAjarAktif->tahun_ajaran : null);
 
@@ -31,6 +37,7 @@ class KelasController extends Controller
             'dataKelas' => $dataKelas,
             'jurusan' => $jurusan,
             'tahunAjar' => $tahunAjar,
+            'tahunAjarAktif' => $tahunAjarAktif,
         ]);
     }
 

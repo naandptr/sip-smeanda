@@ -1,4 +1,4 @@
-@props(['siswa', 'dudiJurusan', 'tahunAjar'])
+@props(['siswa', 'dudiJurusan', 'tahunAjar', 'tahunAjarAktif'])
 <div class="modal fade" id="modalPrakerin" tabindex="-1" aria-labelledby="modalPrakerin" aria-hidden="true">
     <div class="modal-dialog custom-modal">
         <div class="modal-content">
@@ -8,6 +8,7 @@
                         <label for="namaSiswa">Nama Siswa<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="namaSiswa" name="namaSiswa" required>
+                                <option value="" selected>Pilih Siswa</option>
                                 @foreach($siswa as $data)
                                     <option value="{{ $data->id }}">{{ $data->nama }}</option>
                                 @endforeach
@@ -18,6 +19,7 @@
                         <label for="dudiSiswa">Penetapan DUDI<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="dudiSiswa" name="dudiSiswa" required>
+                                <option value="" selected>Pilih Penetapan DUDI</option>
                                 @foreach($dudiJurusan as $data)
                                     <option value="{{ $data->id }}">{{ $data->dudi->nama_dudi }}</option>
                                 @endforeach
@@ -28,9 +30,13 @@
                         <label for="tahunAjar">Tahun Ajaran<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="tahunAjar" name="tahunAjar" required>
-                                @foreach($tahunAjar as $data)
-                                    <option value="{{ $data->id }}">{{ $data->tahun_ajaran }}</option>
-                                @endforeach
+                                @if($tahunAjarAktif)
+                                    <option value="{{ $tahunAjarAktif->id }}" selected>
+                                        {{ $tahunAjarAktif->tahun_ajaran }}
+                                    </option>
+                                @else
+                                    <option value="">Tidak ada tahun ajaran aktif</option>
+                                @endif
                             </select>
                         </div>
                     </div>

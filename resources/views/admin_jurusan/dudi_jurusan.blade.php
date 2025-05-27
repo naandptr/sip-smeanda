@@ -33,7 +33,7 @@
         
         <div class="data-action">
             <button class="btn-open" id="tambahDudiJurusan" data-bs-toggle="modal" data-bs-target="#modalDudiJurusan">+ Penetapan</button>
-            <x-modal_dudi_jurusan :dudi="$dudi" :pembimbing="$pembimbing" :tahunAjar="$tahunAjar" />
+            <x-modal_dudi_jurusan :dudi="$dudi" :pembimbing="$pembimbing" :tahunAjar="$tahunAjar" :tahunAjarAktif="$tahunAjarAktif" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">

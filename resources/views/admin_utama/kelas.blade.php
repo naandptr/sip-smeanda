@@ -32,7 +32,7 @@
         </div>
         <div class="data-action">
             <button class="btn-open" id="tambahKelas" data-bs-toggle="modal" data-bs-target="#modalKelas">+ Kelas</button>
-            <x-modal_kelas :jurusan="$jurusan" :tahunAjar="$tahunAjar" />
+            <x-modal_kelas :jurusan="$jurusan" :tahunAjar="$tahunAjar" :tahunAjarAktif="$tahunAjarAktif" />
         </div>
         <div class="data-content">
             <div class="table-wrapper">

@@ -5,7 +5,7 @@
                 @csrf
                 <div class="modal-form-body">
                     <div class="modal-form-group">
-                        <label for="tglJurnal">Tanggal<span class="required-label">*</span></label>
+                        <label for="tglJurnal">Tanggal</label>
                         <div class="modal-form-value">
                             <input type="text" 
                                 id="tglJurnal" 

@@ -13,10 +13,6 @@ class CheckAccountStatus
     {
         if (Auth::check()) {
             $user = Auth::user();
-            
-            if ($user->role === User::ROLE_ADMIN_UTAMA) {
-                return $next($request);
-            }
 
             if ($user->status === User::STATUS_PENDING) {
                 return redirect()->route('setup-akun');

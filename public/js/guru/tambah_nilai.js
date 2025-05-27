@@ -190,18 +190,20 @@ $(document).ready(function () {
                     });
                 }
             },
-            error: function(xhr) {
+          
+            error: async function(xhr) {
                 if (xhr.status === 422) {
                     let res = xhr.responseJSON;
                     if (res.errors) {
-                        let messages = Object.values(res.errors).map(errArr => errArr[0]).join('<br>');
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal!',
-                            html: messages,
-                        });
-                    }
-                    else if (res.error) {
+                        const firstError = Object.values(res.errors)[0][0];
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: firstError,
+            });
+
+                    } else if (res.error) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Gagal!',

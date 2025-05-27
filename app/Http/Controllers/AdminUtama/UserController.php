@@ -95,6 +95,19 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
+            if (!$request->filled('roleUser')) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['roleUser' => ['Silakan pilih peran pengguna']]
+                ], 422);
+            }
+
+            if (!$request->filled('namaUser')) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['namaUser' => ['Nama pengguna harus diisi']]
+                ], 422);
+            }
             $request->validate([
                 'roleUser' => 'required|in:Siswa,Guru,Admin Jurusan',
                 'namaUser' => [
@@ -106,8 +119,6 @@ class UserController extends Controller
                 ],
             ],[
                 'namaUser.unique' => 'Nama pengguna sudah ada sebelumnya',
-                'roleUser.required' => 'Silakan pilih peran pengguna',
-                'namaUser.required' => 'Nama pengguna harus diisi',
                 'namaUser.regex' => 'Nama pengguna tidak boleh mengandung spasi atau karakter khusus selain titik, garis bawah, dan tanda hubung',
             ]);
 
@@ -120,16 +131,21 @@ class UserController extends Controller
             ]);
 
             if ($request->roleUser == 'Siswa') {
-                $request->validate([
-                    'namaSiswa' => 'required|string|max:255',
-                    'nisSiswa' => 'required|numeric|unique:tbl_siswa,nis',
-                    'kelasSiswa' => 'required|exists:tbl_kelas,id',
-                ],[
-                    'nisSiswa.unique' => 'NIS yang digunakan sudah ada sebelumnya',
-                    'namaSiswa.required' => 'Nama siswa harus diisi',
-                    'nisSiswa.required' => 'NIS siswa harus diisi',
-                    'kelasSiswa.required' => 'Kelas siswa harus dipilih',
-                ]);
+                if (!$request->filled('namaSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['namaSiswa' => 'Nama siswa harus diisi']], 422);
+                }
+
+                if (!$request->filled('nisSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['nisSiswa' => 'NIS siswa harus diisi']], 422);
+                }
+
+                if (Siswa::where('nis', $request->nisSiswa)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['nisSiswa' => 'NIS yang digunakan sudah ada sebelumnya']], 422);
+                }
+
+                if (!$request->filled('kelasSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['kelasSiswa' => 'Kelas siswa harus dipilih']], 422);
+                }
 
                 $siswa = Siswa::create([
                     'user_id' => $user->id,
@@ -143,16 +159,21 @@ class UserController extends Controller
                 }
             } 
             elseif ($request->roleUser == 'Guru') {
-                $request->validate([
-                    'namaGuru' => 'required|string|max:255',
-                    'nipGuru' => 'required|numeric|unique:tbl_pembimbing,nip',
-                    'telpGuru' => 'required|string|max:20',
-                ], [
-                    'nipGuru.unique' => 'NIP yang digunakan sudah ada sebelumnya',
-                    'namaGuru.required' => 'Nama guru harus diisi',
-                    'nipGuru.required' => 'NIP guru harus diisi',
-                    'telpGuru.required' => 'Nomor telepon guru harus diisi',
-                ]);
+                if (!$request->filled('namaGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['namaGuru' => 'Nama guru harus diisi']], 422);
+                }
+
+                if (!$request->filled('nipGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['nipGuru' => 'NIP guru harus diisi']], 422);
+                }
+
+                if (Pembimbing::where('nip', $request->nipGuru)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['nipGuru' => 'NIP yang digunakan sudah ada sebelumnya']], 422);
+                }
+
+                if (!$request->filled('telpGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['telpGuru' => 'Nomor telepon guru harus diisi']], 422);
+                }
 
                 $pembimbing = Pembimbing::create([
                     'user_id' => $user->id,
@@ -166,6 +187,18 @@ class UserController extends Controller
                 }
             } 
             elseif ($request->roleUser == 'Admin Jurusan') {
+                if (!$request->filled('namaAdm')) {
+                    return response()->json(['success' => false, 'errors' => ['namaAdm' => 'Nama admin jurusan harus diisi']], 422);
+                }
+
+                if (AdminJurusan::where('nama', $request->namaAdm)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['namaAdm' => 'Nama admin jurusan yang digunakan sudah ada sebelumnya']], 422);
+                }
+
+                if (!$request->filled('jurusanAdm')) {
+                    return response()->json(['success' => false, 'errors' => ['jurusanAdm' => 'Jurusan harus dipilih']], 422);
+                }
+
                 $existingAdmin = AdminJurusan::where('jurusan_id', $request->jurusanAdm)->first();
                 if ($existingAdmin) {
                     return response()->json([
@@ -173,15 +206,6 @@ class UserController extends Controller
                         'errors' => ['jurusan' => 'Jurusan ini sudah memiliki admin jurusan']
                     ], 422);
                 }
-
-                $request->validate([
-                    'namaAdm' => 'required|string|max:255|unique:tbl_admin_jurusan,nama',
-                    'jurusanAdm' => 'required|exists:tbl_jurusan,id',
-                ], [
-                    'namaAdm.unique' => 'Nama admin jurusan yang digunakan sudah ada sebelumnya',
-                    'namaAdm.required' => 'Nama admin jurusan harus diisi',
-                    'jurusanAdm.required' => 'Jurusan harus dipilih',
-                ]);
 
                 $adminJurusan = AdminJurusan::create([
                     'user_id' => $user->id,
@@ -241,6 +265,12 @@ class UserController extends Controller
         $user = User::with(['siswa', 'pembimbing', 'adminJurusan'])->findOrFail($id);
 
         try {
+            if (!$request->filled('namaUser')) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['namaUser' => ['Nama pengguna harus diisi']]
+                ], 422);
+            }
             $request->validate([
                 'namaUser' => [
                     'required',
@@ -251,7 +281,6 @@ class UserController extends Controller
                 ],
             ], [
                 'namaUser.unique' => 'Nama pengguna sudah ada sebelumnya',
-                'namaUser.required' => 'Nama pengguna harus diisi',
                 'namaUser.regex' => 'Nama pengguna tidak boleh mengandung spasi atau karakter khusus selain titik, garis bawah, dan tanda hubung',
             ]);
             
@@ -260,16 +289,24 @@ class UserController extends Controller
             ]);
     
             if ($request->roleUser == 'Siswa') {
-                $request->validate([
-                    'namaSiswa' => 'required|string|max:255',
-                    'nisSiswa' => 'required|numeric|unique:tbl_siswa,nis,' . $user->siswa->id . ',id',
-                    'kelasSiswa' => 'required',
-                ],[
-                    'nisSiswa.unique' => 'NIS yang digunakan sudah ada sebelumnya',
-                    'namaSiswa.required' => 'Nama siswa harus diisi',
-                    'nisSiswa.required' => 'NIS siswa harus diisi',
-                    'kelasSiswa.required' => 'Kelas siswa harus dipilih',
-                ]);
+
+                if (!$request->filled('namaSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['namaSiswa' => ['Nama siswa harus diisi']]], 422);
+                }
+
+                if (!$request->filled('nisSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['nisSiswa' => ['NIS siswa harus diisi']]], 422);
+                }
+
+                if (Siswa::where('nis', $request->nisSiswa)->where('user_id', '!=', $user->id)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['nisSiswa' => ['NIS sudah digunakan']]], 422);
+                }
+
+                if (!$request->filled('kelasSiswa')) {
+                    return response()->json(['success' => false, 'errors' => ['kelasSiswa' => ['Kelas siswa harus dipilih']]], 422);
+                }
+
+                $user->siswa = Siswa::where('user_id', $user->id)->firstOrFail();
 
                 $user->siswa->update([
                     'nama' => $request->namaSiswa,
@@ -278,16 +315,23 @@ class UserController extends Controller
                 ]);
 
             } elseif ($request->roleUser == 'Guru') {
-                $request->validate([
-                    'namaGuru' => 'required|string|max:255',
-                    'nipGuru' => 'required|numeric|unique:tbl_pembimbing,nip,' . $user->pembimbing->id . ',id',
-                    'telpGuru' => 'required|string|max:20',
-                ],[
-                    'nipGuru.unique' => 'NIP yang digunakan sudah ada sebelumnya',
-                    'namaGuru.required' => 'Nama guru harus diisi',
-                    'nipGuru.required' => 'NIP guru harus diisi',
-                    'telpGuru.required' => 'Nomor telepon guru harus diisi',
-                ]);
+                if (!$request->filled('namaGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['namaGuru' => ['Nama guru harus diisi']]], 422);
+                }
+
+                if (!$request->filled('nipGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['nipGuru' => ['NIP guru harus diisi']]], 422);
+                }
+
+                if (Pembimbing::where('nip', $request->nipGuru)->where('user_id', '!=', $user->id)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['nipGuru' => ['NIP sudah digunakan']]], 422);
+                }
+
+                if (!$request->filled('telpGuru')) {
+                    return response()->json(['success' => false, 'errors' => ['telpGuru' => ['Nomor telepon guru harus diisi']]], 422);
+                }
+
+                $user->pembimbing = Pembimbing::where('user_id', $user->id)->firstOrFail();
 
                 $user->pembimbing->update([
                     'nama' => $request->namaGuru,
@@ -296,6 +340,18 @@ class UserController extends Controller
                 ]);
 
             } elseif ($request->roleUser == 'Admin Jurusan') {
+                if (!$request->filled('namaAdm')) {
+                    return response()->json(['success' => false, 'errors' => ['namaAdm' => ['Nama admin harus diisi']]], 422);
+                }
+
+                if (AdminJurusan::where('nama', $request->namaAdm)->where('user_id', '!=', $user->id)->exists()) {
+                    return response()->json(['success' => false, 'errors' => ['namaAdm' => ['Nama admin sudah digunakan']]], 422);
+                }
+
+                if (!$request->filled('jurusanAdm')) {
+                    return response()->json(['success' => false, 'errors' => ['jurusanAdm' => ['Jurusan harus dipilih']]], 422);
+                }
+
                 $existingAdmin = AdminJurusan::where('jurusan_id', $request->jurusanAdm)
                     ->where('id', '!=', $user->adminJurusan->id)
                     ->first();
@@ -306,14 +362,7 @@ class UserController extends Controller
                     ], 422);
                 }
 
-                $request->validate([
-                    'namaAdm' => 'required|string|max:255|unique:tbl_admin_jurusan,nama,' . $user->adminJurusan->id . ',id',
-                    'jurusanAdm' => 'required',
-                ],[
-                    'namaAdm.unique' => 'Nama admin jurusan yang digunakan sudah ada sebelumnya',
-                    'namaAdm.required' => 'Nama admin jurusan harus diisi',
-                    'jurusanAdm.required' => 'Jurusan harus dipilih',
-                ]);
+                $user->adminJurusan = AdminJurusan::where('user_id', $user->id)->firstOrFail();
 
                 $user->adminJurusan->update([
                     'nama' => $request->namaAdm,

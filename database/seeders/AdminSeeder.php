@@ -9,19 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    // database/seeders/AdminSeeder.php
     public function run()
     {
         DB::table('tbl_users')->insert([
             'username' => 'adminutama',
-            'email' => 'admin@sekolah.sch.id',
-            'password' => Hash::make('password123'), 
-            'is_default_password' => false,
+            'password' => Hash::make('123456'), 
+            'is_default_password' => true,
             'role' => User::ROLE_ADMIN_UTAMA, 
-            'status' => User::STATUS_AKTIF,
-            'email_verified_at' => now(), 
-            'created_at' => now(),
-            'updated_at' => now()
+            'status' => User::STATUS_PENDING,
         ]);
     }
 }

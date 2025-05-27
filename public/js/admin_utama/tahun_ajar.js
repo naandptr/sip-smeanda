@@ -78,7 +78,22 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    if (errors.tahun_ajaran) {
+                        Swal.fire("Gagal!", errors.tahun_ajaran[0], "error");
+                    } else if (errors.periode_mulai) {
+                        Swal.fire("Gagal!", errors.periode_mulai[0], "error");
+                    } else if (errors.periode_selesai) {
+                        Swal.fire("Gagal!", errors.periode_selesai[0], "error");
+                    } else if (errors.status) {
+                        Swal.fire("Gagal!", errors.status[0], "error");
+                    } else {
+                        Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                    }
+                } else {
+                    Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                }
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 
@@ -109,7 +124,22 @@ $(document).ready(function() {
                 });
             },
             error: function (xhr) {
-                Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    if (errors.tahun_ajaran) {
+                        Swal.fire("Gagal!", errors.tahun_ajaran[0], "error");
+                    } else if (errors.periode_mulai) {
+                        Swal.fire("Gagal!", errors.periode_mulai[0], "error");
+                    } else if (errors.periode_selesai) {
+                        Swal.fire("Gagal!", errors.periode_selesai[0], "error");
+                    } else if (errors.status) {
+                        Swal.fire("Gagal!", errors.status[0], "error");
+                    } else {
+                        Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                    }
+                } else {
+                    Swal.fire("Gagal!", xhr.responseJSON.message || "Terjadi kesalahan.", "error");
+                }
             },
             complete: function () {
                 submitBtn.prop('disabled', false); 

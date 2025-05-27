@@ -9,7 +9,7 @@
                         <label for="roleUser">Peran<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="roleUser" name="roleUser" required>
-                                <option value="" selected disabled>Pilih Peran</option>
+                                <option value="" selected>Pilih Peran</option>
                                 <option>Siswa</option>
                                 <option>Guru</option>
                                 <option>Admin Jurusan</option>
@@ -49,7 +49,7 @@
                         <label for="kelasSiswa">Kelas<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="kelasSiswa" name="kelasSiswa" required>
-                                <option value="" selected disabled>Pilih Kelas</option>
+                                <option value="" selected>Pilih Kelas</option>
                                 @foreach($kelas as $kelasItem)
                                     <option value="{{ $kelasItem->id }}">{{ $kelasItem->nama_kelas }}</option>
                                 @endforeach
@@ -92,7 +92,7 @@
                         <label for="jurusanAdm">Jurusan<span class="required-label">*</span></label>
                         <div class="modal-form-value">
                             <select id="jurusanAdm" name="jurusanAdm" required>
-                                <option value="" selected disabled>Pilih Jurusan</option>
+                                <option value="" selected>Pilih Jurusan</option>
                                 @foreach($jurusans as $jurusan)
                                     <option value="{{ $jurusan->id }}">{{ $jurusan->nama_jurusan }}</option>
                                 @endforeach
