@@ -33,6 +33,7 @@ Route::get('/verify-account/{token}', [AuthController::class, 'verifyAccount'])-
 
 Route::middleware(['auth', 'account.status', 'check.default.password'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/chart-data', [DashboardController::class, 'chartData'])->name('dashboard.chart-data');
 });
 
 // Authenticated Routes

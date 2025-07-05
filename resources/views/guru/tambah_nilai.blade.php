@@ -22,7 +22,7 @@
                 <div class="nilai-form-header">
                     <div class="nilai-header-info">
                         <div class="nilai-header-label">
-                            <label for="siswaBimbingan">Nama Peserta Didik</label>
+                            <label for="siswaBimbingan">Nama Peserta Didik<span class="required-label">*</span></label>
                         </div>
                         <div class="nilai-header-value">
                             <select name="siswaBimbingan" id="siswaBimbingan">
@@ -59,7 +59,7 @@
                     </div>
                     <div class="nilai-header-info">
                         <div class="nilai-header-label">
-                            <label for="namaInstruktur">Nama Instruktur</label>
+                            <label for="namaInstruktur">Nama Instruktur<span class="required-label">*</span></label>
                         </div>
                         <div class="nilai-header-value">
                             <input type="text" name="namaInstruktur" id="namaInstruktur">
@@ -116,7 +116,7 @@
                     </div>
                     
                     <div class="nilai-form-section catatan-nilai">
-                        <label for="">Catatan:</label>
+                        <label for="">Catatan:<span class="required-label">*</span></label>
                         <textarea name="catatan" id="" cols="30" rows="10"></textarea>
                     </div>
 
@@ -130,15 +130,15 @@
                                 </thead>
                                 <tbody class="data-body">
                                     <tr>
-                                        <td><label for="jumlahSakit">Sakit</label></td>
+                                        <td><label for="jumlahSakit">Sakit<span class="required-label">*</span></label></td>
                                         <td><input type="text" name="jumlahSakit" id="jumlahSakit"></td>
                                     </tr>
                                     <tr>
-                                        <td><label for="jumlahIjin">Ijin</label></td>
+                                        <td><label for="jumlahIjin">Ijin<span class="required-label">*</span></label></td>
                                         <td><input type="text" name="jumlahIjin" id="jumlahIjin"></td>
                                     </tr>
                                     <tr>
-                                        <td><label for="jumlahAlpa">Tanpa Keterangan</label></td>
+                                        <td><label for="jumlahAlpa">Tanpa Keterangan<span class="required-label">*</span></label></td>
                                         <td><input type="text" name="jumlahAlpa" id="jumlahAlpa"></td>
                                     </tr>
                                 </tbody>             

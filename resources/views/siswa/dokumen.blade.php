@@ -40,7 +40,7 @@
             </div>
 
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="cvSubmit">Kirim</button>
+                <button type="submit" class="btn-submit" id="cvSubmit" style="display: none;">Kirim</button>
             </div>
         </form>
     </div>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="portoSubmit">Kirim</button>
+                <button type="submit" class="btn-submit" id="portoSubmit" style="display: none;">Kirim</button>
             </div>
         </form>
     </div>
@@ -108,7 +108,7 @@
             </div>
 
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="laporanSubmit">Kirim</button>
+                <button type="submit" class="btn-submit" id="laporanSubmit" style="display: none;">Kirim</button>
             </div>
         </form>
     </div>
@@ -142,7 +142,7 @@
             </div>
 
             <div class="document-action">
-                <button type="submit" class="btn-submit" id="sertifikatSubmit">Kirim</button>
+                <button type="submit" class="btn-submit" id="sertifikatSubmit" style="display: none;">Kirim</button>
             </div>
         </form>
     </div>

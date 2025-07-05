@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\AdminUtama;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminJurusan;
 use Illuminate\Http\Request;
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Log; 
 
 class JurusanController extends Controller
@@ -26,6 +28,7 @@ class JurusanController extends Controller
 
     public function store(Request $request)
     {
+        // Cek duplikasi kode atau nama jurusan 
         $existsKode = Jurusan::where('kode_jurusan', $request->kode_jurusan)->exists();
         $existsNama = Jurusan::where('nama_jurusan', $request->nama_jurusan)->exists();
 
@@ -109,8 +112,20 @@ class JurusanController extends Controller
     {
         $jurusan = Jurusan::findOrFail($id);
 
+        // Tidak boleh menghapus jurusan yang masih aktif
         if ($jurusan->status == 'Aktif') {
             return response()->json(['success' => false, 'message' => 'Tidak dapat menghapus jurusan yang aktif'], 400);
+        }
+
+        // Cek relasi ke tabel lain
+        if (
+            Kelas::where('jurusan_id', $jurusan->id)->exists() ||
+            AdminJurusan::where('jurusan_id', $jurusan->id)->exists()
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Jurusan tidak bisa dihapus karena digunakan di data lain'
+            ], 400);
         }
 
         $jurusan->delete();

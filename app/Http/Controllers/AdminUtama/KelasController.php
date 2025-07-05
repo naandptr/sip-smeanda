@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminUtama;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Models\Jurusan;
 use App\Models\TahunAjar;
 
@@ -111,7 +112,23 @@ class KelasController extends Controller
 
     public function destroy($id)
     {
-        Kelas::destroy($id);
-        return response()->json(['success' => true, 'message' => 'Kelas berhasil dihapus']);
+        $kelas = Kelas::findOrFail($id);
+
+        // Cek relasi ke tabel lain
+        if (
+            Siswa::where('kelas_id', $kelas->id)->exists() 
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kelas tidak bisa dihapus karena digunakan di data lain'
+            ], 400);
+        }
+
+        $kelas->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kelas berhasil dihapus'
+        ]);
     }
 }

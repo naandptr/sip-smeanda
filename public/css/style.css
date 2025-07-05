@@ -362,7 +362,28 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     gap: 25px;
 }
 
+.card-container-adm {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    gap: 25px; /* Jarak antar item */
+}
+
 .card-item {
+    display: flex;
+    width: 100%;
+    padding: 24px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    border-radius: 8px;
+    background: var(--colors-white, #FFF);
+
+    /* double shadow */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.card-item-adm {
     display: flex;
     width: 100%;
     padding: 24px 24px;
@@ -1467,6 +1488,20 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     gap: 10px;
 }
 
+.data-filter-adm {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#filterForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
 .filter-value {
     border-radius: 5px;
     border: 1px solid var(--colors-primary-500, #0EA5E9);
@@ -1482,6 +1517,21 @@ p { font-size: 12px; font-style: normal; margin: 0;}
     line-height: 120%; 
     border: none;
     width: 100%;
+}
+
+.header-filter-adm {
+    grid-column: span 2;
+    padding: 20px;
+    border-radius: 8px;
+    background: var(--colors-white, #FFF);
+    /* double shadow */
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px -1px rgba(0, 0, 0, 0.10);
+}
+
+.header-filter-adm h1 {
+    color: var(--colors-primary-900, #0C4A6E);
+    font-weight: 800;
+    line-height: 120%; 
 }
 
 

@@ -13,4 +13,9 @@ class TahunAjar extends Model
     {
         return $query->where('status', 'Aktif');
     }
+
+    public function penetapanPrakerin()
+    {
+        return $this->hasMany(PenetapanPrakerin::class, 'tahun_ajar_id');
+    }
 }

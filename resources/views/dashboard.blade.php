@@ -1,3 +1,7 @@
+@php 
+    $page_name = 'dashboard'; 
+@endphp
+
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
@@ -77,20 +81,62 @@
 
     {{-- Dashboard Admin Jurusan --}}
     @elseif ($role === User::ROLE_ADMIN_JURUSAN)
-        <div class="card-container">
-            <div class="card-item">
+        <div class="card-container-adm">
+            <div class="card-item-adm">
                 <h4>Siswa Jurusan</h4>
                 <div class="detail-card">
                     <img src="img/nis-icon.png" alt="">
                     <h2>{{ $totalSiswa }} Siswa</h2>
                 </div>
             </div>
-            <div class="card-item">
+            <div class="card-item-adm">
                 <h4>Lokasi Prakerin</h4>
                 <div class="detail-card">
                     <img src="img/lokasi-icon.png" alt="">
                     <h2>{{ $totalLokasiPrakerin }} Lokasi Prakerin</h2>
                 </div>
+            </div>
+            <div class="header-filter-adm">
+                <h1>Penetapan Prakerin</h1>
+            </div>
+            <div class="data-filter-adm">
+                <div class="filter-header">
+                    <h5>Rentang Tahun Ajaran</h5>
+                </div>
+                <form id="filterForm">
+                    <label for="tahun_awal"><h5>Dari:</h5></label>
+                    <select id="tahun_awal" name="tahun_awal" class="filter-value">
+                        <option value="">Pilih</option>
+                        @foreach ($semuaTahunAjaran as $tahun)
+                            <option value="{{ $tahun->tahun_ajaran }}">
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label for="tahun_akhir"><h5>Sampai:</h5></label>
+                    <select id="tahun_akhir" name="tahun_akhir" class="filter-value">
+                        <option value="">Pilih</option>
+                        @foreach ($semuaTahunAjaran as $tahun)
+                            <option value="{{ $tahun->tahun_ajaran }}">
+                                {{ $tahun->tahun_ajaran }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+            <div class="card-item-adm">
+                <canvas id="chartPrakerin"
+                    data-url="{{ route('dashboard.chart-data') }}"
+                    data-initial-labels="{{ json_encode($chartLabels ?? []) }}"
+                    data-initial-values="{{ json_encode($chartData ?? []) }}">
+                </canvas>
+            </div>
+            <div class="card-item-adm">
+                <canvas id="chartDudi"
+                    data-url="{{ route('dashboard.chart-data') }}"
+                    data-initial-labels="{{ json_encode($chartLabelsDudi ?? []) }}"
+                    data-initial-values="{{ json_encode($chartDataDudi ?? []) }}">
+                </canvas>
             </div>
         </div>
 

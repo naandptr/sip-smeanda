@@ -102,8 +102,8 @@ $(document).ready(function () {
         e.preventDefault();
         let deskripsi = $("#summernote").val();
 
-        const formData = new FormData(this);
-        formData.set("content", $("#summernote").summernote("code"));
+        let deskripsiHtml = $("#summernote").summernote("code");
+        let deskripsiText = $("<div>").html(deskripsiHtml).text().trim();
 
         if (!deskripsi) {
             Swal.fire({
@@ -113,6 +113,18 @@ $(document).ready(function () {
             });
             return;
         }
+
+        if (deskripsiText.length < 150) {
+            Swal.fire({
+                icon: "error",
+                title: "Gagal!",
+                text: "Deskripsi kegiatan minimal 150 karakter",
+            });
+            return;
+        }
+
+        const formData = new FormData(this);
+        formData.set("content", deskripsiHtml);
 
         $.ajax({
             url: "/jurnal-prakerin",

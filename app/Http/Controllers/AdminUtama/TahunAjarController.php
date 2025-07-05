@@ -5,6 +5,9 @@ namespace App\Http\Controllers\AdminUtama;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TahunAjar;
+use App\Models\Kelas;
+use App\Models\DudiJurusan;
+use App\Models\PenetapanPrakerin;
 use Illuminate\Support\Facades\Log; 
 
 class TahunAjarController extends Controller
@@ -93,6 +96,18 @@ class TahunAjarController extends Controller
 
         if ($tahunAjar->status == 'Aktif') {
             return response()->json(['success' => false, 'message' => 'Tidak dapat menghapus tahun ajaran yang aktif'], 400);
+        }
+
+        // Cek relasi ke tabel lain
+        if (
+            Kelas::where('tahun_ajar_id', $tahunAjar->id)->exists() ||
+            PenetapanPrakerin::where('tahun_ajar_id', $tahunAjar->id)->exists() ||
+            DudiJurusan::where('tahun_ajar_id', $tahunAjar->id)->exists()
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tahun ajaran tidak bisa dihapus karena digunakan di data lain'
+            ], 400);
         }
 
         $tahunAjar->delete();

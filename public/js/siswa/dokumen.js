@@ -1,6 +1,9 @@
 $(document).ready(function() {
     function validateFile(input, label) {
         let file = input.files[0];
+        const form = $(input).closest("form");
+        const submitButton = form.find(".btn-submit");
+
         if (file) {
             let fileName = file.name;
             let fileSize = file.size;
@@ -12,6 +15,7 @@ $(document).ready(function() {
                 alert('Hanya berkas PDF yang diperbolehkan!');
                 $(input).val('');
                 $(label).text('Berkas Kosong');
+                submitButton.hide();
                 return;
             }
 
@@ -19,12 +23,15 @@ $(document).ready(function() {
                 alert('Ukuran berkas maksimal 2MB!');
                 $(input).val('');
                 $(label).text('Berkas Kosong');
+                submitButton.hide();
                 return;
             }
 
             $(label).text(fileName);
+            submitButton.show(); 
         } else {
             $(label).text('Berkas Kosong');
+            submitButton.hide();
         }
     }
 

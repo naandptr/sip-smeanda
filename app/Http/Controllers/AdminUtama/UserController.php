@@ -389,19 +389,48 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with(['siswa.dokumen', 'siswa.penetapanPrakerin', 'pembimbing.dudiJurusan'])->findOrFail($id);
 
-        if ($user->role == 'Siswa' && $user->siswa) {
-            $user->siswa->delete();
-        } elseif ($user->role == 'Guru' && $user->pembimbing) {
-            $user->pembimbing->delete();
-        } elseif ($user->role == 'Admin Jurusan' && $user->adminJurusan) {
+        if ($user->role === 'Siswa' && $user->siswa) {
+            $siswa = $user->siswa;
+
+            if (
+                $siswa->dokumen()->exists() ||
+                $siswa->penetapanPrakerin()->exists() 
+            ) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Pengguna tidak dapat dihapus karena memiliki data yang terkait.'
+                ], 400);
+            }
+
+            $siswa->delete();
+
+        } elseif ($user->role === 'Guru' && $user->pembimbing) {
+            $pembimbing = $user->pembimbing;
+
+            if (
+                $pembimbing->dudiJurusan()->exists()
+            ) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Pengguna tidak dapat dihapus karena memiliki data yang terkait.'
+                ], 400);
+            }
+
+            $pembimbing->delete();
+
+        } elseif ($user->role === 'Admin Jurusan' && $user->adminJurusan) {
             $user->adminJurusan->delete();
         }
 
         $user->delete();
 
-        return response()->json(['success' => true, 'message' => 'Pengguna berhasil dihapus']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengguna berhasil dihapus'
+        ]);
     }
+
 }
 

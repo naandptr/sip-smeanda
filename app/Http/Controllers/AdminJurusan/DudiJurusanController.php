@@ -10,6 +10,7 @@ use App\Models\Dudi;
 use App\Models\Jurusan;
 use App\Models\TahunAjar;
 use App\Models\Pembimbing;
+use App\Models\PenetapanPrakerin;
 
 class DudiJurusanController extends Controller
 {
@@ -162,9 +163,30 @@ class DudiJurusanController extends Controller
         return response()->json(['success' => true, 'message' => 'Penetapan DUDI berhasil diperbarui']);
     }
 
+    // public function destroy($id)
+    // {
+    //     DudiJurusan::destroy($id);
+    //     return response()->json(['success' => true, 'message' => 'Penetapan DUDI berhasil dihapus']);
+    // }
+
     public function destroy($id)
     {
-        DudiJurusan::destroy($id);
+        $dudiJurusan = DudiJurusan::findOrFail($id);
+
+        // Cek relasi ke tabel lain
+        if (
+            PenetapanPrakerin::where('dudi_jurusan_id', $dudiJurusan->id)->exists() 
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Penetapan DUDI tidak bisa dihapus karena digunakan di data lain'
+            ], 400);
+        }
+
+        $dudiJurusan->delete();
+
         return response()->json(['success' => true, 'message' => 'Penetapan DUDI berhasil dihapus']);
     }
+
+    
 }

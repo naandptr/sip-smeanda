@@ -19,9 +19,14 @@ $(document).ready(function () {
                 pdf.style.display = 'block';
             }
 
-            const modalElement = document.getElementById('modalDetailPresensi');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
+            const modalDetail = new bootstrap.Modal('#modalDetailPresensi');
+            modalDetail.show();
+
         });
+    });
+
+    $('#modalDetailPresensi').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
     });
 });

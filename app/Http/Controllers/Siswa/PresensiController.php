@@ -36,7 +36,7 @@ class PresensiController extends Controller
             'jenisPresensi' => 'required|in:Presensi Datang,Presensi Pulang',
             'statusPresensi' => 'nullable|in:Hadir,Izin,Sakit',
             'filePresensi' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ],[
+        ], [
             'jenisPresensi.required' => 'Jenis presensi harus dipilih',
             'filePresensi.required' => 'Bukti presensi harus diunggah',
             'filePresensi.mimes' => 'Format berkas harus JPG, JPEG, PNG, atau PDF',
@@ -78,12 +78,15 @@ class PresensiController extends Controller
             }
         }
 
-    
         $ext = $request->file('filePresensi')->getClientOriginalExtension();
-        $folderNis = 'presensi/' . $siswa->nis;
-        $namaFile = $siswa->nis . '_' . strtolower(str_replace(' ', '_', $jenis)) . '_' . $today->format('Ymd') . '.' . $ext;
+        $folder = "presensi/{$siswa->nis}";
+        $filename = $siswa->nis . '_' . strtolower(str_replace(' ', '_', $jenis)) . '_' . $today->format('Ymd') . '.' . $ext;
 
-        $filePath = $request->file('filePresensi')->storeAs('public/' . $folderNis, $namaFile);
+        $stored = $request->file('filePresensi')->storeAs($folder, $filename, 'public');
+
+        if (!$stored) {
+            return response()->json(['message' => 'Gagal menyimpan file presensi'], 500);
+        }
 
         $presensi = new Presensi([
             'penetapan_prakerin_id' => $penetapan->id,
@@ -91,13 +94,16 @@ class PresensiController extends Controller
             'jenis_presensi' => $jenis,
             'status_kehadiran' => $jenis === 'Presensi Datang' ? $request->statusPresensi : null,
             'keterangan' => $request->ketAbsen,
-            'file' => str_replace('public/', '', $filePath), 
-            'presensi_datang_id' => $jenis === 'Presensi Pulang' ? $absenDatang->id ?? null : null
+            'file' => $stored,
+            'presensi_datang_id' => $jenis === 'Presensi Pulang' ? $presensiDatang->id ?? null : null
         ]);
 
         $presensi->save();
 
-        return response()->json(['message' => 'Presensi berhasil dikirim']);
+        return response()->json([
+            'message' => 'Presensi berhasil dikirim',
+            'file_url' => Storage::url($stored),
+        ]);
     }
 
 }

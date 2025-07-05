@@ -32,6 +32,11 @@
         <script src="{{ asset('js/auth/ganti_password_awal.js') }}"></script>
     @endif
 
+    @if($page_name === 'dashboard')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ asset('js/core/chart-prakerin.js') }}"></script>
+    @endif
+
     @if($page_name === 'admin_utama/user')
         <script src="{{ asset('js/admin_utama/user.js') }}"></script>
     @endif

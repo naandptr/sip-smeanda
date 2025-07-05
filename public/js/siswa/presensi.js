@@ -19,9 +19,8 @@ $(document).ready(function () {
                 pdf.style.display = 'block';
             }
 
-            const modalElement = document.getElementById('modalDetailPresensi');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
+            const modalDetail = new bootstrap.Modal('#modalDetailPresensi');
+            modalDetail.show();
         });
     });
 
@@ -91,9 +90,10 @@ $(document).ready(function () {
     pond.on('addfile', (error, file) => {
         const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
         const allowedExtensions = ['.png', '.jpg', '.jpeg', '.pdf'];
-
         const fileType = file.fileType || '';
         const fileExtension = file.filename.slice(file.filename.lastIndexOf('.')).toLowerCase();
+        const maxSizeMB = 2;
+        const sizeInMB = file.file.size / 1024 / 1024;
 
         if (!allowedTypes.includes(fileType) && !allowedExtensions.includes(fileExtension)) {
             pond.removeFile(file.id);
@@ -102,16 +102,17 @@ $(document).ready(function () {
                 title: "Format tidak didukung",
                 text: "Hanya boleh unggah gambar (PNG, JPG, JPEG) dan PDF!",
             });
+            return;
         }
-    });
 
-    pond.on('error', (error) => {
-        if (error.body && error.body.includes("Max size")) {
+        if (sizeInMB > maxSizeMB) {
+            pond.removeFile(file.id);
             Swal.fire({
                 icon: "error",
                 title: "Ukuran berkas terlalu besar",
-                text: "Ukuran maksimum adalah 2MB.",
+                text: "Ukuran maksimum adalah 2MB!",
             });
+            return;
         }
     });
 
@@ -194,5 +195,10 @@ $(document).ready(function () {
             allowMultiple: false,
             maxFileSize: '2MB',
         });
+    });
+
+    $('#modalDetailPresensi').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
     });
 });

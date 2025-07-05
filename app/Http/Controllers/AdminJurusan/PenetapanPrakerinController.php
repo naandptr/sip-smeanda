@@ -10,6 +10,9 @@ use App\Models\PenetapanPrakerin;
 use App\Models\Siswa;
 use App\Models\DudiJurusan;
 use App\Models\TahunAjar;
+use App\Models\Presensi;
+use App\Models\Jurnal;
+use App\Models\Penilaian;
 
 
 class PenetapanPrakerinController extends Controller
@@ -43,33 +46,8 @@ class PenetapanPrakerinController extends Controller
             $query->where('status', $status);
         }
 
-        $dataPrakerin = $query->paginate(10);
+        $dataPrakerin = $query->orderBy('tanggal_mulai', 'desc')->paginate(10);
 
-        $query = PenetapanPrakerin::with(['siswa.kelas', 'dudiJurusan.dudi', 'tahunAjar'])
-            ->whereHas('siswa.kelas', function ($query) use ($jurusanId) {
-                $query->where('jurusan_id', $jurusanId);
-            });
-
-        if ($tahunAjarId) {
-            $query->where('tahun_ajar_id', $tahunAjarId);
-        }
-
-        if ($status) {
-            $query->where('status', $status);
-        }
-
-        $dataPrakerin = $query->get()->sort(function ($a, $b) {
-            return strcmp(optional($a->siswa)->nama ?? '', optional($b->siswa)->nama ?? '')
-                ?: strcmp(optional($a->dudiJurusan->dudi)->nama_dudi ?? '', optional($b->dudiJurusan->dudi)->nama_dudi ?? '')
-                ?: strcmp(optional($b->tahunAjar)->periode_mulai ?? '', optional($a->tahunAjar)->periode_mulai ?? '')
-                ?: strcmp($b->tanggal_mulai ?? '', $a->tanggal_mulai ?? '');
-        });
-        $dataPrakerin = new \Illuminate\Pagination\LengthAwarePaginator(
-            $dataPrakerin, 
-            $dataPrakerin->count(), 
-            10, 
-            $request->get('page', 1)
-        );
 
         $siswa = Siswa::whereHas('kelas', function ($query) use ($jurusanId) {
             $query->where('jurusan_id', $jurusanId)
@@ -228,7 +206,7 @@ class PenetapanPrakerinController extends Controller
 
     public function destroy($id)
     {
-        $penetapan = PenetapanPrakerin::find($id);
+        $penetapan = PenetapanPrakerin::findOrFail($id);
 
         if (!$penetapan) {
             return response()->json(['success' => false, 'message' => 'Penetapan prakerin tidak ditemukan'], 404);
@@ -236,6 +214,18 @@ class PenetapanPrakerinController extends Controller
 
         if ($penetapan->status === 'Berlangsung') {
             return response()->json(['success' => false, 'message' => 'Penetapan prakerin yang sedang berlangsung tidak bisa dihapus'], 403);
+        }
+
+        // Cek relasi ke tabel lain
+        if (
+            Presensi::where('penetapan_prakerin_id', $penetapan->id)->exists() ||
+            Jurnal::where('penetapan_prakerin_id', $penetapan->id)->exists() ||
+            Penilaian::where('penetapan_prakerin_id', $penetapan->id)->exists() 
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Penetapan prakerin tidak bisa dihapus karena digunakan di data lain'
+            ], 400);
         }
 
         $penetapan->delete();
