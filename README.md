@@ -19,6 +19,7 @@
 - [PDF Generation](#pdf-generation)
 - [Pengembangan & Tips](#pengembangan--tips)
 - [Perintah Artisan Berguna](#perintah-artisan-berguna)
+- [Struktur Database](#struktur-database)
 
 ---
 
