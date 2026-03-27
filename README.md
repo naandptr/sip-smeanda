@@ -1,4 +1,4 @@
-# SIP-Smeanda
+# SIP-SMEANDA
 ### Sistem Informasi Prakerin — Laravel 11
 
 > Platform manajemen Praktik Kerja Industri (Prakerin) berbasis web untuk SMK, mencakup pengelolaan pengguna, dokumen, presensi, jurnal, dan penilaian siswa.
@@ -25,7 +25,7 @@
 
 ## Tentang Aplikasi
 
-**SIP-Smeanda** adalah aplikasi Laravel 11 untuk mengelola alur kerja Praktik Kerja Industri (Prakerin) di SMK. Aplikasi ini mendukung empat peran pengguna — Admin Utama, Admin Jurusan, Guru, dan Siswa — dengan fitur lengkap mulai dari pengelolaan dokumen, presensi harian, jurnal kegiatan, hingga penilaian dan ekspor PDF.
+**SIP-SMEANDA** adalah aplikasi Laravel 11 untuk mengelola alur kerja Praktik Kerja Industri (Prakerin) di SMK. Aplikasi ini mendukung empat peran pengguna — Admin Utama, Admin Jurusan, Guru, dan Siswa — dengan fitur lengkap mulai dari pengelolaan dokumen, presensi harian, jurnal kegiatan, hingga penilaian dan ekspor PDF.
 
 ---
 
@@ -64,7 +64,7 @@
 
 ### 1. Clone Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/naandptr/sip-smeanda.git
 cd sip-smeanda
 ```
 
