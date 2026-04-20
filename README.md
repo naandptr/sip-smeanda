@@ -54,7 +54,6 @@
 | Paket | Fungsi |
 |---|---|
 | `laravel/framework ^11.0` | Framework utama |
-| `laravel/sanctum` | API authentication |
 | `barryvdh/laravel-dompdf` | Export PDF penilaian |
 | `spatie/laravel-permission` | Manajemen role & permission |
 
@@ -226,8 +225,6 @@ Pastikan konfigurasi mail di `.env` sudah benar sebelum menguji alur verifikasi 
 
 `barryvdh/laravel-dompdf` digunakan untuk mengekspor PDF penilaian siswa.
 
-> Pastikan ekstensi PHP `ext-gd` atau `imagick` tersedia jika PDF memerlukan gambar/logo.
-
 ---
 
 ## Pengembangan & Tips
@@ -270,10 +267,6 @@ php artisan route:list
 # Cache
 php artisan config:cache
 php artisan cache:clear
-
-# Queue (jika digunakan)
-php artisan queue:work
-```
 
 ---
 
